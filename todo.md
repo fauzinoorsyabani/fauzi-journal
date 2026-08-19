@@ -32,3 +32,4 @@
 - [x] Menambahkan marquee otomatis kanan-ke-kiri yang tetap bergerak ketika cursor berada di atas area.
 - [x] Menambahkan blur/fade pada tepi kiri dan kanan marquee serta memvalidasi perilaku desktop dan mobile.
 - [x] Memperlambat marquee dua arah agar ritmenya lebih tenang dan tetap berkelanjutan.
+- [x] Menulis panduan berbahasa Indonesia untuk menulis, preview, publish, subscriber, serta pengelolaan inquiry jurnal.
