@@ -85,6 +85,31 @@
   .eyebrow { @apply font-mono text-[0.61rem] uppercase tracking-[0.17em] text-[#b78a58]; }
   .link-sightline { @apply inline-flex items-center gap-3 border-b border-[#b78a58]/75 pb-2 font-mono text-[0.63rem] uppercase tracking-[0.15em] text-[#f3f0ea] transition-[border-color,color,transform] duration-200 hover:border-[#f3f0ea] hover:text-white active:scale-[0.97]; }
   .page-shell { @apply mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-12; }
+  .parallax-frame img { transform: translate3d(0, 0, 0) scale(1.12); will-change: transform; }
+  .reveal-on-scroll { opacity: 0; transform: translate3d(0, 22px, 0); }
+  .reveal-on-scroll[data-revealed="true"] { opacity: 1; transform: translate3d(0, 0, 0); transition: opacity 700ms cubic-bezier(0.23, 1, 0.32, 1), transform 700ms cubic-bezier(0.23, 1, 0.32, 1); }
+  .reveal-on-scroll[data-delay="short"][data-revealed="true"] { transition-delay: 100ms; }
+  .reveal-on-scroll[data-delay="long"][data-revealed="true"] { transition-delay: 180ms; }
+  .rich-journal-editor p { @apply mb-5 text-base leading-8 text-[#d3cfc7] sm:text-lg sm:leading-9; }
+  .rich-journal-editor h2 { @apply mb-6 mt-10 font-display text-4xl leading-[0.9] tracking-[-0.05em] text-[#f3f0ea] sm:text-5xl; }
+  .rich-journal-editor h3 { @apply mb-5 mt-8 font-display text-3xl leading-[0.94] tracking-[-0.04em] text-[#f3f0ea]; }
+  .rich-journal-editor blockquote { @apply my-9 border-l border-[#b78a58] pl-5 font-display text-3xl leading-[0.98] tracking-[-0.04em] text-[#e6e0d6]; }
+  .rich-journal-editor ul { @apply mb-6 list-disc space-y-2 pl-6 text-[#d3cfc7]; }
+  .rich-journal-editor ol { @apply mb-6 list-decimal space-y-2 pl-6 text-[#d3cfc7]; }
+  .rich-journal-editor .is-editor-empty:first-child::before { content: attr(data-placeholder); float: left; height: 0; pointer-events: none; color: #6f6a63; }
+  .rich-journal-editor .journal-figure { @apply my-8; }
+  .rich-journal-editor .journal-figure img { @apply w-full; }
+  .rich-journal-editor .journal-figure figcaption { @apply mt-3 font-mono text-[0.58rem] leading-relaxed tracking-[0.08em] text-[#89857e]; }
+  .rich-journal-reading { @apply mx-auto max-w-3xl; }
+  .rich-journal-reading p { @apply mb-7 text-[1.05rem] leading-9 text-[#c6c1b9] sm:text-xl sm:leading-10; }
+  .rich-journal-reading h2 { @apply mb-7 mt-14 font-display text-[clamp(2.8rem,5vw,5.6rem)] leading-[0.86] tracking-[-0.06em] text-[#f3f0ea]; }
+  .rich-journal-reading h3 { @apply mb-6 mt-12 font-display text-4xl leading-[0.9] tracking-[-0.05em] text-[#f3f0ea]; }
+  .rich-journal-reading blockquote { @apply my-12 border-l-2 border-[#b78a58] pl-6 font-display text-[clamp(2.1rem,4.2vw,4.8rem)] leading-[0.92] tracking-[-0.05em] text-[#e8e0d3]; }
+  .rich-journal-reading ul { @apply mb-8 list-disc space-y-3 pl-6 text-lg leading-8 text-[#c6c1b9]; }
+  .rich-journal-reading ol { @apply mb-8 list-decimal space-y-3 pl-6 text-lg leading-8 text-[#c6c1b9]; }
+  .rich-journal-reading .journal-figure { @apply my-12; }
+  .rich-journal-reading .journal-figure img { @apply w-full; }
+  .rich-journal-reading .journal-figure figcaption { @apply mt-4 max-w-lg font-mono text-[0.62rem] leading-relaxed tracking-[0.08em] text-[#89857e]; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -92,4 +117,9 @@
   .reveal-up-delay { animation: reveal-up 0.75s 0.12s cubic-bezier(0.23, 1, 0.32, 1) both; }
   .reveal-up-delay-2 { animation: reveal-up 0.75s 0.22s cubic-bezier(0.23, 1, 0.32, 1) both; }
   @keyframes reveal-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-frame img { transform: none !important; }
+  .reveal-on-scroll { opacity: 1; transform: none; }
 }

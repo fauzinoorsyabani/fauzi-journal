@@ -5,9 +5,10 @@
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import { StoryCard } from "@/components/StoryCard";
-import { stories } from "@/data/stories";
+import { usePublishedStories } from "@/lib/editorial";
 
 export default function StoryIndex() {
+  const { stories } = usePublishedStories();
   return (
     <main className="bg-[#f3f0ea] pb-16 pt-32 text-[#121110] sm:pb-24 sm:pt-40">
       <section className="page-shell relative">

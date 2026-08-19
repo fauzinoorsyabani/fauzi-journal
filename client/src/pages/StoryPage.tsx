@@ -6,15 +6,17 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useRoute } from "wouter";
 import type { Story, StoryChapter } from "@/data/stories";
-import { getStory, stories } from "@/data/stories";
+import { getStory } from "@/data/stories";
+import { mapPublishedRecord, usePublishedStories } from "@/lib/editorial";
+import { trpc } from "@/lib/trpc";
+import { ParallaxImage, Reveal } from "@/components/ScrollMotion";
+import { RichJournalContent } from "@/components/RichJournalContent";
 
 function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
   if (chapter.type === "image" && chapter.image) {
     return (
       <section className="my-16 sm:my-24 lg:my-32">
-        <div className="story-grain mx-auto max-w-[1500px] overflow-hidden bg-[#151515]">
-          <img src={chapter.image} alt={chapter.alt ?? "Story image"} className="aspect-[16/10] h-full w-full object-cover brightness-[0.86] saturate-[0.82]" loading="lazy" />
-        </div>
+        <ParallaxImage src={chapter.image} alt={chapter.alt ?? "Story image"} className="story-grain mx-auto aspect-[16/10] max-w-[1500px] bg-[#151515]" imageClassName="brightness-[0.86] saturate-[0.82]" loading="eager" />
         {chapter.caption ? (
           <div className="mx-auto mt-3 flex max-w-[1500px] justify-end px-5 sm:px-0">
             <p className="max-w-sm font-mono text-[0.58rem] leading-relaxed tracking-[0.1em] text-[#89857e]">{chapter.caption}</p>
@@ -28,11 +30,11 @@ function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
     return (
       <section className="my-16 border-y border-white/10 py-14 sm:my-24 sm:py-20 lg:my-32 lg:py-28">
         <div className="page-shell grid gap-8 lg:grid-cols-[0.42fr_1fr] lg:gap-20">
-          <p className="eyebrow flex items-center gap-3"><span className="h-px w-6 bg-[#b78a58]" />A note from the work</p>
-          <div>
+          <Reveal><p className="eyebrow flex items-center gap-3"><span className="h-px w-6 bg-[#b78a58]" />A note from the work</p></Reveal>
+          <Reveal delay="short">
             <blockquote className="max-w-5xl font-display text-[clamp(2.6rem,5.8vw,6rem)] leading-[0.88] tracking-[-0.06em] text-[#f3f0ea]">“{chapter.quote}”</blockquote>
             {chapter.attribution ? <cite className="mt-7 block font-mono text-[0.62rem] not-italic uppercase tracking-[0.14em] text-[#b78a58]">{chapter.attribution}</cite> : null}
-          </div>
+          </Reveal>
         </div>
       </section>
     );
@@ -44,18 +46,16 @@ function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
       <section className="my-16 sm:my-24 lg:my-32">
         <div className="page-shell grid gap-8 lg:grid-cols-2 lg:gap-14 xl:gap-20">
           <div className={`${imageFirst ? "lg:order-1" : "lg:order-2"}`}>
-            <div className="story-grain overflow-hidden bg-[#141414]">
-              <img src={chapter.image} alt={chapter.alt ?? "Story image"} className="aspect-[4/5] h-full w-full object-cover brightness-[0.83] saturate-[0.8]" loading="lazy" />
-            </div>
+            <ParallaxImage src={chapter.image} alt={chapter.alt ?? "Story image"} className="story-grain aspect-[4/5] bg-[#141414]" imageClassName="brightness-[0.83] saturate-[0.8]" loading="eager" />
             {chapter.caption ? <p className="mt-3 font-mono text-[0.58rem] leading-relaxed tracking-[0.09em] text-[#89857e]">{chapter.caption}</p> : null}
           </div>
-          <div className={`flex flex-col justify-center ${imageFirst ? "lg:order-2" : "lg:order-1"}`}>
+          <Reveal delay="short" className={`flex flex-col justify-center ${imageFirst ? "lg:order-2" : "lg:order-1"}`}>
             {chapter.eyebrow ? <p className="eyebrow mb-5">{chapter.eyebrow}</p> : null}
             {chapter.heading ? <h2 className="max-w-lg font-display text-[clamp(2.7rem,4.6vw,5.1rem)] leading-[0.88] tracking-[-0.058em] text-[#f3f0ea]">{chapter.heading}</h2> : null}
             <div className="mt-7 max-w-lg space-y-5 text-[0.98rem] leading-8 text-[#bdb9b1] sm:text-lg sm:leading-8">
               {chapter.body?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     );
@@ -64,13 +64,13 @@ function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
   return (
     <section className="my-16 sm:my-24 lg:my-32">
       <div className="page-shell grid gap-9 lg:grid-cols-[0.48fr_1fr] lg:gap-20">
-        <div>{chapter.eyebrow ? <p className="eyebrow">{chapter.eyebrow}</p> : null}</div>
-        <div>
+        <Reveal><div>{chapter.eyebrow ? <p className="eyebrow">{chapter.eyebrow}</p> : null}</div></Reveal>
+        <Reveal delay="short">
           {chapter.heading ? <h2 className="max-w-4xl font-display text-[clamp(2.8rem,5vw,5.6rem)] leading-[0.86] tracking-[-0.06em] text-[#f3f0ea]">{chapter.heading}</h2> : null}
           <div className="mt-9 max-w-2xl space-y-6 text-[1rem] leading-8 text-[#bdb9b1] sm:text-lg sm:leading-9">
             {chapter.body?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -88,7 +88,7 @@ function MissingStory() {
   );
 }
 
-function StoryNavigation({ story }: { story: Story }) {
+function StoryNavigation({ story, stories }: { story: Story; stories: Story[] }) {
   const currentIndex = stories.findIndex((item) => item.slug === story.slug);
   const previous = stories[(currentIndex - 1 + stories.length) % stories.length];
   const next = stories[(currentIndex + 1) % stories.length];
@@ -114,11 +114,13 @@ function StoryNavigation({ story }: { story: Story }) {
 
 export default function StoryPage() {
   const [, params] = useRoute("/stories/:slug");
-  const story = getStory(params?.slug ?? "");
+  const { stories } = usePublishedStories();
+  const record = trpc.editorial.publicBySlug.useQuery({ slug: params?.slug ?? "" });
+  const story = record.data ? mapPublishedRecord(record.data) : getStory(params?.slug ?? "");
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    window.scrollTo(0, 0);
   }, [params?.slug]);
 
   useEffect(() => {
@@ -144,8 +146,8 @@ export default function StoryPage() {
       </div>
 
       <section className="relative isolate min-h-[calc(100svh-4.75rem)] overflow-hidden">
-        <div className="story-grain absolute inset-0">
-          <img src={story.image} alt={story.alt} className="h-full w-full object-cover brightness-[0.64] saturate-[0.75]" style={{ objectPosition: story.imagePosition ?? "center" }} fetchPriority="high" />
+        <div className="absolute inset-0">
+          <ParallaxImage src={story.image} alt={story.alt} className="story-grain h-full w-full" imageClassName="brightness-[0.64] saturate-[0.75]" imageStyle={{ objectPosition: story.imagePosition ?? "center" }} fetchPriority="high" loading="eager" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,8,.94)_0%,rgba(8,8,8,.63)_46%,rgba(8,8,8,.16)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(8,8,8,.85)_0%,transparent_56%)]" />
         </div>
@@ -171,7 +173,11 @@ export default function StoryPage() {
         </div>
       </section>
 
-      {story.chapters.map((chapter, index) => <StoryChapterBlock chapter={chapter} key={`${story.slug}-${index}`} />)}
+      {story.richContentJson ? (
+        <section className="bg-[#080808] py-16 sm:py-24 lg:py-32">
+          <div className="page-shell"><RichJournalContent content={story.richContentJson} /></div>
+        </section>
+      ) : story.chapters.map((chapter, index) => <StoryChapterBlock chapter={chapter} key={`${story.slug}-${index}`} />)}
 
       <section className="bg-[#121110] py-14 sm:py-20">
         <div className="page-shell grid gap-8 lg:grid-cols-[0.56fr_1fr] lg:gap-20">
@@ -180,13 +186,13 @@ export default function StoryPage() {
             <p className="max-w-3xl font-display text-[clamp(2.7rem,4.8vw,5.2rem)] leading-[0.88] tracking-[-0.058em] text-[#f3f0ea]">The frames outside the final edit carry their own kind of truth.</p>
             <div className="mt-9 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
               <p className="max-w-xl text-sm leading-relaxed text-[#aaa69f]">We keep the working images nearby—not as proof of perfection, but as evidence of how attention travels through a process.</p>
-              <a href="mailto:media@lensstories.studio" className="link-sightline">Request media kit <ArrowUpRight size={15} /></a>
+              <a href="#inquiry" className="link-sightline">Request media kit <ArrowUpRight size={15} /></a>
             </div>
           </div>
         </div>
       </section>
 
-      <StoryNavigation story={story} />
+      <StoryNavigation story={story} stories={stories} />
     </main>
   );
 }

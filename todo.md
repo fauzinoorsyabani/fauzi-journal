@@ -1,0 +1,28 @@
+# Peningkatan Fauzi / Journal
+
+- [x] Menetapkan masthead Fauzi / Journal dengan identitas digital `fauzi.journal`.
+- [x] Menetapkan CMS internal dan penyimpanan lead sebagai default agar implementasi dapat dimulai tanpa menunggu kredensial eksternal.
+- [x] Upgrade fondasi proyek untuk penyimpanan konten, admin, dan pengiriman formulir.
+- [x] Membangun workflow CMS untuk menambah, menyunting, menerbitkan, serta menyimpan draft cerita.
+- [x] Mengganti media inquiry mailto dengan formulir tervalidasi dan penyimpanan lead internal.
+- [x] Menunda koneksi email/CRM outbound atas permintaan user; lead tetap tersedia pada inbox internal.
+- [x] Memastikan lead inbox internal menampilkan dan memperbarui status tindak lanjut inquiry.
+- [x] Menambahkan parallax halus serta reveal teks yang menghormati reduced motion.
+- [x] Memperbaiki frame parallax agar relative dan memverifikasi motion tidak menimbulkan layout shift.
+- [x] Menguji motion cerita pada desktop, mobile, dan reduced-motion.
+- [x] Memperbaiki frame parallax chapter yang tidak menampilkan gambar secara konsisten pada halaman cerita.
+- [x] Menguji alur publish, submit inquiry, route story, responsivitas, dan build production.
+- [x] Menulis README yang mendokumentasikan Fauzi / Journal, CMS, lead inbox internal, dan setup lokal.
+- [ ] Membuat repository GitHub privat dan mendorong source code proyek terbaru.
+- [x] Menyusun format rich editor untuk italic, heading, quote, image, caption, link, dan preview jurnal.
+- [x] Menambahkan UI caption gambar pada rich editor serta menyimpannya dalam konten jurnal.
+- [x] Merender caption gambar pada preview Studio dan halaman jurnal publik.
+- [x] Menambah subscriber opt-in, daftar subscriber, serta persetujuan langganan yang eksplisit.
+- [x] Menambahkan log notifikasi publish internal dan status kesiapan subscriber tanpa mengirim email eksternal.
+- [x] Mendokumentasikan workflow penulisan, publish, subscriber, dan email notification pada README.
+- [x] Menunda konfigurasi Resend atas permintaan user; delivery email eksternal tetap menjadi integrasi opsional berikutnya.
+- [ ] Memverifikasi motion reduced-motion dan kestabilan layout parallax pada hero serta chapter.
+- [ ] Memverifikasi end-to-end publish CMS dari Studio ke halaman publik setelah akun editor tersedia.
+- [ ] Memverifikasi submit inquiry, subscribe, dan unsubscribe tanpa meninggalkan data uji pada database produksi.
+- [ ] Memverifikasi frame chapter parallax pada desktop dan mobile setelah pemuatan gambar dipercepat.
+- [ ] Mendiagnosis dan memperbaiki akses 403 CloudFront pada hosted Studio sebelum menguji login editor.

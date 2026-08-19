@@ -10,12 +10,13 @@ import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
 import StoryIndex from "@/pages/StoryIndex";
 import StoryPage from "@/pages/StoryPage";
+import Studio from "@/pages/Studio";
+import Unsubscribe from "@/pages/Unsubscribe";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
-
-function Router() {
+function PublicRouter() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
@@ -28,6 +29,19 @@ function Router() {
       </Switch>
       <SiteFooter />
     </div>
+  );
+}
+
+function Router() {
+  return (
+    <Switch>
+      <Route path={"/studio"} component={Studio} />
+      <Route path={"/studio/new"} component={Studio} />
+      <Route path={"/studio/inquiries"} component={Studio} />
+      <Route path={"/studio/subscribers"} component={Studio} />
+      <Route path={"/unsubscribe"} component={Unsubscribe} />
+      <Route component={PublicRouter} />
+    </Switch>
   );
 }
 

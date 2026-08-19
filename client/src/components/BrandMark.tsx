@@ -1,6 +1,6 @@
 /**
  * Style guide: Editorial Noir / Premium Web3 Gallery.
- * The aperture mark is a sculptural, high-contrast symbol—not a generic app icon.
+ * The aperture mark is a sculptural, high-contrast symbol for Fauzi / Journal—not a generic app icon.
  */
 type BrandMarkProps = {
   className?: string;
@@ -17,7 +17,7 @@ export function BrandMark({
     <div className={`flex items-center gap-3 ${className}`}>
       <img
         src="/manus-storage/lensstories-mark_71722fa8.png"
-        alt="LensStories aperture mark"
+        alt="Fauzi Journal aperture mark"
         className="h-9 w-9 object-contain sm:h-10 sm:w-10"
       />
       {withWordmark ? (
@@ -27,10 +27,10 @@ export function BrandMark({
           }`}
         >
           <span className="font-display text-[1.55rem] leading-none tracking-[-0.075em] sm:text-[1.7rem]">
-            Lens
+            Fauzi
           </span>
           <span className="font-sans text-[0.61rem] font-bold uppercase tracking-[0.16em]">
-            Stories
+            Journal
           </span>
         </span>
       ) : null}

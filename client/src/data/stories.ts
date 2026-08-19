@@ -31,6 +31,7 @@ export type Story = {
   accent: string;
   impact: string;
   chapters: StoryChapter[];
+  richContentJson?: string | null;
 };
 
 export const stories: Story[] = [

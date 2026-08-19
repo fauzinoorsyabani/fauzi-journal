@@ -4,6 +4,8 @@
  */
 import { ArrowUpRight } from "lucide-react";
 import { BrandMark } from "./BrandMark";
+import { MediaInquiryForm } from "./MediaInquiryForm";
+import { SubscribeForm } from "./SubscribeForm";
 
 export function SiteFooter() {
   return (
@@ -13,21 +15,16 @@ export function SiteFooter() {
           <div>
             <BrandMark className="mb-9" />
             <p className="max-w-sm font-sans text-base leading-relaxed text-[#b8b4ad] sm:text-lg">
-              A visual journal for stories of impact, culture, and the work that makes both matter.
+              A visual journal by Fauzi, gathering field notes, image-led stories, and the work beneath the surface.
             </p>
+            <div className="mt-9 max-w-sm border-t border-white/10 pt-6"><p className="mb-4 font-mono text-[0.61rem] uppercase tracking-[0.18em] text-[#b78a58]">Receive journal notes</p><SubscribeForm /></div>
           </div>
 
           <div className="grid gap-10 sm:grid-cols-2">
-            <div>
+            <div id="inquiry">
               <p className="mb-4 font-mono text-[0.61rem] uppercase tracking-[0.18em] text-[#b78a58]">For the press</p>
-              <a
-                href="mailto:media@lensstories.studio"
-                className="group inline-flex items-center gap-2 border-b border-white/30 pb-1 font-display text-2xl leading-tight text-[#f3f0ea] transition-colors hover:border-[#b78a58] sm:text-3xl"
-              >
-                Media inquiries
-                <ArrowUpRight size={18} className="text-[#b78a58] transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </a>
-              <p className="mt-4 font-mono text-[0.64rem] tracking-[0.08em] text-[#8d8983]">media@lensstories.studio</p>
+              <p className="mb-5 font-display text-3xl leading-none text-[#f3f0ea]">Media inquiries</p>
+              <MediaInquiryForm />
             </div>
             <div>
               <p className="mb-4 font-mono text-[0.61rem] uppercase tracking-[0.18em] text-[#b78a58]">Elsewhere</p>
@@ -35,12 +32,13 @@ export function SiteFooter() {
                 <a href="#stories" className="transition-colors hover:text-[#b78a58]">Story index</a>
                 <a href="#impact" className="transition-colors hover:text-[#b78a58]">Impact notes</a>
                 <a href="#culture" className="transition-colors hover:text-[#b78a58]">Behind the scenes</a>
+                <a href="/studio" className="transition-colors hover:text-[#b78a58]">Editorial studio</a>
               </div>
             </div>
           </div>
         </div>
         <div className="flex flex-col gap-3 border-t border-white/10 py-5 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#77736d] sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 LensStories. Made for the work beneath the surface.</p>
+          <p>© 2026 Fauzi / Journal. Made for the work beneath the surface.</p>
           <p>Volume 04 · The everyday archive</p>
         </div>
       </div>

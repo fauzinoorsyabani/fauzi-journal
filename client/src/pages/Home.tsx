@@ -5,9 +5,10 @@
 import { ArrowDown, ArrowUpRight, MoveRight } from "lucide-react";
 import { Link } from "wouter";
 import { StoryCard } from "@/components/StoryCard";
-import { stories } from "@/data/stories";
+import { usePublishedStories } from "@/lib/editorial";
 
 export default function Home() {
+  const { stories } = usePublishedStories();
   const featured = stories[0];
   const storyGrid = stories.slice(1);
 
