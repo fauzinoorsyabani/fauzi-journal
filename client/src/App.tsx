@@ -1,20 +1,33 @@
+/**
+ * Style guide: Editorial Noir / Premium Web3 Gallery.
+ * A dark global shell keeps every route within the same cinematic visual world.
+ */
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
+import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
+import StoryIndex from "@/pages/StoryIndex";
+import StoryPage from "@/pages/StoryPage";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
 
 
 function Router() {
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <div className="min-h-screen bg-background text-foreground">
+      <SiteHeader />
+      <Switch>
+        <Route path={"/"} component={Home} />
+        <Route path={"/stories"} component={StoryIndex} />
+        <Route path={"/stories/:slug"} component={StoryPage} />
+        <Route path={"/404"} component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
+      <SiteFooter />
+    </div>
   );
 }
 
@@ -26,10 +39,7 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
           <Router />
