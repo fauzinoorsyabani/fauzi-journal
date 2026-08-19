@@ -84,6 +84,10 @@ Platform menyediakan environment variables untuk database, OAuth, dan storage se
 
 Integrasi email outbound sengaja **ditunda** untuk saat ini. Ketika sebuah jurnal dipublikasikan, sistem membuat catatan notifikasi `queued` untuk setiap subscriber yang aktif; catatan tersebut dapat dikirim melalui provider pilihan—misalnya Resend atau Brevo—pada tahap berikutnya. Jangan commit file `.env` atau credential ke repository.
 
+## Known Platform Blocker
+
+Route `/studio` pada domain production telah memuat layar sign-in dengan benar. Namun, tombol **Enter studio** saat ini diarahkan ke `manus.im/app-auth` dan menerima respons CloudFront `403` sebelum OAuth callback kembali ke aplikasi. Kode frontend sudah menggunakan `window.location.origin` untuk membentuk callback `/api/oauth/callback`, sehingga kendala ini berada pada layanan autentikasi/edge platform. Gunakan [Manus Help](https://help.manus.im) dan sertakan CloudFront Request ID bila masalah masih terjadi.
+
 ## Project Structure
 
 ```text
