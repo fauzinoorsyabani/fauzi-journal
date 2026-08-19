@@ -5,6 +5,7 @@
 import { ArrowDown, ArrowUpRight, MoveRight } from "lucide-react";
 import { Link } from "wouter";
 import { StoryCard } from "@/components/StoryCard";
+import { EditorialMarquee } from "@/components/EditorialMarquee";
 import { usePublishedStories } from "@/lib/editorial";
 
 export default function Home() {
@@ -49,6 +50,8 @@ export default function Home() {
           <span>Scroll to enter</span><ArrowDown size={13} className="text-[#b78a58]" />
         </div>
       </section>
+
+      <EditorialMarquee />
 
       <section id="stories" className="bg-[#f3f0ea] py-16 text-[#121110] sm:py-24 lg:py-32">
         <div className="page-shell">

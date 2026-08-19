@@ -28,3 +28,6 @@
 - [ ] Mendiagnosis dan memperbaiki akses 403 CloudFront pada hosted Studio sebelum menguji login editor.
 - [ ] Mendiagnosis dan memperbaiki OAuth redirect yang menghasilkan 403 setelah tombol Enter studio dipilih.
 - [x] Menunda eskalasi OAuth ke platform selama maintenance; Studio tetap mempertahankan autentikasi aman tanpa bypass.
+- [x] Mempercepat ritme motion non-esensial pada elemen editorial yang bergerak.
+- [x] Menambahkan marquee otomatis kanan-ke-kiri yang tetap bergerak ketika cursor berada di atas area.
+- [x] Menambahkan blur/fade pada tepi kiri dan kanan marquee serta memvalidasi perilaku desktop dan mobile.
