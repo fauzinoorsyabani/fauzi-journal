@@ -13,7 +13,7 @@
 - [x] Memperbaiki frame parallax chapter yang tidak menampilkan gambar secara konsisten pada halaman cerita.
 - [x] Menguji alur publish, submit inquiry, route story, responsivitas, dan build production.
 - [x] Menulis README yang mendokumentasikan Fauzi / Journal, CMS, lead inbox internal, dan setup lokal.
-- [ ] Membuat repository GitHub privat dan mendorong source code proyek terbaru.
+- [x] Membuat repository GitHub privat dan mendorong source code proyek terbaru.
 - [x] Menyusun format rich editor untuk italic, heading, quote, image, caption, link, dan preview jurnal.
 - [x] Menambahkan UI caption gambar pada rich editor serta menyimpannya dalam konten jurnal.
 - [x] Merender caption gambar pada preview Studio dan halaman jurnal publik.
