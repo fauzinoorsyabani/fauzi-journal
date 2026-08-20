@@ -25,7 +25,7 @@
 - [ ] Memverifikasi end-to-end publish CMS dari Studio ke halaman publik setelah akun editor tersedia.
 - [x] Memverifikasi submit inquiry, subscribe, dan unsubscribe tanpa meninggalkan data uji pada database produksi.
 - [x] Memverifikasi frame chapter parallax pada desktop dan mobile setelah pemuatan gambar dipercepat.
-- [ ] Mendiagnosis dan memperbaiki akses 403 CloudFront pada hosted Studio sebelum menguji login editor.
+- [ ] Mendiagnosis penyebab 403 CloudFront pada hosted Studio; route saat ini telah pulih tetapi akar masalah platform belum dapat dibuktikan.
 - [ ] Mendiagnosis dan memperbaiki OAuth redirect yang menghasilkan 403 setelah tombol Enter studio dipilih.
 - [x] Menunda eskalasi OAuth ke platform selama maintenance; Studio tetap mempertahankan autentikasi aman tanpa bypass.
 - [x] Mempercepat ritme motion non-esensial pada elemen editorial yang bergerak.
@@ -45,7 +45,7 @@
 - [x] Menyelaraskan judul dokumen dan metadata browser production dengan identitas Fauzi / Journal.
 - [x] Mendorong pembaruan metadata Fauzi / Journal ke GitHub dan memverifikasi title production setelah redeploy Vercel.
 - [x] Memvalidasi meta description Fauzi / Journal pada halaman production setelah redeploy.
-- [ ] Memverifikasi dan mendokumentasikan penyebab pemulihan route hosted Studio sebelum menutup diagnosis CloudFront 403.
+- [x] Mendokumentasikan 403 CloudFront sebagai gangguan hosting yang tidak lagi reproduktif dan mempertahankan batas diagnosis akar masalah.
 - [x] Menambahkan bukti runtime reduced-motion untuk hero dan chapter sebelum menutup verifikasi motion.
 - [x] Menambahkan assertion DOM/layout untuk frame chapter parallax pada desktop dan mobile setelah gambar selesai dimuat.
 - [x] Menambahkan jalur verifikasi non-produksi atau dry-run untuk submit inquiry, subscribe, dan unsubscribe tanpa menulis data Production.

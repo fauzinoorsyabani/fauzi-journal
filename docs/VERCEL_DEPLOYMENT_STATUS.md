@@ -47,6 +47,17 @@ Untuk pembaruan kode berikutnya, push ke branch `main` pada repository GitHub. V
 
 > **Catatan batasan yang masih terpisah dari deployment:** pemeriksaan terakhir menunjukkan route hosted `/studio` telah kembali merespons halaman sign-in, bukan lagi error CloudFront 403. Autentikasi Studio berbasis Manus OAuth belum diuji end-to-end karena membutuhkan login interaktif; redirect yang sebelumnya menghasilkan 403 tetap perlu divalidasi setelah sesi editor tersedia. Hal ini tidak memblokir halaman publik Vercel, media Blob, atau deployment Production.
 
+## Status Studio dan OAuth
+
+Pemeriksaan langsung pada `https://lensstory-sw8onh5d.manus.space/studio` kini menampilkan shell **Sign in to continue** beserta tombol **Enter studio**, bukan respons CloudFront 403. Tidak ada perubahan kode atau konfigurasi aplikasi yang dapat diatribusikan sebagai perbaikan CloudFront; karena itu pemulihan dicatat sebagai gangguan hosting/platform yang **tidak lagi reproduktif**, bukan root-cause fix yang telah terbukti.
+
+Implementasi OAuth menggunakan `window.location.origin` untuk `redirectUri` dan nonce satu kali pada cookie host-only. Test callback memverifikasi bahwa state/cookie yang tidak cocok dihentikan secara aman dengan `403 invalid oauth state`, sedangkan parameter callback yang tidak lengkap menghasilkan `400`; total suite kini memuat 11 assertions pada 5 test files. Login interaktif dan publish CMS end-to-end tetap memerlukan sesi editor yang sah.
+
+| Verifikasi yang tertunda | Prasyarat | Langkah aman setelah tersedia |
+|---|---|---|
+| Redirect OAuth end-to-end | Sesi editor dapat login pada browser | Tekan **Enter studio**, selesaikan autentikasi, lalu konfirmasi callback kembali ke aplikasi tanpa `403`. |
+| Publish CMS end-to-end | Akun editor dengan peran admin | Buat draft dengan slug unik, gunakan preview, publish, dan buka URL cerita publik. Jangan gunakan email atau inquiry uji pada Production. |
+
 ## Referensi
 
 [1]: https://fauzi-journal.vercel.app/ "Fauzi / Journal Production"
