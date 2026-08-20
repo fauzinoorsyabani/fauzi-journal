@@ -42,3 +42,6 @@
 - [x] Menyelaraskan seluruh copy/placeholder UI editor agar tidak lagi menyebut path `/manus-storage`.
 - [x] Mengganti fixture test media yang masih memakai contoh path hosting lama.
 - [x] Mendokumentasikan setup media Vercel Blob dan memvalidasi Vercel build dengan konfigurasi asset eksplisit.
+- [x] Menyelaraskan judul dokumen dan metadata browser production dengan identitas Fauzi / Journal.
+- [ ] Mendorong pembaruan metadata Fauzi / Journal ke GitHub dan memverifikasi title production setelah redeploy Vercel.
+- [ ] Memvalidasi meta description Fauzi / Journal pada halaman production setelah redeploy.
