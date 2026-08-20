@@ -14,7 +14,7 @@ describe("mapPublishedRecord", () => {
       readTime: "04 min read",
       accent: "Studio note",
       impact: "A detail worth retaining.",
-      heroImageUrl: "/manus-storage/story.jpg",
+      heroImageUrl: "https://example.public.blob.vercel-storage.com/fauzi-journal/story.jpg",
       heroImageAlt: "A descriptive editorial image.",
       heroImagePosition: "center",
       chaptersJson: JSON.stringify([{ type: "copy", heading: "A chapter", body: ["A paragraph."] }]),
@@ -25,7 +25,7 @@ describe("mapPublishedRecord", () => {
     expect(story.index).toBe("07");
     expect(story.slug).toBe("a-test-note");
     expect(story.chapters).toEqual([{ type: "copy", heading: "A chapter", body: ["A paragraph."] }]);
-    expect(story.image).toBe("/manus-storage/story.jpg");
+    expect(story.image).toBe("https://example.public.blob.vercel-storage.com/fauzi-journal/story.jpg");
   });
 
   it("keeps malformed chapter payloads from breaking the public story page", () => {
@@ -40,7 +40,7 @@ describe("mapPublishedRecord", () => {
       readTime: "03 min read",
       accent: null,
       impact: null,
-      heroImageUrl: "/manus-storage/story.jpg",
+      heroImageUrl: "https://example.public.blob.vercel-storage.com/fauzi-journal/story.jpg",
       heroImageAlt: "A descriptive editorial image.",
       heroImagePosition: null,
       chaptersJson: "not-json",

@@ -6,6 +6,14 @@ import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
 
+const isVercelBuild = process.env.VITE_DEPLOY_TARGET === "vercel" || process.env.VERCEL === "1";
+
+if (isVercelBuild && !process.env.VITE_PUBLIC_MEDIA_BASE_URL) {
+  throw new Error(
+    "VITE_PUBLIC_MEDIA_BASE_URL is required for a Vercel build. Connect a public Vercel Blob store, migrate the editorial assets, then set its URL in the Vercel project environment.",
+  );
+}
+
 // =============================================================================
 // Manus Debug Collector - Vite Plugin
 // Writes browser logs directly to files, trimmed when exceeding size limit
@@ -150,7 +158,8 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
+const plugins = [react(), tailwindcss(), jsxLocPlugin()];
+if (!isVercelBuild) plugins.push(vitePluginManusRuntime(), vitePluginManusDebugCollector());
 
 export default defineConfig({
   plugins,

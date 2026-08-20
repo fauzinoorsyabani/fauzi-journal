@@ -1,7 +1,7 @@
-// Preconfigured storage helpers for Manus WebDev templates
-// Uploads via Forge Server presigned URL to S3 (PUT direct).
-// Downloads return /manus-storage/{key} paths served via 307 redirect.
+// Storage adapter: Vercel Blob for external deployment, Forge storage for the managed runtime.
+// Stored URLs are persisted on stories, so public Vercel Blob URLs remain portable across hosts.
 
+import { put } from "@vercel/blob";
 import { ENV } from "./_core/env";
 
 function getForgeConfig() {
@@ -33,6 +33,17 @@ export async function storagePut(
   data: Buffer | Uint8Array | string,
   contentType = "application/octet-stream",
 ): Promise<{ key: string; url: string }> {
+  if (process.env.VERCEL || process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID) {
+    const key = `fauzi-journal/${appendHashSuffix(normalizeKey(relKey))}`;
+    const payload = typeof data === "string" || Buffer.isBuffer(data) ? data : Buffer.from(data);
+    const uploaded = await put(key, payload, {
+      access: "public",
+      addRandomSuffix: false,
+      contentType,
+    });
+    return { key: uploaded.pathname, url: uploaded.url };
+  }
+
   const { forgeUrl, forgeKey } = getForgeConfig();
   const key = appendHashSuffix(normalizeKey(relKey));
 

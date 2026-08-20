@@ -1,3 +1,5 @@
+import { editorialMedia } from "@/lib/media";
+
 /**
  * Style guide: Editorial Noir / Premium Web3 Gallery.
  * Content is structured as gallery labels: precise, human, and image-led.
@@ -45,7 +47,7 @@ export const stories: Story[] = [
     date: "Jun 06, 2026",
     readTime: "08 min read",
     author: "Mara Liang",
-    image: "/manus-storage/lensstories-hero_12cce36a.jpg",
+    image: editorialMedia.hero,
     alt: "A lone figure in a dark coat standing on a pale salt flat at dawn.",
     imagePosition: "center",
     accent: "Field report / 04.26",
@@ -62,7 +64,7 @@ export const stories: Story[] = [
       },
       {
         type: "image",
-        image: "/manus-storage/lensstories-impact_64901fa7.jpg",
+        image: editorialMedia.impact,
         alt: "People sharing objects and papers around a workshop table.",
         caption: "A working table becomes a map when every hand is invited to mark it.",
       },
@@ -79,7 +81,7 @@ export const stories: Story[] = [
           "The visible outcome carries a hidden archive of revisions: a changed route, an offered chair, a question asked after the recorder had been put away. Those details make the story credible because they make it human.",
           "LensStories follows the work at that scale. Not to make it look bigger, but to preserve the texture of how it became possible.",
         ],
-        image: "/manus-storage/lensstories-bts_e0db8756.jpg",
+        image: editorialMedia.bts,
         alt: "Night-time desk with contact sheets, camera, and warm desk lamp.",
         caption: "Contact sheets from a late review in the studio.",
         side: "right",
@@ -96,7 +98,7 @@ export const stories: Story[] = [
     date: "May 14, 2026",
     readTime: "06 min read",
     author: "Amos Reid",
-    image: "/manus-storage/lensstories-people_497231a3.jpg",
+    image: editorialMedia.people,
     alt: "Artists collaborating over materials in a warm, shadowed atelier.",
     imagePosition: "center",
     accent: "Studio journal / 03.26",
@@ -113,7 +115,7 @@ export const stories: Story[] = [
       },
       {
         type: "image",
-        image: "/manus-storage/lensstories-bts_e0db8756.jpg",
+        image: editorialMedia.bts,
         alt: "A contact sheet and analog camera lit by a small desk lamp.",
         caption: "The archive is part of the practice, not a record made afterward.",
       },
@@ -134,7 +136,7 @@ export const stories: Story[] = [
     date: "Apr 29, 2026",
     readTime: "07 min read",
     author: "Nia Wells",
-    image: "/manus-storage/lensstories-impact_64901fa7.jpg",
+    image: editorialMedia.impact,
     alt: "Community members sharing objects around a long table near an open doorway.",
     imagePosition: "center",
     accent: "People / 02.26",
@@ -156,7 +158,7 @@ export const stories: Story[] = [
         body: [
           "When people can see their contribution change the direction of the work, care becomes tangible. The point is not consensus. The point is a frame wide enough to hold contradiction without losing momentum.",
         ],
-        image: "/manus-storage/lensstories-hero_12cce36a.jpg",
+        image: editorialMedia.hero,
         alt: "A figure on a pale open landscape at dawn.",
         caption: "A pause before the gathering begins.",
         side: "left",

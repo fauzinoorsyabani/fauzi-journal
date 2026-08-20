@@ -7,6 +7,7 @@ import { Link } from "wouter";
 import { StoryCard } from "@/components/StoryCard";
 import { EditorialMarquee } from "@/components/EditorialMarquee";
 import { usePublishedStories } from "@/lib/editorial";
+import { editorialMedia } from "@/lib/media";
 
 export default function Home() {
   const { stories } = usePublishedStories();
@@ -116,7 +117,7 @@ export default function Home() {
 
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.65fr_0.8fr] lg:gap-10">
             <div className="story-grain relative aspect-[16/10] overflow-hidden bg-[#131313]">
-              <img src="/manus-storage/lensstories-bts_e0db8756.jpg" alt="Contact sheets and analog camera beside a warm desk lamp." className="h-full w-full object-cover brightness-[0.8] saturate-[0.75]" loading="lazy" />
+              <img src={editorialMedia.bts} alt="Contact sheets and analog camera beside a warm desk lamp." className="h-full w-full object-cover brightness-[0.8] saturate-[0.75]" loading="lazy" />
               <div className="absolute inset-0 z-[2] bg-gradient-to-t from-black/65 via-transparent to-transparent" />
               <p className="absolute bottom-5 left-5 z-[3] max-w-xs font-mono text-[0.6rem] leading-relaxed tracking-[0.11em] text-[#f3f0ea]/80">03:17 / Reviewing the pictures that taught us what we had missed.</p>
             </div>

@@ -8,6 +8,8 @@ type BrandMarkProps = {
   light?: boolean;
 };
 
+import { editorialMedia } from "@/lib/media";
+
 export function BrandMark({
   className = "",
   withWordmark = true,
@@ -16,7 +18,7 @@ export function BrandMark({
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       <img
-        src="/manus-storage/lensstories-mark_71722fa8.png"
+        src={editorialMedia.mark}
         alt="Fauzi Journal aperture mark"
         className="h-9 w-9 object-contain sm:h-10 sm:w-10"
       />

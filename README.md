@@ -84,6 +84,51 @@ Platform menyediakan environment variables untuk database, OAuth, dan storage se
 
 Integrasi email outbound sengaja **ditunda** untuk saat ini. Ketika sebuah jurnal dipublikasikan, sistem membuat catatan notifikasi `queued` untuk setiap subscriber yang aktif; catatan tersebut dapat dikirim melalui provider pilihan—misalnya Resend atau Brevo—pada tahap berikutnya. Jangan commit file `.env` atau credential ke repository.
 
+## Deploy di Vercel
+
+Project ini sudah memiliki `vercel.json`, entrypoint serverless pada `api/index.ts`, serta command `pnpm build:vercel`. Vercel menjalankan Express sebagai Function dan menyajikan asset statis dari hasil Vite build; fallback rewrite menjaga deep link seperti `/stories/:slug` tetap dibuka oleh client router. Panduan resmi Vercel menyatakan asset static harus dilayani dari `public/**`, sedangkan `express.static()` tidak digunakan untuk Express yang berjalan sebagai Vercel Function.[^vercel-express]
+
+### Langkah deploy
+
+1. Di Vercel, pilih **Add New → Project**, lalu import repository privat `fauzinoorsyabani/fauzi-journal`.
+2. Gunakan Node.js 22. `vercel.json` sudah menetapkan build command `pnpm build:vercel` dan output `dist/public`.
+3. Buat **public Vercel Blob store**, lalu sambungkan store tersebut ke project Vercel. Public Blob URLs memang ditujukan untuk gambar yang ditampilkan kepada pembaca.[^vercel-blob]
+4. Setelah store tersambung, ambil root URL publik Blob dan set environment variable berikut di Vercel untuk **Preview** dan **Production**:
+
+   ```text
+   VITE_PUBLIC_MEDIA_BASE_URL=https://<blob-store>.public.blob.vercel-storage.com
+   ```
+
+   Build Vercel sengaja akan berhenti jika variable ini tidak diisi. Dengan begitu, deployment tidak diam-diam kembali bergantung pada storage hosting lama.
+
+5. Migrasikan lima gambar editorial awal ke prefix `fauzi-journal/`. Pada mesin lokal yang memiliki `BLOB_READ_WRITE_TOKEN`, jalankan:
+
+   ```bash
+   pnpm media:migrate:vercel
+   ```
+
+   Skrip mengambil aset lama satu kali lalu mengunggahnya ke Vercel Blob. Jangan commit token ini ke GitHub. Di Function Vercel yang project-nya sudah tersambung dengan Blob, SDK `@vercel/blob` memakai OIDC secara otomatis untuk upload cover baru.[^vercel-blob]
+
+6. Tambahkan environment variable production berikut pada Vercel:
+
+   | Variable | Kegunaan |
+   | --- | --- |
+   | `DATABASE_URL` | Database MySQL/TiDB yang dapat diakses dari Vercel Functions. Jalankan migration Drizzle terhadap database target sebelum memakai Studio. |
+   | `JWT_SECRET` | Menandatangani session editor. Gunakan nilai baru yang panjang dan rahasia untuk deployment eksternal. |
+   | `OWNER_OPEN_ID` | Menetapkan akun owner sebagai admin setelah OAuth berhasil. |
+   | `VITE_APP_ID`, `OAUTH_SERVER_URL`, `VITE_OAUTH_PORTAL_URL` | Diperlukan bila Studio tetap memakai Manus OAuth. Redirect URI Vercel `/api/oauth/callback` harus diizinkan oleh provider OAuth. |
+   | `VITE_PUBLIC_MEDIA_BASE_URL` | Root URL public Vercel Blob untuk visual editorial fallback. |
+
+> **Catatan penting:** source code sudah Vercel-ready, tetapi database production dan OAuth tidak dapat dipindahkan otomatis karena keduanya memerlukan credential serta konfigurasi akun pemilik. Jika redirect OAuth Manus tidak menerima domain Vercel, gunakan provider auth yang mengizinkan callback domain baru atau selesaikan allowlist redirect dengan provider tersebut.
+
+### Setelah GitHub terhubung
+
+Setiap push ke branch `main` akan membuat deployment Vercel sesuai pengaturan Git Integration project. Uji dahulu URL Preview, terutama `/stories/...`, `/unsubscribe`, dan `/api/trpc`, sebelum melakukan promosi ke production. Rewrites Vercel mempertahankan URL asli saat meneruskan route SPA ke `index.html`.[^vercel-rewrites]
+
+[^vercel-express]: [Vercel — Express on Vercel](https://vercel.com/docs/frameworks/backend/express)
+[^vercel-blob]: [Vercel — Vercel Blob](https://vercel.com/docs/vercel-blob)
+[^vercel-rewrites]: [Vercel — Rewrites](https://vercel.com/docs/routing/rewrites)
+
 ## Known Platform Blocker
 
 Route `/studio` pada domain production telah memuat layar sign-in dengan benar. Namun, tombol **Enter studio** saat ini diarahkan ke `manus.im/app-auth` dan menerima respons CloudFront `403` sebelum OAuth callback kembali ke aplikasi. Kode frontend sudah menggunakan `window.location.origin` untuk membentuk callback `/api/oauth/callback`, sehingga kendala ini berada pada layanan autentikasi/edge platform. Gunakan [Manus Help](https://help.manus.im) dan sertakan CloudFront Request ID bila masalah masih terjadi.
