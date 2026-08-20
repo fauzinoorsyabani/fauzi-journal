@@ -2,13 +2,13 @@
 
 ## Status akhir
 
-Deployment **Production** Fauzi / Journal telah berhasil dan tersedia di [fauzi-journal.vercel.app][1]. Versi aktif berasal dari branch `main` pada commit [`8245c7d`][2], dengan deployment Vercel `b5jm2Ghs9EhVHbYt7cCJmSAoyJ3r` berstatus **Ready**. Konfigurasi ini menggantikan deployment sebelumnya yang gagal karena URL media publik belum tersedia.
+Deployment **Production** Fauzi / Journal telah berhasil dan tersedia di [fauzi-journal.vercel.app][1]. Versi aktif berasal dari branch `main` pada commit [`9f91634`][2], dengan deployment Vercel `DgiM5eSaQHkZjSFhdphyZvdtn43f` berstatus **Ready**. Konfigurasi ini menggantikan deployment sebelumnya yang gagal karena URL media publik belum tersedia.
 
 | Komponen | Status | Konfigurasi terverifikasi |
 |---|---|---|
 | Situs Production | **Ready** | [fauzi-journal.vercel.app][1] |
 | Repository | **Tersinkron** | [`fauzinoorsyabani/fauzi-journal`][3], branch `main` |
-| Deployment aktif | **Ready** | [Vercel deployment `b5jm2Ghs9EhVHbYt7cCJmSAoyJ3r`][4] |
+| Deployment aktif | **Ready** | [Vercel deployment `DgiM5eSaQHkZjSFhdphyZvdtn43f`][4] |
 | Public media store | **Aktif** | `fauzi-journal-media`, region `iad1`, akses **Public** |
 | URL dasar media | **Aktif** | `https://gwst4iapywswxoyh.public.blob.vercel-storage.com` |
 | Build Vercel lokal | **Lulus** | `pnpm build:vercel` dengan URL media publik |
@@ -50,7 +50,7 @@ Untuk pembaruan kode berikutnya, push ke branch `main` pada repository GitHub. V
 ## Referensi
 
 [1]: https://fauzi-journal.vercel.app/ "Fauzi / Journal Production"
-[2]: https://github.com/fauzinoorsyabani/fauzi-journal/commit/8245c7da "Commit status Studio Fauzi / Journal"
+[2]: https://github.com/fauzinoorsyabani/fauzi-journal/commit/9f916343499f80ccc514ea69dd011d9e5bac222a "Commit verifikasi dry-run form publik"
 [3]: https://github.com/fauzinoorsyabani/fauzi-journal "Repository Fauzi / Journal"
-[4]: https://vercel.com/fauzins-projects/fauzi-journal/b5jm2Ghs9EhVHbYt7cCJmSAoyJ3r "Vercel Production Deployment"
+[4]: https://vercel.com/fauzins-projects/fauzi-journal/DgiM5eSaQHkZjSFhdphyZvdtn43f "Vercel Production Deployment"
 [5]: https://gwst4iapywswxoyh.public.blob.vercel-storage.com/fauzi-journal/lensstories-impact.jpg "Aset impact pada Vercel Blob"
