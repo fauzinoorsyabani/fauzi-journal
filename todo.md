@@ -37,11 +37,11 @@
 - [x] Mengidentifikasi dependency hosting saat ini yang menghambat deployment Vercel.
 - [x] Memindahkan referensi gambar dan data publik ke pola portable yang kompatibel dengan Vercel.
 - [x] Menambahkan konfigurasi Vercel serta dokumentasi environment variables dan layanan eksternal yang diperlukan.
-- [ ] Memvalidasi build Vercel-ready dan mendorong perbaikannya ke GitHub.
+- [x] Memvalidasi build Vercel-ready dan mendorong perbaikannya ke GitHub.
 - [x] Menghapus fallback media yang masih bergantung pada domain Manus dan mewajibkan konfigurasi media Vercel yang portable.
 - [x] Menyelaraskan seluruh copy/placeholder UI editor agar tidak lagi menyebut path `/manus-storage`.
 - [x] Mengganti fixture test media yang masih memakai contoh path hosting lama.
 - [x] Mendokumentasikan setup media Vercel Blob dan memvalidasi Vercel build dengan konfigurasi asset eksplisit.
 - [x] Menyelaraskan judul dokumen dan metadata browser production dengan identitas Fauzi / Journal.
-- [ ] Mendorong pembaruan metadata Fauzi / Journal ke GitHub dan memverifikasi title production setelah redeploy Vercel.
-- [ ] Memvalidasi meta description Fauzi / Journal pada halaman production setelah redeploy.
+- [x] Mendorong pembaruan metadata Fauzi / Journal ke GitHub dan memverifikasi title production setelah redeploy Vercel.
+- [x] Memvalidasi meta description Fauzi / Journal pada halaman production setelah redeploy.
