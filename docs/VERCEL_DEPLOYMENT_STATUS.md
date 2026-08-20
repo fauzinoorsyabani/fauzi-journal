@@ -35,7 +35,7 @@ Lima aset editorial awal telah dipindahkan ke prefix `fauzi-journal/`: `lensstor
 
 Untuk pembaruan kode berikutnya, push ke branch `main` pada repository GitHub. Vercel akan membuat deployment Production otomatis dengan environment media yang sudah terpasang. Jika aset editorial baru perlu ditambahkan melalui Studio pada Vercel, verifikasi dahulu alur upload berbasis OIDC pada runtime, karena token `BLOB_READ_WRITE_TOKEN` tidak diekspos sebagai environment variable project.
 
-> **Catatan batasan yang masih terpisah dari deployment:** autentikasi Studio berbasis Manus OAuth masih memerlukan pemulihan akses platform/redirect yang sebelumnya menghasilkan 403. Hal ini tidak memblokir halaman publik Vercel, media Blob, atau deployment Production.
+> **Catatan batasan yang masih terpisah dari deployment:** pemeriksaan terakhir menunjukkan route hosted `/studio` telah kembali merespons halaman sign-in, bukan lagi error CloudFront 403. Autentikasi Studio berbasis Manus OAuth belum diuji end-to-end karena membutuhkan login interaktif; redirect yang sebelumnya menghasilkan 403 tetap perlu divalidasi setelah sesi editor tersedia. Hal ini tidak memblokir halaman publik Vercel, media Blob, atau deployment Production.
 
 ## Referensi
 

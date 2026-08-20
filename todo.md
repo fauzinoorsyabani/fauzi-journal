@@ -45,3 +45,4 @@
 - [x] Menyelaraskan judul dokumen dan metadata browser production dengan identitas Fauzi / Journal.
 - [x] Mendorong pembaruan metadata Fauzi / Journal ke GitHub dan memverifikasi title production setelah redeploy Vercel.
 - [x] Memvalidasi meta description Fauzi / Journal pada halaman production setelah redeploy.
+- [ ] Memverifikasi dan mendokumentasikan penyebab pemulihan route hosted Studio sebelum menutup diagnosis CloudFront 403.
