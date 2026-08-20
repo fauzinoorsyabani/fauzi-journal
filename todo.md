@@ -21,10 +21,10 @@
 - [x] Menambahkan log notifikasi publish internal dan status kesiapan subscriber tanpa mengirim email eksternal.
 - [x] Mendokumentasikan workflow penulisan, publish, subscriber, dan email notification pada README.
 - [x] Menunda konfigurasi Resend atas permintaan user; delivery email eksternal tetap menjadi integrasi opsional berikutnya.
-- [ ] Memverifikasi motion reduced-motion dan kestabilan layout parallax pada hero serta chapter.
+- [x] Memverifikasi motion reduced-motion dan kestabilan layout parallax pada hero serta chapter.
 - [ ] Memverifikasi end-to-end publish CMS dari Studio ke halaman publik setelah akun editor tersedia.
-- [ ] Memverifikasi submit inquiry, subscribe, dan unsubscribe tanpa meninggalkan data uji pada database produksi.
-- [ ] Memverifikasi frame chapter parallax pada desktop dan mobile setelah pemuatan gambar dipercepat.
+- [x] Memverifikasi submit inquiry, subscribe, dan unsubscribe tanpa meninggalkan data uji pada database produksi.
+- [x] Memverifikasi frame chapter parallax pada desktop dan mobile setelah pemuatan gambar dipercepat.
 - [ ] Mendiagnosis dan memperbaiki akses 403 CloudFront pada hosted Studio sebelum menguji login editor.
 - [ ] Mendiagnosis dan memperbaiki OAuth redirect yang menghasilkan 403 setelah tombol Enter studio dipilih.
 - [x] Menunda eskalasi OAuth ke platform selama maintenance; Studio tetap mempertahankan autentikasi aman tanpa bypass.
@@ -46,3 +46,9 @@
 - [x] Mendorong pembaruan metadata Fauzi / Journal ke GitHub dan memverifikasi title production setelah redeploy Vercel.
 - [x] Memvalidasi meta description Fauzi / Journal pada halaman production setelah redeploy.
 - [ ] Memverifikasi dan mendokumentasikan penyebab pemulihan route hosted Studio sebelum menutup diagnosis CloudFront 403.
+- [x] Menambahkan bukti runtime reduced-motion untuk hero dan chapter sebelum menutup verifikasi motion.
+- [x] Menambahkan assertion DOM/layout untuk frame chapter parallax pada desktop dan mobile setelah gambar selesai dimuat.
+- [x] Menambahkan jalur verifikasi non-produksi atau dry-run untuk submit inquiry, subscribe, dan unsubscribe tanpa menulis data Production.
+- [x] Menguji end-to-end ketiga form terhadap environment aman atau mock network terintegrasi lalu mendokumentasikan hasilnya.
+- [x] Mengimplementasikan mode dry-run berbasis environment untuk form publik tanpa persistensi database.
+- [x] Menambahkan harness browser/E2E reproducible dengan mock network untuk subscribe, inquiry, dan unsubscribe.

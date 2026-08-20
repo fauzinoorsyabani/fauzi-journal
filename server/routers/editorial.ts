@@ -70,6 +70,10 @@ function editorialValues(input: z.infer<typeof storyInputSchema>) {
   };
 }
 
+function isPublicFormDryRun() {
+  return process.env.FORM_DRY_RUN === "true";
+}
+
 export const editorialRouter = router({
   publicList: publicProcedure.query(async () => listPublishedStories()),
   publicBySlug: publicProcedure.input(z.object({ slug: z.string().min(1).max(160) })).query(async ({ input }) => {
@@ -85,6 +89,7 @@ export const editorialRouter = router({
     message: z.string().min(16).max(5000),
     sourcePath: z.string().max(320).optional(),
   })).mutation(async ({ input }) => {
+    if (isPublicFormDryRun()) return { success: true as const, dryRun: true as const };
     await createMediaInquiry({
       fullName: input.fullName.trim(),
       email: input.email.toLowerCase().trim(),
@@ -93,17 +98,21 @@ export const editorialRouter = router({
       message: input.message.trim(),
       sourcePath: input.sourcePath?.trim() || null,
     });
-    return { success: true } as const;
+    return { success: true as const, dryRun: false as const };
   }),
   subscribe: publicProcedure.input(z.object({
     email: z.string().email().max(320),
     displayName: z.string().max(160).optional(),
     consent: z.literal(true),
   })).mutation(async ({ input }) => {
+    if (isPublicFormDryRun()) return { success: true as const, wasNew: false, dryRun: true as const };
     const result = await subscribeReader(input);
-    return { success: true as const, wasNew: result.wasNew };
+    return { success: true as const, wasNew: result.wasNew, dryRun: false as const };
   }),
-  unsubscribe: publicProcedure.input(z.object({ token: z.string().min(24).max(96) })).mutation(async ({ input }) => ({ success: await unsubscribeReader(input.token) })),
+  unsubscribe: publicProcedure.input(z.object({ token: z.string().min(24).max(96) })).mutation(async ({ input }) => {
+    if (isPublicFormDryRun()) return { success: true as const, dryRun: true as const };
+    return { success: await unsubscribeReader(input.token), dryRun: false as const };
+  }),
   adminList: adminProcedure.query(async () => listStoriesForEditor()),
   adminCreate: adminProcedure.input(storyInputSchema.extend({ status: z.enum(["draft", "published"]).default("draft") })).mutation(async ({ ctx, input }) => {
     try {
