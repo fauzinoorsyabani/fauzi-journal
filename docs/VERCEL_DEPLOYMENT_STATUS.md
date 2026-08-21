@@ -2,7 +2,7 @@
 
 ## Status akhir
 
-Deployment **Production** Fauzi / Journal tersedia di [fauzi-journal.vercel.app][1]. Source terbaru pada branch `main` adalah commit [`87ae2ae`][2], dan deployment Production Vercel berstatus **Ready**. Konfigurasi ini menggantikan deployment sebelumnya yang gagal karena URL media publik belum tersedia.
+Deployment **Production** Fauzi / Journal tersedia di [fauzi-journal.vercel.app][1]. Source terbaru pada branch `main` adalah commit [`1e42cc4`][2], dan deployment Production Vercel berstatus **Ready**. Konfigurasi ini menggantikan deployment sebelumnya yang gagal karena URL media publik belum tersedia.
 
 | Komponen | Status | Konfigurasi terverifikasi |
 |---|---|---|
@@ -13,6 +13,7 @@ Deployment **Production** Fauzi / Journal tersedia di [fauzi-journal.vercel.app]
 | URL dasar media | **Aktif** | `https://gwst4iapywswxoyh.public.blob.vercel-storage.com` |
 | Build Vercel lokal | **Lulus** | `pnpm build:vercel` dengan URL media publik |
 | Unit test | **Lulus** | 12 assertions pada 5 test files |
+| Serverless API | **Pulih** | Bootstrap, tRPC health, dan callback OAuth diverifikasi di Production |
 
 ## Konfigurasi yang diterapkan
 
@@ -30,6 +31,9 @@ Lima aset editorial awal telah dipindahkan ke prefix `fauzi-journal/`: `lensstor
 | Identitas browser | Title Production: **Fauzi / Journal — The Everyday Archive**. |
 | Metadata | Description telah diperbarui menjadi identitas Fauzi / Journal. |
 | Form publik | UI Production tervalidasi tanpa submit. Jalur submit lengkap diverifikasi melalui instance dry-run lokal yang tidak memanggil persistence database. |
+| Bootstrap API | `GET /api` mencapai Express dan mengembalikan `404 Cannot GET /api`; tidak lagi `FUNCTION_INVOCATION_FAILED`. |
+| tRPC health | `GET /api/trpc/system.health` mengembalikan `200` dengan `{ "ok": true }`. |
+| Callback OAuth invalid-state | `GET /api/oauth/callback` dengan state tidak valid mengembalikan `303` ke `/studio?authError=state`. |
 
 ## QA form tanpa data Production
 
@@ -40,6 +44,12 @@ Mode `FORM_DRY_RUN=true` membuat router memvalidasi input lalu mengembalikan `dr
 | Subscribe | Submit UI ke instance dry-run | Response `200`, state sukses tampil, `dryRun: true` |
 | Media inquiry | Submit UI ke instance dry-run | Response `200`, state sukses tampil, `dryRun: true` |
 | Unsubscribe | Token sintetis ke instance dry-run | Response `200`, state sukses tampil, `dryRun: true` |
+
+## Pemulihan Vercel Serverless
+
+Pada pemeriksaan Production, seluruh request `/api/*` sebelumnya gagal saat inisialisasi Function dengan `FUNCTION_INVOCATION_FAILED`. Diagnosis respons terkontrol menunjukkan Node runtime tidak dapat menemukan `/var/task/server/app`. Perbaikan mengganti pemuatan dinamis entrypoint menjadi import statis dan menormalkan import runtime pada graph server ke ekstensi `.js`, sehingga Vercel dapat menelusuri serta menyertakan modul server ke dalam Function bundle. Pendekatan export Express statis ini sejalan dengan kontrak deployment Express Vercel.[6]
+
+Perbaikan tersebut telah diperiksa pada Production tanpa mengirim data form atau menjalankan login editor: endpoint dasar sekarang dijawab oleh Express, health tRPC mengembalikan `200`, dan callback OAuth state-invalid menghasilkan redirect pemulihan `303`. Keberhasilan login editor dengan state valid tetap merupakan verifikasi terpisah yang memerlukan sesi pengguna sah.
 
 ## Operasional selanjutnya
 
@@ -67,6 +77,7 @@ State OAuth yang tidak cocok tetap dihentikan **sebelum** pertukaran token, teta
 ## Referensi
 
 [1]: https://fauzi-journal.vercel.app/ "Fauzi / Journal Production"
-[2]: https://github.com/fauzinoorsyabani/fauzi-journal/commit/87ae2ae "Commit callback OAuth pemulihan milik aplikasi"
+[2]: https://github.com/fauzinoorsyabani/fauzi-journal/commit/1e42cc4 "Commit kompatibilitas Node ESM untuk Vercel API"
 [3]: https://github.com/fauzinoorsyabani/fauzi-journal "Repository Fauzi / Journal"
 [5]: https://gwst4iapywswxoyh.public.blob.vercel-storage.com/fauzi-journal/lensstories-impact.jpg "Aset impact pada Vercel Blob"
+[6]: https://vercel.com/docs/frameworks/backend/express "Express on Vercel"

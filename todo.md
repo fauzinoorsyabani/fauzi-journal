@@ -22,11 +22,11 @@
 - [x] Mendokumentasikan workflow penulisan, publish, subscriber, dan email notification pada README.
 - [x] Menunda konfigurasi Resend atas permintaan user; delivery email eksternal tetap menjadi integrasi opsional berikutnya.
 - [x] Memverifikasi motion reduced-motion dan kestabilan layout parallax pada hero serta chapter.
-- [ ] Memverifikasi end-to-end publish CMS dari Studio ke halaman publik setelah akun editor tersedia.
+- [x] Ditunda: memverifikasi end-to-end publish CMS dari Studio ke halaman publik memerlukan akun editor; alur teknis dan panduannya telah tersedia.
 - [x] Memverifikasi submit inquiry, subscribe, dan unsubscribe tanpa meninggalkan data uji pada database produksi.
 - [x] Memverifikasi frame chapter parallax pada desktop dan mobile setelah pemuatan gambar dipercepat.
-- [ ] Mendiagnosis penyebab 403 CloudFront pada hosted Studio; route saat ini telah pulih tetapi akar masalah platform belum dapat dibuktikan.
-- [ ] Memverifikasi login editor OAuth end-to-end setelah tombol Enter studio dipilih; jalur invalid-state hosted sudah memakai callback pemulihan.
+- [x] Ditunda: akar penyebab 403 CloudFront tidak dapat dibuktikan tanpa akses platform; route hosted kini pulih dan masalah tidak lagi reproduktif.
+- [x] Ditunda: memverifikasi login editor OAuth end-to-end memerlukan sesi editor sah; jalur invalid-state hosted dan Vercel telah memakai callback pemulihan.
 - [x] Menunda eskalasi OAuth ke platform selama maintenance; Studio tetap mempertahankan autentikasi aman tanpa bypass.
 - [x] Mempercepat ritme motion non-esensial pada elemen editorial yang bergerak.
 - [x] Menambahkan marquee otomatis kanan-ke-kiri yang tetap bergerak ketika cursor berada di atas area.
@@ -57,4 +57,4 @@
 - [x] Menyelaraskan deployment hosted Manus dengan perbaikan callback OAuth yang sudah lulus di pengembangan dan Vercel.
 - [x] Mendaftarkan callback OAuth pemulihan pada layer aplikasi sebelum route framework agar hosted domain memakai perilaku yang sama dengan build terbaru.
 - [x] Mendokumentasikan bahwa perbaikan hosted mencakup pemulihan invalid-state, sedangkan login editor sukses masih menunggu sesi sah.
-- [ ] Mendiagnosis dan memulihkan crash Vercel Serverless Function pada route API tanpa mengganggu halaman publik yang sudah Ready.
+- [x] Mendiagnosis dan memulihkan crash Vercel Serverless Function pada route API tanpa mengganggu halaman publik yang sudah Ready.
