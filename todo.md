@@ -26,7 +26,7 @@
 - [x] Memverifikasi submit inquiry, subscribe, dan unsubscribe tanpa meninggalkan data uji pada database produksi.
 - [x] Memverifikasi frame chapter parallax pada desktop dan mobile setelah pemuatan gambar dipercepat.
 - [ ] Mendiagnosis penyebab 403 CloudFront pada hosted Studio; route saat ini telah pulih tetapi akar masalah platform belum dapat dibuktikan.
-- [ ] Mendiagnosis dan memperbaiki OAuth redirect yang menghasilkan 403 setelah tombol Enter studio dipilih; hosted domain masih menyajikan callback lama.
+- [ ] Memverifikasi login editor OAuth end-to-end setelah tombol Enter studio dipilih; jalur invalid-state hosted sudah memakai callback pemulihan.
 - [x] Menunda eskalasi OAuth ke platform selama maintenance; Studio tetap mempertahankan autentikasi aman tanpa bypass.
 - [x] Mempercepat ritme motion non-esensial pada elemen editorial yang bergerak.
 - [x] Menambahkan marquee otomatis kanan-ke-kiri yang tetap bergerak ketika cursor berada di atas area.
@@ -53,6 +53,8 @@
 - [x] Mengimplementasikan mode dry-run berbasis environment untuk form publik tanpa persistensi database.
 - [x] Menambahkan harness browser/E2E reproducible dengan mock network untuk subscribe, inquiry, dan unsubscribe.
 - [x] Merekam redirect OAuth Studio, cookie nonce, dan respons callback untuk mengisolasi error autentikasi tanpa kredensial pengguna.
-- [ ] Mengarahkan callback OAuth state tidak valid kembali ke Studio dengan pesan pemulihan yang aman, bukan halaman 403 mentah pada hosted domain.
-- [ ] Menyelaraskan deployment hosted Manus dengan perbaikan callback OAuth yang sudah lulus di pengembangan dan Vercel.
-- [ ] Mendaftarkan callback OAuth pemulihan pada layer aplikasi sebelum route framework agar hosted domain memakai perilaku yang sama dengan build terbaru.
+- [x] Mengarahkan callback OAuth state tidak valid kembali ke Studio dengan pesan pemulihan yang aman, bukan halaman 403 mentah pada hosted domain.
+- [x] Menyelaraskan deployment hosted Manus dengan perbaikan callback OAuth yang sudah lulus di pengembangan dan Vercel.
+- [x] Mendaftarkan callback OAuth pemulihan pada layer aplikasi sebelum route framework agar hosted domain memakai perilaku yang sama dengan build terbaru.
+- [x] Mendokumentasikan bahwa perbaikan hosted mencakup pemulihan invalid-state, sedangkan login editor sukses masih menunggu sesi sah.
+- [ ] Mendiagnosis dan memulihkan crash Vercel Serverless Function pada route API tanpa mengganggu halaman publik yang sudah Ready.

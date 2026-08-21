@@ -2,17 +2,17 @@
 
 ## Status akhir
 
-Deployment **Production** Fauzi / Journal telah berhasil dan tersedia di [fauzi-journal.vercel.app][1]. Versi aktif berasal dari branch `main` pada commit [`9f91634`][2], dengan deployment Vercel `DgiM5eSaQHkZjSFhdphyZvdtn43f` berstatus **Ready**. Konfigurasi ini menggantikan deployment sebelumnya yang gagal karena URL media publik belum tersedia.
+Deployment **Production** Fauzi / Journal tersedia di [fauzi-journal.vercel.app][1]. Source terbaru pada branch `main` adalah commit [`87ae2ae`][2], dan deployment Production Vercel berstatus **Ready**. Konfigurasi ini menggantikan deployment sebelumnya yang gagal karena URL media publik belum tersedia.
 
 | Komponen | Status | Konfigurasi terverifikasi |
 |---|---|---|
 | Situs Production | **Ready** | [fauzi-journal.vercel.app][1] |
 | Repository | **Tersinkron** | [`fauzinoorsyabani/fauzi-journal`][3], branch `main` |
-| Deployment aktif | **Ready** | [Vercel deployment `DgiM5eSaQHkZjSFhdphyZvdtn43f`][4] |
+| Deployment aktif | **Ready** | Production dipicu dari branch `main` |
 | Public media store | **Aktif** | `fauzi-journal-media`, region `iad1`, akses **Public** |
 | URL dasar media | **Aktif** | `https://gwst4iapywswxoyh.public.blob.vercel-storage.com` |
 | Build Vercel lokal | **Lulus** | `pnpm build:vercel` dengan URL media publik |
-| Unit test | **Lulus** | 9 assertions pada 4 test files |
+| Unit test | **Lulus** | 12 assertions pada 5 test files |
 
 ## Konfigurasi yang diterapkan
 
@@ -45,17 +45,19 @@ Mode `FORM_DRY_RUN=true` membuat router memvalidasi input lalu mengembalikan `dr
 
 Untuk pembaruan kode berikutnya, push ke branch `main` pada repository GitHub. Vercel akan membuat deployment Production otomatis dengan environment media yang sudah terpasang. Jika aset editorial baru perlu ditambahkan melalui Studio pada Vercel, verifikasi dahulu alur upload berbasis OIDC pada runtime, karena token `BLOB_READ_WRITE_TOKEN` tidak diekspos sebagai environment variable project.
 
-> **Catatan batasan yang masih terpisah dari deployment:** pemeriksaan terakhir menunjukkan route hosted `/studio` telah kembali merespons halaman sign-in, bukan lagi error CloudFront 403. Autentikasi Studio berbasis Manus OAuth belum diuji end-to-end karena membutuhkan login interaktif; redirect yang sebelumnya menghasilkan 403 tetap perlu divalidasi setelah sesi editor tersedia. Hal ini tidak memblokir halaman publik Vercel, media Blob, atau deployment Production.
+> **Catatan batasan yang masih terpisah dari deployment:** pemeriksaan terakhir menunjukkan route hosted `/studio` telah kembali merespons halaman sign-in, bukan lagi error CloudFront 403. Callback dengan state tidak valid kini juga terbukti kembali ke halaman pemulihan Studio. Autentikasi Studio berbasis Manus OAuth yang lengkap tetap membutuhkan login interaktif; karena itu keberhasilan callback dengan sesi editor yang sah belum dapat diklaim. Hal ini tidak memblokir halaman publik Vercel, media Blob, atau deployment Production.
 
 ## Status Studio dan OAuth
 
 Pemeriksaan langsung pada `https://lensstory-sw8onh5d.manus.space/studio` kini menampilkan shell **Sign in to continue** beserta tombol **Enter studio**, bukan respons CloudFront 403. Tidak ada perubahan kode atau konfigurasi aplikasi yang dapat diatribusikan sebagai perbaikan CloudFront; karena itu pemulihan dicatat sebagai gangguan hosting/platform yang **tidak lagi reproduktif**, bukan root-cause fix yang telah terbukti.
 
-Implementasi OAuth menggunakan `window.location.origin` untuk `redirectUri` dan nonce satu kali pada cookie host-only. Test callback memverifikasi bahwa state/cookie yang tidak cocok dihentikan secara aman dengan `403 invalid oauth state`, sedangkan parameter callback yang tidak lengkap menghasilkan `400`; total suite kini memuat 11 assertions pada 5 test files. Login interaktif dan publish CMS end-to-end tetap memerlukan sesi editor yang sah.
+Implementasi OAuth menggunakan `window.location.origin` untuk `redirectUri` dan nonce satu kali pada cookie host-only. Route `registerOAuthRecoveryRoute(app)` didaftarkan sebelum route framework OAuth sehingga runtime hosted menggunakan callback milik aplikasi. Test callback memverifikasi bahwa state/cookie yang tidak cocok dihentikan sebelum pertukaran token dan dialihkan secara aman, sedangkan parameter callback yang tidak lengkap menghasilkan `400`; total suite memuat 12 assertions pada 5 test files. Login interaktif dan publish CMS end-to-end tetap memerlukan sesi editor yang sah.
 
 ### Perbaikan pemulihan callback
 
-State OAuth yang tidak cocok tetap dihentikan **sebelum** pertukaran token, tetapi callback sekarang mengembalikan `303` ke `/studio?authError=state` alih-alih menampilkan halaman `403` mentah. Studio menampilkan pesan bahwa sesi sign-in kadaluarsa atau terinterupsi dan menawarkan login ulang. Verifikasi browser pada instance pengembangan menunjukkan URL callback invalid berakhir di state pemulihan tersebut; callback dengan nonce yang cocok diuji terhadap provider mock, sehingga alur keamanan dan jalur pertukaran token dapat diperiksa tanpa kredensial pengguna.
+State OAuth yang tidak cocok tetap dihentikan **sebelum** pertukaran token, tetapi callback sekarang mengembalikan `303` ke `/studio?authError=state` alih-alih menampilkan halaman `403` mentah. Studio menampilkan pesan bahwa sesi sign-in kadaluarsa atau terinterupsi dan menawarkan login ulang. Verifikasi browser pada **hosted domain** menunjukkan callback dengan state tidak valid berakhir di state pemulihan tersebut. Callback dengan nonce yang cocok diuji terhadap provider mock, sehingga guard keamanan dan jalur pertukaran token dapat diperiksa tanpa kredensial pengguna.
+
+> **Batas bukti:** verifikasi ini membuktikan jalur pemulihan untuk login yang terputus atau memiliki state tidak valid; verifikasi ini **belum** membuktikan bahwa seorang editor dapat menyelesaikan login OAuth dengan state valid pada hosted domain. Penyebab awal respons CloudFront 403 juga tidak lagi dapat direproduksi dan tidak dapat diatribusikan sebagai root-cause aplikasi tanpa akses platform.
 
 | Verifikasi yang tertunda | Prasyarat | Langkah aman setelah tersedia |
 |---|---|---|
@@ -65,7 +67,6 @@ State OAuth yang tidak cocok tetap dihentikan **sebelum** pertukaran token, teta
 ## Referensi
 
 [1]: https://fauzi-journal.vercel.app/ "Fauzi / Journal Production"
-[2]: https://github.com/fauzinoorsyabani/fauzi-journal/commit/9f916343499f80ccc514ea69dd011d9e5bac222a "Commit verifikasi dry-run form publik"
+[2]: https://github.com/fauzinoorsyabani/fauzi-journal/commit/87ae2ae "Commit callback OAuth pemulihan milik aplikasi"
 [3]: https://github.com/fauzinoorsyabani/fauzi-journal "Repository Fauzi / Journal"
-[4]: https://vercel.com/fauzins-projects/fauzi-journal/DgiM5eSaQHkZjSFhdphyZvdtn43f "Vercel Production Deployment"
 [5]: https://gwst4iapywswxoyh.public.blob.vercel-storage.com/fauzi-journal/lensstories-impact.jpg "Aset impact pada Vercel Blob"
