@@ -3,6 +3,7 @@ import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { appRouter } from "./routers";
 import { createContext } from "./_core/context";
 import { registerOAuthRoutes } from "./_core/oauth";
+import { registerOAuthRecoveryRoute } from "./oauthRecovery";
 import { registerStorageProxy } from "./_core/storageProxy";
 
 /**
@@ -16,6 +17,7 @@ export function createApp() {
 
   // Retain the legacy proxy only on the Manus runtime. Vercel media uses direct Blob URLs.
   if (!process.env.VERCEL) registerStorageProxy(app);
+  registerOAuthRecoveryRoute(app);
   registerOAuthRoutes(app);
   app.use(
     "/api/trpc",
