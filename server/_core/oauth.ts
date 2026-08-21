@@ -26,7 +26,9 @@ export function registerOAuthRoutes(app: Express) {
     const { nonce } = decodeOAuthState(state);
     const expectedNonce = parseCookieHeader(req.headers.cookie ?? "")[OAUTH_STATE_COOKIE];
     if (!nonce || nonce !== expectedNonce) {
-      res.status(403).json({ error: "invalid oauth state" });
+      // The login is rejected before token exchange, but return the editor to a
+      // recoverable UI state rather than exposing a bare 403 page.
+      res.redirect(303, "/studio?authError=state");
       return;
     }
     res.clearCookie(OAUTH_STATE_COOKIE, { path: "/", secure: true, sameSite: "none" });

@@ -26,7 +26,7 @@
 - [x] Memverifikasi submit inquiry, subscribe, dan unsubscribe tanpa meninggalkan data uji pada database produksi.
 - [x] Memverifikasi frame chapter parallax pada desktop dan mobile setelah pemuatan gambar dipercepat.
 - [ ] Mendiagnosis penyebab 403 CloudFront pada hosted Studio; route saat ini telah pulih tetapi akar masalah platform belum dapat dibuktikan.
-- [ ] Mendiagnosis dan memperbaiki OAuth redirect yang menghasilkan 403 setelah tombol Enter studio dipilih.
+- [x] Mendiagnosis dan memperbaiki OAuth redirect yang menghasilkan 403 setelah tombol Enter studio dipilih.
 - [x] Menunda eskalasi OAuth ke platform selama maintenance; Studio tetap mempertahankan autentikasi aman tanpa bypass.
 - [x] Mempercepat ritme motion non-esensial pada elemen editorial yang bergerak.
 - [x] Menambahkan marquee otomatis kanan-ke-kiri yang tetap bergerak ketika cursor berada di atas area.
@@ -52,3 +52,5 @@
 - [x] Menguji end-to-end ketiga form terhadap environment aman atau mock network terintegrasi lalu mendokumentasikan hasilnya.
 - [x] Mengimplementasikan mode dry-run berbasis environment untuk form publik tanpa persistensi database.
 - [x] Menambahkan harness browser/E2E reproducible dengan mock network untuk subscribe, inquiry, dan unsubscribe.
+- [x] Merekam redirect OAuth Studio, cookie nonce, dan respons callback untuk mengisolasi error autentikasi tanpa kredensial pengguna.
+- [x] Mengarahkan callback OAuth state tidak valid kembali ke Studio dengan pesan pemulihan yang aman, bukan halaman 403 mentah.

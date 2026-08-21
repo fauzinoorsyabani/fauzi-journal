@@ -50,6 +50,7 @@ export default function DashboardLayout({
     return saved ? parseInt(saved, 10) : DEFAULT_WIDTH;
   });
   const { loading, user } = useAuth();
+  const hasOAuthStateError = new URLSearchParams(window.location.search).get("authError") === "state";
 
   useEffect(() => {
     localStorage.setItem(SIDEBAR_WIDTH_KEY, sidebarWidth.toString());
@@ -70,6 +71,11 @@ export default function DashboardLayout({
             <p className="text-sm text-muted-foreground text-center max-w-sm">
               Sign in to open the private editorial workspace.
             </p>
+            {hasOAuthStateError ? (
+              <p role="alert" className="max-w-sm border border-[#b78a58]/50 bg-[#b78a58]/10 px-4 py-3 text-center text-sm leading-relaxed text-[#f3f0ea]">
+                Your secure sign-in session expired or was interrupted. Choose Enter studio to start a fresh sign-in.
+              </p>
+            ) : null}
           </div>
           <Button
             onClick={() => startLogin()}

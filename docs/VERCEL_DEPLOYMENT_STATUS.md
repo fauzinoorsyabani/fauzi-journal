@@ -53,6 +53,10 @@ Pemeriksaan langsung pada `https://lensstory-sw8onh5d.manus.space/studio` kini m
 
 Implementasi OAuth menggunakan `window.location.origin` untuk `redirectUri` dan nonce satu kali pada cookie host-only. Test callback memverifikasi bahwa state/cookie yang tidak cocok dihentikan secara aman dengan `403 invalid oauth state`, sedangkan parameter callback yang tidak lengkap menghasilkan `400`; total suite kini memuat 11 assertions pada 5 test files. Login interaktif dan publish CMS end-to-end tetap memerlukan sesi editor yang sah.
 
+### Perbaikan pemulihan callback
+
+State OAuth yang tidak cocok tetap dihentikan **sebelum** pertukaran token, tetapi callback sekarang mengembalikan `303` ke `/studio?authError=state` alih-alih menampilkan halaman `403` mentah. Studio menampilkan pesan bahwa sesi sign-in kadaluarsa atau terinterupsi dan menawarkan login ulang. Verifikasi browser pada instance pengembangan menunjukkan URL callback invalid berakhir di state pemulihan tersebut; callback dengan nonce yang cocok diuji terhadap provider mock, sehingga alur keamanan dan jalur pertukaran token dapat diperiksa tanpa kredensial pengguna.
+
 | Verifikasi yang tertunda | Prasyarat | Langkah aman setelah tersedia |
 |---|---|---|
 | Redirect OAuth end-to-end | Sesi editor dapat login pada browser | Tekan **Enter studio**, selesaikan autentikasi, lalu konfirmasi callback kembali ke aplikasi tanpa `403`. |
