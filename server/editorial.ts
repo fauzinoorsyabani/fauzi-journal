@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { desc, eq } from "drizzle-orm";
-import { mediaInquiries, newsletterDeliveries, stories, subscribers, type InsertMediaInquiry, type InsertStoryRecord } from "../drizzle/schema";
-import { getDb } from "./db";
+import { mediaInquiries, newsletterDeliveries, stories, subscribers, type InsertMediaInquiry, type InsertStoryRecord } from "../drizzle/schema.js";
+import { getDb } from "./db.js";
 
 export async function listPublishedStories() {
   const db = await getDb();

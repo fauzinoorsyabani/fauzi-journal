@@ -15,9 +15,9 @@ import {
   unsubscribeReader,
   updateMediaInquiryStatus,
   updateStory,
-} from "../editorial";
-import { adminProcedure, publicProcedure, router } from "../_core/trpc";
-import { storagePut } from "../storage";
+} from "../editorial.js";
+import { adminProcedure, publicProcedure, router } from "../_core/trpc.js";
+import { storagePut } from "../storage.js";
 
 const chapterSchema = z.object({
   type: z.enum(["copy", "image", "quote", "split"]),

@@ -2,7 +2,7 @@
 // Stored URLs are persisted on stories, so public Vercel Blob URLs remain portable across hosts.
 
 import { put } from "@vercel/blob";
-import { ENV } from "./_core/env";
+import { ENV } from "./_core/env.js";
 
 function getForgeConfig() {
   const forgeUrl = ENV.forgeApiUrl;

@@ -1,10 +1,10 @@
 import express from "express";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { appRouter } from "./routers";
-import { createContext } from "./_core/context";
-import { registerOAuthRoutes } from "./_core/oauth";
-import { registerOAuthRecoveryRoute } from "./oauthRecovery";
-import { registerStorageProxy } from "./_core/storageProxy";
+import { appRouter } from "./routers.js";
+import { createContext } from "./_core/context.js";
+import { registerOAuthRoutes } from "./_core/oauth.js";
+import { registerOAuthRecoveryRoute } from "./oauthRecovery.js";
+import { registerStorageProxy } from "./_core/storageProxy.js";
 
 /**
  * Shared Express application.
