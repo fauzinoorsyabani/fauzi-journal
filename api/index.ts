@@ -12,7 +12,13 @@ const handler: RequestHandler = async (request, response, next) => {
     return app(request, response, next);
   } catch (error) {
     console.error("[Vercel API] Unable to initialize application", error);
-    response.status(503).json({ error: "API initialization unavailable" });
+    const message = error instanceof Error ? error.message : "";
+    const issue = /cannot find (package|module)/i.test(message)
+      ? "module-resolution"
+      : /environment|configuration/i.test(message)
+        ? "environment"
+        : "unknown";
+    response.status(503).json({ error: "API initialization unavailable", issue });
   }
 };
 
