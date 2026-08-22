@@ -6,11 +6,12 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { BrandMark } from "./BrandMark";
+import { copy } from "@/lib/copy";
 
 const navItems = [
-  { label: "Stories", href: "/stories" },
-  { label: "Impact", href: "/#impact" },
-  { label: "Culture", href: "/#culture" },
+  { label: copy.navigation.stories, href: "/stories" },
+  { label: copy.navigation.impact, href: "/#impact" },
+  { label: copy.navigation.culture, href: "/#culture" },
 ];
 
 export function SiteHeader() {
@@ -40,11 +41,11 @@ export function SiteHeader() {
       }`}
     >
       <div className="mx-auto flex h-[4.75rem] max-w-[1600px] items-center justify-between px-5 sm:px-8 lg:px-12">
-        <Link href="/" aria-label="LensStories home" className="relative z-10">
+        <Link href="/" aria-label={copy.navigation.homeAria} className="relative z-10">
           <BrandMark />
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary navigation">
+        <nav className="hidden items-center gap-8 lg:flex" aria-label={copy.navigation.primaryAria}>
           {navItems.map((item) => (
             <a
               key={item.label}
@@ -61,13 +62,13 @@ export function SiteHeader() {
           href="mailto:media@lensstories.studio"
           className="hidden border-b border-[#b78a58]/70 pb-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#f3f0ea] transition-colors hover:border-[#f3f0ea] lg:block"
         >
-          Media inquiries
+          {copy.navigation.mediaInquiries}
         </a>
 
         <button
           type="button"
           className="relative z-10 grid h-10 w-10 place-items-center border border-white/20 bg-black/20 text-[#f3f0ea] transition-transform duration-150 active:scale-[0.97] lg:hidden"
-          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-label={isOpen ? copy.navigation.closeMenu : copy.navigation.openMenu}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((value) => !value)}
         >
@@ -80,7 +81,7 @@ export function SiteHeader() {
           isOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <nav className="px-5 py-5 sm:px-8" aria-label="Mobile navigation">
+        <nav className="px-5 py-5 sm:px-8" aria-label={copy.navigation.mobileAria}>
           <div className="flex flex-col gap-1">
             {navItems.map((item, index) => (
               <a

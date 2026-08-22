@@ -58,3 +58,4 @@
 - [x] Mendaftarkan callback OAuth pemulihan pada layer aplikasi sebelum route framework agar hosted domain memakai perilaku yang sama dengan build terbaru.
 - [x] Mendokumentasikan bahwa perbaikan hosted mencakup pemulihan invalid-state, sedangkan login editor sukses masih menunggu sesi sah.
 - [x] Mendiagnosis dan memulihkan crash Vercel Serverless Function pada route API tanpa mengganggu halaman publik yang sudah Ready.
+- [x] Menjadikan Bahasa Indonesia sebagai bahasa utama antarmuka publik, Studio CMS, dan dokumentasi tanpa menerjemahkan naskah jurnal editorial.

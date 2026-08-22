@@ -14,14 +14,14 @@ export default function StoryIndex() {
       <section className="page-shell relative">
         <div className="pointer-events-none absolute -top-12 right-[14%] hidden h-48 w-px bg-[#b78a58] lg:block" aria-hidden="true" />
         <div className="border-b border-black/15 pb-9 sm:pb-12">
-          <p className="eyebrow mb-5">LensStories / Volume 04</p>
+          <p className="eyebrow mb-5">Fauzi / Journal / Volume 04</p>
           <div className="grid gap-7 lg:grid-cols-[1.2fr_0.55fr] lg:items-end">
-            <h1 className="max-w-5xl font-display text-[clamp(4rem,9vw,9rem)] leading-[0.78] tracking-[-0.07em]">Story index</h1>
+            <h1 className="max-w-5xl font-display text-[clamp(4rem,9vw,9rem)] leading-[0.78] tracking-[-0.07em]">Indeks cerita</h1>
             <div className="space-y-5">
-              <p className="max-w-sm font-sans text-sm leading-relaxed text-[#625e58] sm:text-base">Observations from the field, the studio, and the spaces where a shared future becomes visible.</p>
+              <p className="max-w-sm font-sans text-sm leading-relaxed text-[#625e58] sm:text-base">Pengamatan dari lapangan, studio, dan ruang-ruang tempat masa depan bersama mulai terlihat.</p>
               <div className="flex max-w-sm items-center justify-between bg-[#080808] px-4 py-3 font-mono text-[0.58rem] uppercase tracking-[0.15em] text-[#f3f0ea]">
-                <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#b78a58]" /> Archive coordinate</span>
-                <span className="text-[#b78a58]">06 frames</span>
+                <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#b78a58]" /> Koordinat arsip</span>
+                <span className="text-[#b78a58]">06 bingkai</span>
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@ export default function StoryIndex() {
                   <div className="mt-5 grid gap-3 border-t border-black/15 pt-4 sm:grid-cols-[1fr_auto] sm:items-start">
                     <p className="max-w-md font-sans text-sm leading-relaxed text-[#625e58]">{story.deck}</p>
                     <Link href={`/stories/${story.slug}`} className="inline-flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.13em] text-[#24211e] transition-colors hover:text-[#b78a58]">
-                      Read story <ArrowUpRight size={14} />
+                      Baca cerita <ArrowUpRight size={14} />
                     </Link>
                   </div>
                 ) : null}

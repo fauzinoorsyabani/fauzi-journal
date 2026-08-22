@@ -16,7 +16,7 @@ function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
   if (chapter.type === "image" && chapter.image) {
     return (
       <section className="my-16 sm:my-24 lg:my-32">
-        <ParallaxImage src={chapter.image} alt={chapter.alt ?? "Story image"} className="story-grain mx-auto aspect-[16/10] max-w-[1500px] bg-[#151515]" imageClassName="brightness-[0.86] saturate-[0.82]" loading="eager" />
+        <ParallaxImage src={chapter.image} alt={chapter.alt ?? "Gambar cerita"} className="story-grain mx-auto aspect-[16/10] max-w-[1500px] bg-[#151515]" imageClassName="brightness-[0.86] saturate-[0.82]" loading="eager" />
         {chapter.caption ? (
           <div className="mx-auto mt-3 flex max-w-[1500px] justify-end px-5 sm:px-0">
             <p className="max-w-sm font-mono text-[0.58rem] leading-relaxed tracking-[0.1em] text-[#89857e]">{chapter.caption}</p>
@@ -30,7 +30,7 @@ function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
     return (
       <section className="my-16 border-y border-white/10 py-14 sm:my-24 sm:py-20 lg:my-32 lg:py-28">
         <div className="page-shell grid gap-8 lg:grid-cols-[0.42fr_1fr] lg:gap-20">
-          <Reveal><p className="eyebrow flex items-center gap-3"><span className="h-px w-6 bg-[#b78a58]" />A note from the work</p></Reveal>
+          <Reveal><p className="eyebrow flex items-center gap-3"><span className="h-px w-6 bg-[#b78a58]" />Catatan dari karya</p></Reveal>
           <Reveal delay="short">
             <blockquote className="max-w-5xl font-display text-[clamp(2.6rem,5.8vw,6rem)] leading-[0.88] tracking-[-0.06em] text-[#f3f0ea]">“{chapter.quote}”</blockquote>
             {chapter.attribution ? <cite className="mt-7 block font-mono text-[0.62rem] not-italic uppercase tracking-[0.14em] text-[#b78a58]">{chapter.attribution}</cite> : null}
@@ -46,7 +46,7 @@ function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
       <section className="my-16 sm:my-24 lg:my-32">
         <div className="page-shell grid gap-8 lg:grid-cols-2 lg:gap-14 xl:gap-20">
           <div className={`${imageFirst ? "lg:order-1" : "lg:order-2"}`}>
-            <ParallaxImage src={chapter.image} alt={chapter.alt ?? "Story image"} className="story-grain aspect-[4/5] bg-[#141414]" imageClassName="brightness-[0.83] saturate-[0.8]" loading="eager" />
+            <ParallaxImage src={chapter.image} alt={chapter.alt ?? "Gambar cerita"} className="story-grain aspect-[4/5] bg-[#141414]" imageClassName="brightness-[0.83] saturate-[0.8]" loading="eager" />
             {chapter.caption ? <p className="mt-3 font-mono text-[0.58rem] leading-relaxed tracking-[0.09em] text-[#89857e]">{chapter.caption}</p> : null}
           </div>
           <Reveal delay="short" className={`flex flex-col justify-center ${imageFirst ? "lg:order-2" : "lg:order-1"}`}>
@@ -80,9 +80,9 @@ function MissingStory() {
   return (
     <main className="grid min-h-[70vh] place-items-center bg-[#080808] px-5 pt-24 text-center text-[#f3f0ea]">
       <div>
-        <p className="eyebrow">Story unavailable</p>
-        <h1 className="mt-5 font-display text-5xl tracking-[-0.06em] sm:text-7xl">The frame is empty.</h1>
-        <Link href="/stories" className="link-sightline mt-8">Return to story index <ArrowLeft size={15} /></Link>
+        <p className="eyebrow">Cerita tidak tersedia</p>
+        <h1 className="mt-5 font-display text-5xl tracking-[-0.06em] sm:text-7xl">Bingkai ini kosong.</h1>
+        <Link href="/stories" className="link-sightline mt-8">Kembali ke indeks cerita <ArrowLeft size={15} /></Link>
       </div>
     </main>
   );
@@ -96,14 +96,14 @@ function StoryNavigation({ story, stories }: { story: Story; stories: Story[] })
   return (
     <section className="border-t border-white/10 bg-[#0d0d0d] py-16 sm:py-20 lg:py-24">
       <div className="page-shell">
-        <p className="eyebrow mb-8">Continue reading</p>
+        <p className="eyebrow mb-8">Lanjut membaca</p>
         <div className="grid gap-10 md:grid-cols-2 md:gap-16">
           <Link href={`/stories/${previous.slug}`} className="group border-t border-white/15 pt-5">
-            <div className="mb-4 flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.15em] text-[#9d9992]"><ArrowLeft size={14} className="text-[#b78a58]" /> Previous story</div>
+            <div className="mb-4 flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.15em] text-[#9d9992]"><ArrowLeft size={14} className="text-[#b78a58]" /> Cerita sebelumnya</div>
             <p className="max-w-lg font-display text-3xl leading-[0.93] tracking-[-0.05em] text-[#f3f0ea] transition-colors group-hover:text-[#b78a58] sm:text-4xl">{previous.cardTitle}</p>
           </Link>
           <Link href={`/stories/${next.slug}`} className="group border-t border-white/15 pt-5 md:text-right">
-            <div className="mb-4 flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.15em] text-[#9d9992] md:justify-end">Next story <ArrowRight size={14} className="text-[#b78a58]" /></div>
+            <div className="mb-4 flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.15em] text-[#9d9992] md:justify-end">Cerita berikutnya <ArrowRight size={14} className="text-[#b78a58]" /></div>
             <p className="ml-auto max-w-lg font-display text-3xl leading-[0.93] tracking-[-0.05em] text-[#f3f0ea] transition-colors group-hover:text-[#b78a58] sm:text-4xl">{next.cardTitle}</p>
           </Link>
         </div>
@@ -152,7 +152,7 @@ export default function StoryPage() {
           <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(8,8,8,.85)_0%,transparent_56%)]" />
         </div>
         <div className="page-shell relative z-10 flex min-h-[calc(100svh-4.75rem)] flex-col justify-end pb-10 pt-16 sm:pb-14 lg:pb-16">
-          <Link href="/stories" className="mb-auto inline-flex w-fit items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-[#ddd8d1]/80 transition-colors hover:text-[#b78a58]"><ArrowLeft size={14} /> Back to index</Link>
+          <Link href="/stories" className="mb-auto inline-flex w-fit items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-[#ddd8d1]/80 transition-colors hover:text-[#b78a58]"><ArrowLeft size={14} /> Kembali ke indeks</Link>
           <div className="max-w-6xl">
             <div className="mb-7 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[0.6rem] uppercase tracking-[0.15em] text-[#e0b98d]">
               <span>{story.index} / 06</span><span className="h-1 w-1 rounded-full bg-[#b78a58]" /><span>{story.category}</span><span className="h-1 w-1 rounded-full bg-[#b78a58]" /><span>{story.date}</span>
@@ -160,7 +160,7 @@ export default function StoryPage() {
             <h1 className="max-w-6xl font-display text-[clamp(3.6rem,9vw,9.4rem)] leading-[0.8] tracking-[-0.07em] text-[#f8f5ef]">{story.title}</h1>
             <div className="mt-8 grid max-w-4xl gap-5 border-t border-white/20 pt-5 sm:grid-cols-[1fr_auto] sm:items-start">
               <p className="max-w-2xl font-sans text-base leading-relaxed text-[#d8d4cd] sm:text-lg">{story.deck}</p>
-              <p className="font-mono text-[0.58rem] uppercase tracking-[0.15em] text-[#aaa69f]">Words by {story.author} · {story.readTime}</p>
+              <p className="font-mono text-[0.58rem] uppercase tracking-[0.15em] text-[#aaa69f]">Ditulis oleh {story.author} · {story.readTime}</p>
             </div>
           </div>
         </div>
@@ -168,7 +168,7 @@ export default function StoryPage() {
 
       <section className="border-b border-white/10 bg-[#0d0d0d] py-9 sm:py-12">
         <div className="page-shell grid gap-6 sm:grid-cols-[0.42fr_1fr] sm:items-start">
-          <p className="eyebrow">Story coordinates</p>
+          <p className="eyebrow">Koordinat cerita</p>
           <p className="max-w-3xl font-display text-3xl leading-[0.97] tracking-[-0.045em] text-[#e8e4dd] sm:text-4xl">{story.impact}</p>
         </div>
       </section>
@@ -181,12 +181,12 @@ export default function StoryPage() {
 
       <section className="bg-[#121110] py-14 sm:py-20">
         <div className="page-shell grid gap-8 lg:grid-cols-[0.56fr_1fr] lg:gap-20">
-          <div><p className="eyebrow">Behind this story</p></div>
+          <div><p className="eyebrow">Di balik cerita ini</p></div>
           <div>
-            <p className="max-w-3xl font-display text-[clamp(2.7rem,4.8vw,5.2rem)] leading-[0.88] tracking-[-0.058em] text-[#f3f0ea]">The frames outside the final edit carry their own kind of truth.</p>
+            <p className="max-w-3xl font-display text-[clamp(2.7rem,4.8vw,5.2rem)] leading-[0.88] tracking-[-0.058em] text-[#f3f0ea]">Bingkai di luar penyuntingan akhir membawa kebenarannya sendiri.</p>
             <div className="mt-9 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
-              <p className="max-w-xl text-sm leading-relaxed text-[#aaa69f]">We keep the working images nearby—not as proof of perfection, but as evidence of how attention travels through a process.</p>
-              <a href="#inquiry" className="link-sightline">Request media kit <ArrowUpRight size={15} /></a>
+              <p className="max-w-xl text-sm leading-relaxed text-[#aaa69f]">Kami menyimpan gambar proses di dekat kami—bukan sebagai bukti kesempurnaan, melainkan jejak tentang bagaimana perhatian bergerak melalui sebuah proses.</p>
+              <a href="#inquiry" className="link-sightline">Minta media kit <ArrowUpRight size={15} /></a>
             </div>
           </div>
         </div>

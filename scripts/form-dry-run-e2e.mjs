@@ -116,19 +116,19 @@ try {
       descriptor?.set?.call(element, value);
       element.dispatchEvent(new Event('input', { bubbles: true }));
     };
-    const subscribe = document.querySelector('form[aria-label="Subscribe to new journal notes"]');
+    const subscribe = document.querySelector('form[aria-label="Berlangganan catatan jurnal"]');
     const subscribeEmail = subscribe?.querySelector('input[type="email"]');
     const consent = subscribe?.querySelector('input[type="checkbox"]');
-    if (!subscribe || !subscribeEmail || !consent) throw new Error('Subscribe form not found');
+    if (!subscribe || !subscribeEmail || !consent) throw new Error('Form subscriber tidak ditemukan');
     setInput(subscribeEmail, 'dry-run-subscriber@example.com');
     consent.click();
     subscribe.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     await new Promise(resolve => setTimeout(resolve, 450));
 
-    const inquiry = document.querySelector('form[aria-label="Media inquiry form"]');
+    const inquiry = document.querySelector('form[aria-label="Formulir pertanyaan media"]');
     const inputs = inquiry?.querySelectorAll('input');
     const message = inquiry?.querySelector('textarea');
-    if (!inquiry || !inputs?.[0] || !inputs?.[1] || !message) throw new Error('Inquiry form not found');
+    if (!inquiry || !inputs?.[0] || !inputs?.[1] || !message) throw new Error('Form pertanyaan media tidak ditemukan');
     setInput(inputs[0], 'Dry Run Editor');
     setInput(inputs[1], 'dry-run-editor@example.com');
     setTextArea(message, 'This dry-run request is verified without persistence.');
@@ -138,8 +138,8 @@ try {
     globalThis.fetch = originalFetch;
     return {
       records,
-      subscribeSuccess: document.body.textContent?.includes('You’re on the list.') ?? false,
-      inquirySuccess: document.body.textContent?.includes('Your note is in the inbox.') ?? false,
+      subscribeSuccess: document.body.textContent?.includes('Anda sudah terdaftar.') ?? false,
+      inquirySuccess: document.body.textContent?.includes('Pesan Anda sudah masuk ke inbox.') ?? false,
     };
   })()`);
 
@@ -159,7 +159,7 @@ try {
     globalThis.fetch = originalFetch;
     return {
       records,
-      success: document.body.textContent?.includes('You’re unsubscribed.') ?? false,
+      success: document.body.textContent?.includes('Anda sudah berhenti berlangganan.') ?? false,
     };
   })()`);
 

@@ -29,10 +29,10 @@ import { Button } from "./ui/button";
 import { BrandMark } from "./BrandMark";
 
 const menuItems = [
-  { icon: BookOpenText, label: "Stories", path: "/studio" },
-  { icon: FilePlus2, label: "Write story", path: "/studio/new" },
-  { icon: UsersRound, label: "Subscribers", path: "/studio/subscribers" },
-  { icon: Inbox, label: "Inquiries", path: "/studio/inquiries" },
+  { icon: BookOpenText, label: "Cerita", path: "/studio" },
+  { icon: FilePlus2, label: "Tulis cerita", path: "/studio/new" },
+  { icon: UsersRound, label: "Pelanggan", path: "/studio/subscribers" },
+  { icon: Inbox, label: "Pertanyaan", path: "/studio/inquiries" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -66,14 +66,14 @@ export default function DashboardLayout({
         <div className="flex flex-col items-center gap-8 p-8 max-w-md w-full">
           <div className="flex flex-col items-center gap-6">
             <h1 className="text-2xl font-semibold tracking-tight text-center">
-              Sign in to continue
+              Masuk untuk melanjutkan
             </h1>
             <p className="text-sm text-muted-foreground text-center max-w-sm">
-              Sign in to open the private editorial workspace.
+              Masuk untuk membuka ruang kerja editorial pribadi.
             </p>
             {hasOAuthStateError ? (
               <p role="alert" className="max-w-sm border border-[#b78a58]/50 bg-[#b78a58]/10 px-4 py-3 text-center text-sm leading-relaxed text-[#f3f0ea]">
-                Your secure sign-in session expired or was interrupted. Choose Enter studio to start a fresh sign-in.
+                Sesi masuk aman Anda berakhir atau terputus. Pilih Masuk ke Studio untuk memulai sesi baru.
               </p>
             ) : null}
           </div>
@@ -82,7 +82,7 @@ export default function DashboardLayout({
             size="lg"
             className="w-full shadow-lg hover:shadow-xl transition-all"
           >
-            Enter studio
+            Masuk ke Studio
           </Button>
         </div>
       </div>
@@ -171,7 +171,7 @@ function DashboardLayoutContent({
               <button
                 onClick={toggleSidebar}
                 className="h-8 w-8 flex items-center justify-center hover:bg-accent rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0"
-                aria-label="Toggle navigation"
+                aria-label="Ubah tampilan navigasi"
               >
                 <PanelLeft className="h-4 w-4 text-muted-foreground" />
               </button>
@@ -231,7 +231,7 @@ function DashboardLayoutContent({
                   className="cursor-pointer text-destructive focus:text-destructive"
                 >
                   <LogOut className="mr-2 h-4 w-4" />
-                  <span>Sign out</span>
+                  <span>Keluar</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

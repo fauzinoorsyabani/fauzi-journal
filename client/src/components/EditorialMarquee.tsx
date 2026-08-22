@@ -2,8 +2,8 @@
  * Style guide: Fauzi / Journal.
  * A paired signal strip keeps the archive in motion without introducing a disruptive carousel.
  */
-const leftwardNotes = ["FIELD NOTES", "IMAGE STUDIES", "QUIET IMPACT", "THE WORK BENEATH", "FAUZI / JOURNAL"];
-const rightwardNotes = ["RETURNING", "LISTENING", "MAKING", "LOOKING AGAIN", "STAYING WITH THE DETAIL"];
+const leftwardNotes = ["CATATAN LAPANGAN", "STUDI GAMBAR", "DAMPAK YANG TENANG", "KERJA DI BALIK PERMUKAAN", "FAUZI / JOURNAL"];
+const rightwardNotes = ["KEMBALI", "MENDENGARKAN", "MENGERJAKAN", "MELIHAT LAGI", "TINGGAL BERSAMA DETAIL"];
 
 function Track({ notes, direction }: { notes: string[]; direction: "left" | "right" }) {
   const sequence = [...notes, ...notes, ...notes, ...notes];
@@ -16,7 +16,7 @@ function Track({ notes, direction }: { notes: string[]; direction: "left" | "rig
 
 export function EditorialMarquee() {
   return (
-    <section className="border-y border-[#b78a58]/25 bg-[#0d0c0b] py-3 text-[#eee9e1]" aria-label="Editorial signals">
+    <section className="border-y border-[#b78a58]/25 bg-[#0d0c0b] py-3 text-[#eee9e1]" aria-label="Sinyal editorial">
       <div className="marquee-shell">
         <Track notes={leftwardNotes} direction="left" />
       </div>

@@ -1,21 +1,21 @@
 # Fauzi / Journal
 
-> **A visual journal for field notes, image-led stories, and the work beneath the surface.**
+> **Jurnal visual untuk catatan lapangan, cerita berbasis gambar, dan kerja di balik permukaan.**
 
 Fauzi / Journal adalah platform editorial imersif yang dibangun sebagai pengalaman publik bernuansa gallery noir sekaligus workspace privat untuk penerbitan cerita. Website menggabungkan hero sinematik, story index full-bleed, halaman cerita dengan parallax yang lembut, dan sistem CMS internal agar tim dapat menyimpan draft serta menerbitkan cerita tanpa mengubah source code.
 
-## Highlight
+## Sorotan
 
 | Area | Implementasi |
 | --- | --- |
-| **Public journal** | Landing page editorial, story archive, route detail per slug, navigasi antarcerita, dan footer media inquiry. |
-| **Cinematic reading** | Hero full-bleed, parallax berbasis `transform`, scroll progress, serta reveal teks berbasis viewport. Motion non-esensial dihormati melalui `prefers-reduced-motion`. |
-| **Editorial CMS** | Workspace privat pada `/studio` untuk membuat draft, menulis dengan rich editor, preview reading layout, upload cover image, dan menerbitkan cerita. |
-| **Lead inbox** | Form media inquiry tervalidasi tersimpan ke database dan dapat ditindaklanjuti lewat status `new`, `reviewed`, atau `contacted`. |
-| **Journal subscribers** | Footer opt-in dengan persetujuan eksplisit, daftar subscriber privat, unsubscribe token, serta log notifikasi publish yang siap dikirim melalui provider email di tahap berikutnya. |
-| **Brand system** | Masthead **Fauzi / Journal**, aperture mark, palette obsidian–warm white–Signal Brass, serta kombinasi Bodoni Moda, Manrope, dan IBM Plex Mono. |
+| **Jurnal publik** | Beranda editorial, arsip cerita, route detail per slug, navigasi antarcerita, dan footer pertanyaan media. |
+| **Pembacaan sinematik** | Hero full-bleed, parallax berbasis `transform`, scroll progress, serta reveal teks berbasis viewport. Motion non-esensial dihormati melalui `prefers-reduced-motion`. |
+| **CMS editorial** | Ruang kerja privat pada `/studio` untuk membuat draf, menulis dengan rich editor, melihat pratinjau layout baca, mengunggah gambar sampul, dan menerbitkan cerita. |
+| **Inbox prospek** | Form pertanyaan media tervalidasi disimpan ke database dan dapat ditindaklanjuti lewat status `new`, `reviewed`, atau `contacted`. |
+| **Pelanggan jurnal** | Footer opt-in dengan persetujuan eksplisit, daftar pelanggan privat, token unsubscribe, serta log notifikasi terbit yang siap dikirim melalui provider email di tahap berikutnya. |
+| **Sistem merek** | Masthead **Fauzi / Journal**, aperture mark, palet obsidian–warm white–Signal Brass, serta kombinasi Bodoni Moda, Manrope, dan IBM Plex Mono. |
 
-## Technology
+## Teknologi
 
 | Layer | Stack |
 | --- | --- |
@@ -26,7 +26,7 @@ Fauzi / Journal adalah platform editorial imersif yang dibangun sebagai pengalam
 | Media | Object storage terkelola untuk upload cover image CMS |
 | Tests | Vitest |
 
-## Local Development
+## Pengembangan Lokal
 
 Install dependencies, lalu jalankan server development:
 
@@ -43,7 +43,7 @@ pnpm test
 pnpm build
 ```
 
-## Database Setup
+## Pengaturan Database
 
 Schema editorial berada pada `drizzle/schema.ts` dan mencakup tabel `users`, `stories`, `mediaInquiries`, `subscribers`, serta `newsletterDeliveries`. Untuk menghasilkan migration baru setelah mengubah schema, gunakan:
 
@@ -53,30 +53,30 @@ pnpm drizzle-kit generate
 
 Kemudian review SQL yang dihasilkan di `drizzle/` sebelum menerapkan migration ke database target. Tabel `stories` menyimpan metadata, chapter fallback, dan dokumen rich text TipTap. Tabel `mediaInquiries` menyimpan lead, sedangkan `subscribers` dan `newsletterDeliveries` menyimpan persetujuan pembaca serta catatan setiap notifikasi jurnal yang siap dikirim.
 
-## Publishing Workflow
+## Alur Penerbitan
 
 1. Buka `/studio` dan masuk menggunakan akun editor/admin.
-2. Pilih **New story** untuk membuat draft baru.
-3. Isi metadata, cover image, alt text, dan body menggunakan rich editor.
-4. Toolbar editor mendukung **bold, italic, heading, quote, daftar, link, gambar, dan caption gambar**. Gunakan **Preview** untuk memeriksa layout baca sebelum publikasi.
-5. Pilih **Save draft** untuk menyimpan pekerjaan atau **Publish story** untuk menayangkannya pada public journal.
-6. Buka **Subscribers** untuk melihat pembaca yang melakukan opt-in dan log notifikasi publish yang sudah diantrekan.
-7. Buka **Inquiries** untuk melihat lead dari footer media inquiry dan perbarui status follow-up.
+2. Pilih **Cerita baru** untuk membuat draf baru.
+3. Isi metadata, gambar sampul, teks alternatif, dan isi jurnal menggunakan rich editor.
+4. Toolbar editor mendukung **tebal, italic, subjudul, kutipan, daftar, tautan, gambar, dan keterangan gambar**. Gunakan **Pratinjau** untuk memeriksa layout baca sebelum publikasi.
+5. Pilih **Simpan draf** untuk menyimpan pekerjaan atau **Terbitkan cerita** untuk menayangkannya pada jurnal publik.
+6. Buka **Pelanggan** untuk melihat pembaca yang melakukan opt-in dan log notifikasi terbit yang sudah diantrekan.
+7. Buka **Pertanyaan** untuk melihat prospek dari footer pertanyaan media dan memperbarui status tindak lanjut.
 
 > Akun owner akan dipetakan sebagai `admin` secara otomatis. Akun tambahan dapat dipromosikan melalui kolom `role` pada tabel `users`.
 
-## Routes
+## Route
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Homepage dengan featured story, story grid, impact note, dan behind-the-scenes. |
+| `/` | Beranda dengan cerita pilihan, grid cerita, catatan dampak, dan di balik layar. |
 | `/stories` | Arsip semua cerita publik. |
 | `/stories/:slug` | Halaman cerita sinematik. |
-| `/studio` | Dashboard CMS internal untuk draft dan published stories. |
-| `/studio/new` | Editor untuk membuat atau menyunting story. |
-| `/studio/subscribers` | Daftar subscriber opt-in dan log notifikasi publish internal. |
-| `/studio/inquiries` | Lead inbox internal untuk media inquiry. |
-| `/unsubscribe?token=…` | Halaman unsubscribe berbasis token pribadi subscriber. |
+| `/studio` | Dashboard CMS internal untuk draf dan cerita yang sudah diterbitkan. |
+| `/studio/new` | Editor untuk membuat atau menyunting cerita. |
+| `/studio/subscribers` | Daftar pelanggan opt-in dan log notifikasi terbit internal. |
+| `/studio/inquiries` | Inbox prospek internal untuk pertanyaan media. |
+| `/unsubscribe?token=…` | Halaman berhenti berlangganan berbasis token pribadi pelanggan. |
 
 ## Environment
 
@@ -129,11 +129,11 @@ Setiap push ke branch `main` akan membuat deployment Vercel sesuai pengaturan Gi
 [^vercel-blob]: [Vercel — Vercel Blob](https://vercel.com/docs/vercel-blob)
 [^vercel-rewrites]: [Vercel — Rewrites](https://vercel.com/docs/routing/rewrites)
 
-## Known Platform Blocker
+## Status Studio dan OAuth
 
-Route `/studio` pada domain production telah memuat layar sign-in dengan benar. Namun, tombol **Enter studio** saat ini diarahkan ke `manus.im/app-auth` dan menerima respons CloudFront `403` sebelum OAuth callback kembali ke aplikasi. Kode frontend sudah menggunakan `window.location.origin` untuk membentuk callback `/api/oauth/callback`, sehingga kendala ini berada pada layanan autentikasi/edge platform. Gunakan [Manus Help](https://help.manus.im) dan sertakan CloudFront Request ID bila masalah masih terjadi.
+Route `/studio` pada domain hosted telah memuat layar masuk dengan benar. Callback OAuth state-invalid kini diarahkan kembali ke Studio melalui `/studio?authError=state`, bukan ke respons `403` mentah. Login OAuth editor dengan state valid tetap memerlukan sesi editor yang sah untuk diverifikasi secara interaktif.
 
-## Project Structure
+## Struktur Proyek
 
 ```text
 client/src/
@@ -149,10 +149,10 @@ server/
   storage.ts        # Managed object storage helper
 ```
 
-## Quality Checks
+## Pemeriksaan Kualitas
 
 Sebelum release, jalankan `pnpm test`, `pnpm check`, dan `pnpm build`. Verifikasi juga alur berikut secara manual: menulis rich content, menambahkan image-caption, preview draft, publish story, membuka story berdasarkan slug, subscribe dan unsubscribe, serta mengubah status lead pada inbox internal.
 
-## Next Enhancements
+## Pengembangan Berikutnya
 
 Hubungkan provider email seperti Resend, Brevo, atau Mailchimp untuk mengirim seluruh record `queued` pada `newsletterDeliveries` ke subscriber aktif. Fitur berikutnya yang layak dipertimbangkan adalah multi-author permissions, scheduled publishing, dan analytics newsletter.
