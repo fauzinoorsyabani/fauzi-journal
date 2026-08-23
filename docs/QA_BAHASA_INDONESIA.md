@@ -16,6 +16,8 @@ Pemeriksaan mobile `375×812` pada beranda, jurnal kebiasaan, dan jurnal waktu m
 
 Kelima foto personal telah dipindahkan ke Vercel Blob **public** pada `gwst4iapywswxoyh.public.blob.vercel-storage.com`. Pemeriksaan HTTP terhadap setiap URL menghasilkan status `200`, sehingga aset tidak lagi bergantung pada path `/manus-storage/` privat dan dapat digunakan oleh deployment Vercel Production.
 
+Verifikasi pada domain Production `fauzi-journal.vercel.app/stories/mulai-dari-yang-kecil` mengonfirmasi judul jurnal baru, highlight refleksi, daftar bacaan *Atomic Habits*, dan foto studio, konferensi, serta latihan termuat dari Vercel Blob publik.
+
 ## Batas verifikasi
 
 Visual editor yang sudah masuk menampilkan workspace admin pada environment pengembangan. Publikasi cerita end-to-end tetap membutuhkan sesi editor sah pada lingkungan target. Naskah artikel, judul, deck, kutipan, slug, dan rich text milik editor tidak diterjemahkan otomatis oleh penataan bahasa ini.
