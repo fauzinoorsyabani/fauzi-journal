@@ -59,3 +59,6 @@
 - [x] Mendokumentasikan bahwa perbaikan hosted mencakup pemulihan invalid-state, sedangkan login editor sukses masih menunggu sesi sah.
 - [x] Mendiagnosis dan memulihkan crash Vercel Serverless Function pada route API tanpa mengganggu halaman publik yang sudah Ready.
 - [x] Menjadikan Bahasa Indonesia sebagai bahasa utama antarmuka publik, Studio CMS, dan dokumentasi tanpa menerjemahkan naskah jurnal editorial.
+- [x] Mengubah konten publik menjadi seri self-development berbahasa Indonesia yang ringan dengan rujukan buku nyata dan highlight gagasan penting.
+- [x] Menyimpan foto pengguna pada storage publik dan menempatkannya secara proporsional di jurnal self-development yang relevan.
+- [x] Memvalidasi seri self-development, aset personal, build, dan tampilan responsif sebelum publikasi Production.

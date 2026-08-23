@@ -14,11 +14,13 @@ import { RichJournalContent } from "@/components/RichJournalContent";
 
 function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
   if (chapter.type === "image" && chapter.image) {
+    const imageWidth = chapter.imageSize === "small" ? "max-w-md" : chapter.imageSize === "medium" ? "max-w-3xl" : "max-w-[1500px]";
+    const imageAspect = chapter.imageSize === "small" || chapter.imageSize === "medium" ? "aspect-[4/5]" : "aspect-[16/10]";
     return (
       <section className="my-16 sm:my-24 lg:my-32">
-        <ParallaxImage src={chapter.image} alt={chapter.alt ?? "Gambar cerita"} className="story-grain mx-auto aspect-[16/10] max-w-[1500px] bg-[#151515]" imageClassName="brightness-[0.86] saturate-[0.82]" loading="eager" />
+        <ParallaxImage src={chapter.image} alt={chapter.alt ?? "Gambar cerita"} className={`story-grain mx-auto ${imageAspect} w-full ${imageWidth} bg-[#151515]`} imageClassName="brightness-[0.86] saturate-[0.82]" loading="eager" />
         {chapter.caption ? (
-          <div className="mx-auto mt-3 flex max-w-[1500px] justify-end px-5 sm:px-0">
+          <div className={`mx-auto mt-3 flex w-full ${imageWidth} justify-end px-5 sm:px-0`}>
             <p className="max-w-sm font-mono text-[0.58rem] leading-relaxed tracking-[0.1em] text-[#89857e]">{chapter.caption}</p>
           </div>
         ) : null}
@@ -52,6 +54,7 @@ function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
           <Reveal delay="short" className={`flex flex-col justify-center ${imageFirst ? "lg:order-2" : "lg:order-1"}`}>
             {chapter.eyebrow ? <p className="eyebrow mb-5">{chapter.eyebrow}</p> : null}
             {chapter.heading ? <h2 className="max-w-lg font-display text-[clamp(2.7rem,4.6vw,5.1rem)] leading-[0.88] tracking-[-0.058em] text-[#f3f0ea]">{chapter.heading}</h2> : null}
+            {chapter.highlight ? <p className="mt-7 max-w-lg border-l-2 border-[#b78a58] bg-[#b78a58]/10 px-5 py-4 font-display text-2xl leading-tight tracking-[-0.035em] text-[#f0d4ad]">{chapter.highlight}</p> : null}
             <div className="mt-7 max-w-lg space-y-5 text-[0.98rem] leading-8 text-[#bdb9b1] sm:text-lg sm:leading-8">
               {chapter.body?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
@@ -67,6 +70,7 @@ function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
         <Reveal><div>{chapter.eyebrow ? <p className="eyebrow">{chapter.eyebrow}</p> : null}</div></Reveal>
         <Reveal delay="short">
           {chapter.heading ? <h2 className="max-w-4xl font-display text-[clamp(2.8rem,5vw,5.6rem)] leading-[0.86] tracking-[-0.06em] text-[#f3f0ea]">{chapter.heading}</h2> : null}
+          {chapter.highlight ? <p className="mt-8 max-w-2xl border-l-2 border-[#b78a58] bg-[#b78a58]/10 px-5 py-4 font-display text-2xl leading-tight tracking-[-0.035em] text-[#f0d4ad] sm:text-3xl">{chapter.highlight}</p> : null}
           <div className="mt-9 max-w-2xl space-y-6 text-[1rem] leading-8 text-[#bdb9b1] sm:text-lg sm:leading-9">
             {chapter.body?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           </div>
@@ -155,7 +159,7 @@ export default function StoryPage() {
           <Link href="/stories" className="mb-auto inline-flex w-fit items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-[#ddd8d1]/80 transition-colors hover:text-[#b78a58]"><ArrowLeft size={14} /> Kembali ke indeks</Link>
           <div className="max-w-6xl">
             <div className="mb-7 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[0.6rem] uppercase tracking-[0.15em] text-[#e0b98d]">
-              <span>{story.index} / 06</span><span className="h-1 w-1 rounded-full bg-[#b78a58]" /><span>{story.category}</span><span className="h-1 w-1 rounded-full bg-[#b78a58]" /><span>{story.date}</span>
+              <span>{story.index} / {String(stories.length).padStart(2, "0")}</span><span className="h-1 w-1 rounded-full bg-[#b78a58]" /><span>{story.category}</span><span className="h-1 w-1 rounded-full bg-[#b78a58]" /><span>{story.date}</span>
             </div>
             <h1 className="max-w-6xl font-display text-[clamp(3.6rem,9vw,9.4rem)] leading-[0.8] tracking-[-0.07em] text-[#f8f5ef]">{story.title}</h1>
             <div className="mt-8 grid max-w-4xl gap-5 border-t border-white/20 pt-5 sm:grid-cols-[1fr_auto] sm:items-start">
@@ -179,14 +183,26 @@ export default function StoryPage() {
         </section>
       ) : story.chapters.map((chapter, index) => <StoryChapterBlock chapter={chapter} key={`${story.slug}-${index}`} />)}
 
+      {story.references?.length ? (
+        <section className="border-t border-white/10 bg-[#0d0d0d] py-12 sm:py-16">
+          <div className="page-shell grid gap-6 sm:grid-cols-[0.42fr_1fr] sm:items-start">
+            <p className="eyebrow">Bacaan yang dirujuk</p>
+            <div className="max-w-2xl space-y-3">
+              {story.references.map((reference) => <a key={reference.url} href={reference.url} target="_blank" rel="noreferrer" className="group flex items-center justify-between gap-5 border-b border-white/10 pb-3 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-[#d8d4cd] transition-colors hover:text-[#b78a58]"><span><span className="text-[#b78a58]">{reference.title}</span> · {reference.author}</span><ArrowUpRight size={15} className="shrink-0" /></a>)}
+              <p className="pt-2 text-xs leading-relaxed text-[#89857e]">Gagasan buku diolah sebagai refleksi pribadi dan parafrase; tulisan ini bukan ringkasan pengganti karya aslinya.</p>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <section className="bg-[#121110] py-14 sm:py-20">
         <div className="page-shell grid gap-8 lg:grid-cols-[0.56fr_1fr] lg:gap-20">
-          <div><p className="eyebrow">Di balik cerita ini</p></div>
+          <div><p className="eyebrow">Ruang setelah membaca</p></div>
           <div>
-            <p className="max-w-3xl font-display text-[clamp(2.7rem,4.8vw,5.2rem)] leading-[0.88] tracking-[-0.058em] text-[#f3f0ea]">Bingkai di luar penyuntingan akhir membawa kebenarannya sendiri.</p>
+            <p className="max-w-3xl font-display text-[clamp(2.7rem,4.8vw,5.2rem)] leading-[0.88] tracking-[-0.058em] text-[#f3f0ea]">Tidak semua hal harus langsung dipahami untuk tetap memberi arah.</p>
             <div className="mt-9 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
-              <p className="max-w-xl text-sm leading-relaxed text-[#aaa69f]">Kami menyimpan gambar proses di dekat kami—bukan sebagai bukti kesempurnaan, melainkan jejak tentang bagaimana perhatian bergerak melalui sebuah proses.</p>
-              <a href="#inquiry" className="link-sightline">Minta media kit <ArrowUpRight size={15} /></a>
+              <p className="max-w-xl text-sm leading-relaxed text-[#aaa69f]">Simpan satu kalimat yang terasa dekat, lalu biarkan ia bekerja perlahan di hari-hari berikutnya. Tidak perlu terburu-buru membuatnya menjadi jawaban.</p>
+              <Link href="/stories" className="link-sightline">Baca jurnal lain <ArrowUpRight size={15} /></Link>
             </div>
           </div>
         </div>

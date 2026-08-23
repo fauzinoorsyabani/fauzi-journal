@@ -1,13 +1,14 @@
 import { editorialMedia } from "@/lib/media";
 
 /**
- * Style guide: Editorial Noir / Premium Web3 Gallery.
- * Content is structured as gallery labels: precise, human, and image-led.
+ * Story fallback untuk jurnal publik. Naskah mengolah gagasan buku secara
+ * parafrase, bukan menyalin kutipan dari karya berhak cipta.
  */
 export type StoryChapter = {
   type: "copy" | "image" | "quote" | "split";
   eyebrow?: string;
   heading?: string;
+  highlight?: string;
   body?: string[];
   quote?: string;
   attribution?: string;
@@ -15,6 +16,7 @@ export type StoryChapter = {
   alt?: string;
   caption?: string;
   side?: "left" | "right";
+  imageSize?: "small" | "medium" | "wide";
 };
 
 export type Story = {
@@ -33,220 +35,198 @@ export type Story = {
   accent: string;
   impact: string;
   chapters: StoryChapter[];
+  references?: { title: string; author: string; url: string }[];
   richContentJson?: string | null;
+};
+
+const personalMediaBase = "https://gwst4iapywswxoyh.public.blob.vercel-storage.com";
+
+const personalMedia = {
+  portraitStudio: `${personalMediaBase}/portrait-studio.png`,
+  portraitPerjalanan: `${personalMediaBase}/portrait-perjalanan.png`,
+  konferensi: `${personalMediaBase}/proses-belajar-konferensi.webp`,
+  kafe: `${personalMediaBase}/jeda-refleksi-kafe.webp`,
+  latihan: `${personalMediaBase}/kebiasaan-latihan.webp`,
 };
 
 export const stories: Story[] = [
   {
-    slug: "the-quiet-shift",
+    slug: "mulai-dari-yang-kecil",
     index: "01",
-    category: "Impact",
-    title: "The quiet shift begins before the sun arrives.",
-    cardTitle: "The quiet shift",
-    deck: "At the edge of the salt flats, a small group is turning local knowledge into a shared language for what comes next.",
-    date: "Jun 06, 2026",
-    readTime: "08 min read",
-    author: "Mara Liang",
+    category: "Kebiasaan",
+    title: "Mulai dari yang kecil, lalu pulang sebagai orang yang berbeda.",
+    cardTitle: "Mulai dari yang kecil",
+    deck: "Catatan tentang kebiasaan sederhana, belajar tanpa banyak drama, dan alasan mengapa langkah kecil tetap layak dirayakan.",
+    date: "23 Agu 2026",
+    readTime: "07 menit baca",
+    author: "Fauzi",
     image: editorialMedia.hero,
-    alt: "A lone figure in a dark coat standing on a pale salt flat at dawn.",
+    alt: "Lanskap pegunungan pada pagi hari yang tenang.",
     imagePosition: "center",
-    accent: "Field report / 04.26",
-    impact: "18 months of listening, mapping, and returning to the same horizon.",
+    accent: "Seri tumbuh pelan / 01",
+    impact: "Perubahan yang terasa besar sering dimulai dari hal yang hampir tidak terlihat hari ini.",
+    references: [{ title: "Atomic Habits", author: "James Clear", url: "https://jamesclear.com/atomic-habits" }],
     chapters: [
       {
         type: "copy",
-        eyebrow: "A practice of return",
-        heading: "The future is rarely announced. It is rehearsed.",
+        eyebrow: "Tidak harus langsung hebat",
+        heading: "Kita sering gagal bukan karena malas, tetapi karena ingin berubah terlalu jauh dalam satu hari.",
+        highlight: "Kebiasaan kecil bukan remeh. Ia adalah cara kita memberi bukti bahwa diri ini bisa dipercaya.",
         body: [
-          "Before the first meetings, there were long walks. Before the first plan, there were conversations that had nowhere to go except further. The work began by choosing to return—again and again—to the people who already knew the landscape.",
-          "What emerged was not a program waiting to be launched. It was a shared method: listening, making, testing, and leaving enough space for the next voice to alter the frame.",
+          "Ada masa ketika saya mengira perubahan harus dimulai dengan jadwal yang rapi, target yang tinggi, dan energi yang selalu penuh. Kenyataannya, hari biasa tidak bekerja seperti itu. Ada lelah, ada pekerjaan yang menumpuk, dan ada rasa ingin menunda semuanya sampai Senin depan.",
+          "Sekarang saya lebih suka memulai dengan versi yang ringan: membaca beberapa halaman, berjalan sebentar, menulis satu kalimat, atau membuka materi belajar selama lima belas menit. Ukurannya kecil, tetapi cukup untuk membuat hari itu punya arah.",
+          "Dalam Atomic Habits, James Clear membahas perubahan kecil dan sistem yang memudahkan kebiasaan baik untuk terus diulang. Yang saya ambil bukan janji hasil instan, melainkan pengingat sederhana: jangan hanya sibuk mengejar target; buat jalan pulang ke target itu lebih mudah dilalui.",
         ],
       },
       {
         type: "image",
-        image: editorialMedia.impact,
-        alt: "People sharing objects and papers around a workshop table.",
-        caption: "A working table becomes a map when every hand is invited to mark it.",
-      },
-      {
-        type: "quote",
-        quote: "We were not there to arrive with an answer. We were there to notice what had already started moving.",
-        attribution: "— Field note, early spring",
+        image: personalMedia.portraitStudio,
+        alt: "Potret Fauzi dengan jas hitam di studio berlatar terang.",
+        caption: "Mengingat kembali arah pribadi: bukan untuk terlihat selalu siap, tetapi untuk tetap datang dan mencoba.",
+        imageSize: "small",
       },
       {
         type: "split",
-        eyebrow: "The measure of care",
-        heading: "Make the process visible, then make room for it to change.",
+        eyebrow: "Belajar sebagai kebiasaan",
+        heading: "Datang ke ruang belajar membuat saya ingat bahwa keahlian dibangun dari kehadiran.",
+        highlight: "Kemajuan tidak selalu terdengar keras. Kadang ia hanya tampak sebagai keputusan untuk kembali belajar.",
         body: [
-          "The visible outcome carries a hidden archive of revisions: a changed route, an offered chair, a question asked after the recorder had been put away. Those details make the story credible because they make it human.",
-          "LensStories follows the work at that scale. Not to make it look bigger, but to preserve the texture of how it became possible.",
+          "Mengikuti konferensi, mendengar pengalaman orang lain, atau duduk di materi yang belum sepenuhnya kita pahami bisa terasa canggung. Namun, dari situlah rasa ingin tahu mendapat tempat untuk tumbuh.",
+          "Tidak semua pertemuan harus langsung menghasilkan jawaban. Ada yang cukup meninggalkan satu pertanyaan baik untuk dibawa pulang dan dicoba pelan-pelan.",
         ],
-        image: editorialMedia.bts,
-        alt: "Night-time desk with contact sheets, camera, and warm desk lamp.",
-        caption: "Contact sheets from a late review in the studio.",
+        image: personalMedia.konferensi,
+        alt: "Fauzi berdiri di area Dicoding Developer Conference.",
+        caption: "Belajar tidak selalu berarti tahu lebih banyak hari ini. Kadang cukup berani masuk ke ruang yang menantang kita.",
         side: "right",
       },
+      {
+        type: "image",
+        image: personalMedia.latihan,
+        alt: "Fauzi berfoto di depan cermin area latihan dengan peralatan kebugaran di belakangnya.",
+        caption: "Rutinitas fisik tidak perlu sempurna untuk tetap berarti. Yang penting, ada ruang untuk kembali bergerak.",
+        imageSize: "medium",
+      },
+      {
+        type: "quote",
+        quote: "Hari yang baik bukan hari ketika semua selesai. Hari yang baik adalah hari ketika kita tidak meninggalkan diri sendiri.",
+        attribution: "— Catatan pribadi Fauzi",
+      },
+      {
+        type: "copy",
+        eyebrow: "Buku yang menemani tulisan ini",
+        heading: "Bukan resep hidup, melainkan teman untuk menyusun langkah.",
+        body: [
+          "Atomic Habits karya James Clear menjadi rujukan untuk bagian tentang perubahan kecil dan sistem kebiasaan. Buku ini tidak saya jadikan aturan kaku. Ia lebih berguna sebagai pertanyaan: kebiasaan apa yang bisa dibuat sedikit lebih mudah hari ini?",
+          "Jika ada satu hal yang ingin saya simpan, jawabannya sederhana: mulai secukupnya, ulangi dengan ramah, lalu beri waktu pada diri sendiri untuk bertumbuh.",
+        ],
+      },
     ],
   },
   {
-    slug: "a-room-for-making",
+    slug: "belajar-tanpa-menunggu-hebat",
     index: "02",
-    category: "Culture",
-    title: "A room for making, and the people who keep it open.",
-    cardTitle: "A room for making",
-    deck: "Inside the studio, material experiments become a quiet daily ritual of trust, critique, and care.",
-    date: "May 14, 2026",
-    readTime: "06 min read",
-    author: "Amos Reid",
+    category: "Cara Berpikir",
+    title: "Belajar tanpa menunggu hebat.",
+    cardTitle: "Belajar tanpa menunggu hebat",
+    deck: "Saat rasa takut salah terlalu besar, proses belajar justru butuh bahasa yang lebih ramah dan langkah yang lebih jujur.",
+    date: "21 Agu 2026",
+    readTime: "06 menit baca",
+    author: "Fauzi",
     image: editorialMedia.people,
-    alt: "Artists collaborating over materials in a warm, shadowed atelier.",
+    alt: "Sekelompok orang duduk bersama dalam suasana kolaboratif.",
     imagePosition: "center",
-    accent: "Studio journal / 03.26",
-    impact: "The best culture is not announced. It is practiced at the worktable.",
+    accent: "Seri tumbuh pelan / 02",
+    impact: "Kemampuan bukan pintu yang sudah tertutup; ia adalah ruang yang bisa kita masuki berkali-kali.",
+    references: [{ title: "Mindset: The New Psychology of Success", author: "Carol S. Dweck", url: "https://ccsre.stanford.edu/publications/mindset-updated-edition-changing-way-you-think-fulfill-your-potential" }],
     chapters: [
       {
         type: "copy",
-        eyebrow: "Inside the studio",
-        heading: "A shared table is a way of thinking.",
+        eyebrow: "Boleh belum bisa",
+        heading: "Kita tidak harus merasa siap untuk mulai belajar.",
+        highlight: "Kalimat “belum bisa” membuka ruang yang tidak dimiliki oleh kalimat “aku memang tidak bisa”.",
         body: [
-          "There is a moment before a material finds its use when it is simply a proposition. On the worktable, that proposition passes through many hands and comes back altered.",
-          "The studio keeps that exchange deliberately visible. Notes stay on the wall. Samples remain within reach. A first instinct is not mistaken for a final answer.",
+          "Pernah ada masa ketika saya menilai kemampuan dari seberapa cepat seseorang terlihat paham. Kalau saya lambat, saya merasa tertinggal. Kalau hasil pertama tidak bagus, saya ingin menyimpulkan bahwa bidang itu bukan untuk saya.",
+          "Cara pandang seperti itu melelahkan karena setiap kesalahan terasa seperti bukti tentang siapa kita. Padahal, kesalahan lebih sering adalah informasi: bagian mana yang perlu dilihat lagi, ditanya lagi, atau dilatih lagi.",
+          "Carol S. Dweck dalam Mindset membedakan cara pandang fixed mindset dan growth mindset. Bagi saya, bagian paling membantu dari gagasan itu adalah pilihan bahasa. Mengganti “aku gagal” menjadi “aku masih belajar” tidak menghapus masalah, tetapi membuat kita tidak berhenti di tengah jalan.",
         ],
       },
       {
         type: "image",
-        image: editorialMedia.bts,
-        alt: "A contact sheet and analog camera lit by a small desk lamp.",
-        caption: "The archive is part of the practice, not a record made afterward.",
-      },
-      {
-        type: "quote",
-        quote: "We make space for the unfinished because it is where the next useful question appears.",
-        attribution: "— Studio conversation",
-      },
-    ],
-  },
-  {
-    slug: "the-listening-table",
-    index: "03",
-    category: "People",
-    title: "The listening table: where a hundred small observations begin to connect.",
-    cardTitle: "The listening table",
-    deck: "A series of gatherings asks what happens when community expertise is treated as a material, not a metric.",
-    date: "Apr 29, 2026",
-    readTime: "07 min read",
-    author: "Nia Wells",
-    image: editorialMedia.impact,
-    alt: "Community members sharing objects around a long table near an open doorway.",
-    imagePosition: "center",
-    accent: "People / 02.26",
-    impact: "Every object on the table carries a way of seeing the work differently.",
-    chapters: [
-      {
-        type: "copy",
-        eyebrow: "People before process",
-        heading: "A question becomes clearer when it changes hands.",
-        body: [
-          "The listening table is a recurring invitation rather than a single event. Its power is in the continuity: one person remembers where the previous conversation stopped, while another proposes an entirely new place to begin.",
-          "The record is made in fragments—annotations, tools left on the table, a photograph of an idea before it is named. Together they form a more useful picture than a summary ever could.",
-        ],
+        image: personalMedia.kafe,
+        alt: "Fauzi memegang minuman di kafe dengan latar interior berwarna abu-abu.",
+        caption: "Jeda kecil bukan pelarian. Kadang ia adalah tempat kita menyusun ulang pikiran sebelum melanjutkan.",
+        imageSize: "medium",
       },
       {
         type: "split",
-        eyebrow: "Field note",
-        heading: "Participation is a design material.",
+        eyebrow: "Tumbuh dengan jujur",
+        heading: "Tidak semua perkembangan terlihat dari luar, tetapi tetap terasa di cara kita merespons diri sendiri.",
+        highlight: "Bertumbuh bukan soal selalu percaya diri. Bertumbuh adalah tetap penasaran ketika percaya diri belum datang.",
         body: [
-          "When people can see their contribution change the direction of the work, care becomes tangible. The point is not consensus. The point is a frame wide enough to hold contradiction without losing momentum.",
+          "Saya mencoba berhenti menjadikan hasil orang lain sebagai ukuran tunggal untuk perjalanan saya. Perbandingan mungkin memberi arah sesaat, tetapi latihan yang konsisten lebih sering datang dari memahami ritme diri sendiri.",
+          "Saat sebuah pekerjaan belum berhasil, saya ingin bertanya: apa satu hal yang bisa dicoba dengan cara berbeda? Pertanyaan itu terasa lebih berguna daripada menyalahkan diri sepanjang hari.",
         ],
-        image: editorialMedia.hero,
-        alt: "A figure on a pale open landscape at dawn.",
-        caption: "A pause before the gathering begins.",
+        image: personalMedia.portraitPerjalanan,
+        alt: "Potret Fauzi di tepi laut dengan cahaya sore dan pulau-pulau kecil di latar belakang.",
+        caption: "Melihat sedikit lebih jauh mengingatkan saya: arah tetap ada, meski langkah hari ini belum panjang.",
         side: "left",
+      },
+      {
+        type: "quote",
+        quote: "Kita boleh menjadi pemula lebih dari sekali. Tidak ada yang memalukan dari kembali belajar.",
+        attribution: "— Catatan pribadi Fauzi",
+      },
+      {
+        type: "copy",
+        eyebrow: "Buku yang menemani tulisan ini",
+        heading: "Membiarkan kemampuan menjadi proses, bukan vonis.",
+        body: [
+          "Mindset: The New Psychology of Success karya Carol S. Dweck menjadi rujukan untuk refleksi ini. Buku tersebut membahas bagaimana keyakinan tentang kemampuan dapat memengaruhi cara seseorang menghadapi tantangan dan proses belajar.",
+          "Saya memilih membawa gagasan itu dalam bentuk yang paling sederhana: jangan buru-buru menutup pintu hanya karena kita belum mahir mengetuknya.",
+        ],
       },
     ],
   },
   {
-    slug: "notes-from-the-edge",
-    index: "04",
-    category: "Field Notes",
-    title: "Notes from the edge of a map still being drawn.",
-    cardTitle: "Notes from the edge",
-    deck: "A field journal from the spaces where research moves at the speed of weather, trust, and return visits.",
-    date: "Mar 17, 2026",
-    readTime: "05 min read",
-    author: "Elio Chen",
-    image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1400&q=85",
-    alt: "Moody aerial view of a mountain valley covered in mist.",
+    slug: "cukup-penting-untuk-hari-ini",
+    index: "03",
+    category: "Waktu & Perhatian",
+    title: "Cukup penting untuk hari ini.",
+    cardTitle: "Cukup penting untuk hari ini",
+    deck: "Tentang berhenti mengejar semua hal sekaligus dan memilih apa yang benar-benar layak mendapat perhatian kita sekarang.",
+    date: "18 Agu 2026",
+    readTime: "05 menit baca",
+    author: "Fauzi",
+    image: editorialMedia.bts,
+    alt: "Meja kerja dengan pencahayaan hangat dan suasana tenang.",
     imagePosition: "center",
-    accent: "Field notes / 01.26",
-    impact: "Fieldwork asks the same thing each day: what did you notice that was easy to miss?",
+    accent: "Seri tumbuh pelan / 03",
+    impact: "Kita tidak perlu melakukan semuanya untuk menjalani hari yang berarti.",
+    references: [{ title: "Four Thousand Weeks", author: "Oliver Burkeman", url: "https://www.oliverburkeman.com/fourthousandweeks" }],
     chapters: [
       {
         type: "copy",
-        eyebrow: "A moving horizon",
-        heading: "The map changes when you walk it slowly.",
+        eyebrow: "Bukan tentang menjadi mesin",
+        heading: "Ada hal-hal yang harus sengaja tidak kita lakukan agar hidup terasa lebih lapang.",
+        highlight: "Memilih satu hal penting bukan berarti menyerah pada yang lain. Itu berarti memberi perhatian tempat untuk tinggal.",
         body: [
-          "A landscape does not reveal itself all at once. Every return adjusts the scale, altering what feels near, what feels possible, and what is still left outside the frame.",
-          "These notes are an argument for staying with that uncertainty long enough for a more honest story to surface.",
+          "Daftar tugas bisa bertambah lebih cepat daripada waktu yang kita punya. Saya pernah mencoba menaklukkannya dengan menambah aplikasi, menambah alarm, dan menambah tekanan. Hasilnya bukan lebih tenang, tetapi lebih mudah merasa tertinggal.",
+          "Sekarang saya mencoba memulai hari dengan satu pertanyaan kecil: kalau hanya satu hal yang selesai hari ini, apa yang paling membuat saya lega? Bukan yang paling mengesankan, tetapi yang paling jujur diperlukan.",
+          "Four Thousand Weeks karya Oliver Burkeman mengingatkan bahwa waktu kita memang terbatas. Bukan untuk membuat kita panik, tetapi supaya kita berhenti menunggu keadaan sempurna sebelum memberi ruang pada hal yang bermakna.",
         ],
       },
       {
         type: "quote",
-        quote: "A field note is not proof. It is a promise to look again.",
-        attribution: "— From the notebook",
+        quote: "Ruang kosong di kalender bukan tanda kurang ambisi. Ia bisa menjadi tempat napas, perhatian, dan keputusan yang lebih baik.",
+        attribution: "— Catatan pribadi Fauzi",
       },
-    ],
-  },
-  {
-    slug: "the-language-of-touch",
-    index: "05",
-    category: "Craft",
-    title: "The language of touch lives in every deliberate surface.",
-    cardTitle: "The language of touch",
-    deck: "A closer look at how material decisions hold memory, labour, and a more generous definition of finish.",
-    date: "Feb 08, 2026",
-    readTime: "09 min read",
-    author: "Iris Navarro",
-    image: "https://images.unsplash.com/photo-1523726491678-bf852e717f6a?auto=format&fit=crop&w=1400&q=85",
-    alt: "Close-up of hands working with tactile natural materials.",
-    imagePosition: "center",
-    accent: "Material study / 12.25",
-    impact: "Material memory is not a surface effect. It is the record of every decision made with care.",
-    chapters: [
       {
         type: "copy",
-        eyebrow: "Material study",
-        heading: "A finish should carry evidence of the hands that made it.",
+        eyebrow: "Buku yang menemani tulisan ini",
+        heading: "Produktif tidak selalu berarti dekat dengan yang penting.",
         body: [
-          "The language of touch is an accumulation of tiny choices: which edge stays soft, which mark remains visible, which surface asks you to slow down. These choices are often invisible in a specification, but impossible to miss in use.",
-          "Craft becomes a way of making attention transferable—from the maker, to the object, to the person who encounters it later.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "a-different-kind-of-signal",
-    index: "06",
-    category: "Future",
-    title: "A different kind of signal: build slowly, share early.",
-    cardTitle: "A different kind of signal",
-    deck: "An experiment in making ambitious work more legible while it is still taking shape.",
-    date: "Jan 19, 2026",
-    readTime: "04 min read",
-    author: "Sora Akin",
-    image: "https://images.unsplash.com/photo-1515168833906-d2a3b82b302a?auto=format&fit=crop&w=1400&q=85",
-    alt: "An atmospheric modern creative workspace with a tactile, low-lit editorial mood.",
-    imagePosition: "center",
-    accent: "Signal / 11.25",
-    impact: "The future becomes more useful when its draft is allowed to be seen.",
-    chapters: [
-      {
-        type: "copy",
-        eyebrow: "Signal, not spectacle",
-        heading: "Make room for a future that has not finished explaining itself.",
-        body: [
-          "New work often arrives under the pressure to look resolved. This experiment chose a different posture: share the questions, show the tests, and leave the edges visible.",
-          "The result is not a polished prediction. It is a better invitation to participate in what comes next.",
+          "Four Thousand Weeks: Time Management for Mortals karya Oliver Burkeman menjadi rujukan untuk tulisan ini. Gagasannya tentang menerima keterbatasan waktu membantu saya melihat bahwa manajemen waktu bukan hanya soal menambah efisiensi, tetapi juga soal memilih apa yang rela tidak kita kejar.",
+          "Mungkin hari ini tidak butuh daftar baru. Mungkin kita hanya butuh keberanian untuk menyelesaikan satu hal dengan perhatian utuh.",
         ],
       },
     ],

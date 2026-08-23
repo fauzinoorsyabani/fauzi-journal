@@ -4,9 +4,9 @@
  */
 export const copy = {
   navigation: {
-    stories: "Cerita",
-    impact: "Dampak",
-    culture: "Budaya",
+    stories: "Jurnal",
+    impact: "Ritme",
+    culture: "Refleksi",
     mediaInquiries: "Pertanyaan media",
     homeAria: "Beranda Fauzi / Journal",
     primaryAria: "Navigasi utama",
@@ -15,17 +15,17 @@ export const copy = {
     closeMenu: "Tutup menu navigasi",
   },
   footer: {
-    description: "Jurnal visual oleh Fauzi—menghimpun catatan lapangan, cerita berbasis gambar, dan kerja yang berlangsung di balik permukaan.",
+    description: "Jurnal personal oleh Fauzi—tentang kebiasaan kecil, cara berpikir, dan ruang untuk tumbuh tanpa terburu-buru.",
     subscribeLabel: "Terima catatan jurnal",
     pressLabel: "Untuk media",
     mediaInquiries: "Pertanyaan media",
     elsewhere: "Jelajahi",
-    storyIndex: "Indeks cerita",
-    impactNotes: "Catatan dampak",
-    behindTheScenes: "Di balik layar",
+    storyIndex: "Indeks jurnal",
+    impactNotes: "Ritme realistis",
+    behindTheScenes: "Ruang refleksi",
     editorialStudio: "Studio editorial",
-    copyright: "© 2026 Fauzi / Journal. Dibuat untuk kerja di balik permukaan.",
-    volume: "Volume 04 · Arsip keseharian",
+    copyright: "© 2026 Fauzi / Journal. Dibuat untuk bertumbuh dengan sadar.",
+    volume: "Volume 01 · Tumbuh pelan",
   },
   forms: {
     optional: "opsional",
