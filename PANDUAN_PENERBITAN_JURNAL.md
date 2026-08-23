@@ -17,7 +17,7 @@
 
 ## 1. Masuk ke Studio
 
-Buka halaman **`/studio`** pada domain Fauzi / Journal, lalu pilih **Masuk ke Studio** dan masuk menggunakan akun Anda. Akun owner akan memperoleh akses editor/admin secara otomatis.
+Buka [Studio Production](https://fauzi-journal.vercel.app/studio), lalu pilih **Masuk ke Studio** dan masuk menggunakan akun Anda. Akun owner akan memperoleh akses editor/admin secara otomatis.
 
 > Jika sesi masuk berakhir atau terputus, Studio menampilkan pesan pemulihan dan tombol **Masuk ke Studio** untuk memulai ulang autentikasi. Jangan membuat bypass atau membagikan akses Studio publik; workspace tetap harus memakai autentikasi aman.
 
@@ -25,17 +25,21 @@ Buka halaman **`/studio`** pada domain Fauzi / Journal, lalu pilih **Masuk ke St
 
 Setelah masuk, pilih tombol **Cerita baru**. Halaman editor terdiri dari tiga bagian utama: **Koordinat cerita**, **Gambar hero**, dan **Isi jurnal**.
 
+### Versi singkat: dari ide sampai terbit
+
+Jika baru pertama kali memakai Studio, lakukan lima tindakan berikut secara berurutan: pilih **Cerita baru**, isi semua field wajib, pilih **Simpan draf**, buka **Pratinjau**, lalu tekan **Terbitkan cerita** hanya setelah checklist pada akhir panduan selesai. Anda tidak perlu mengubah kode atau membuka GitHub untuk alur ini.
+
 ### Isi Koordinat Cerita
 
 | Field | Cara mengisi | Contoh |
 | --- | --- | --- |
 | **Nomor cerita** | Nomor urut cerita. Gunakan angka unik dan berurutan bila memungkinkan. | `07` |
-| **Kategori** | Tema utama jurnal. | `Catatan Lapangan`, `Budaya`, `Dampak` |
-| **Judul** | Judul utama yang tampil besar pada halaman cerita. | `Catatan dari ruang yang belum selesai.` |
+| **Kategori** | Tema utama jurnal. | `Kebiasaan`, `Cara Berpikir`, `Ritme Hidup` |
+| **Judul** | Judul utama pada halaman cerita. Gunakan kalimat singkat agar nyaman dibaca. | `Mulai dari yang kecil, lalu pulang sebagai orang yang berbeda.` |
 | **Slug** | Versi URL dari judul. Gunakan huruf kecil dan tanda hubung, tanpa spasi. | `catatan-dari-ruang-yang-belum-selesai` |
-| **Pembuka singkat** | Ringkasan yang menjelaskan konteks cerita. | `Sebuah catatan tentang proses, percakapan, dan jeda yang membentuk kerja bersama.` |
+| **Pembuka singkat** | Ringkasan yang menjelaskan konteks cerita. | `Catatan tentang kebiasaan sederhana dan alasan langkah kecil tetap layak dirayakan.` |
 
-Gunakan **judul yang spesifik** dan **deck yang ringkas**. Judul boleh puitis; deck sebaiknya tetap memberi pembaca konteks yang jelas.
+Gunakan **judul yang spesifik** dan **deck yang ringkas**. Judul boleh puitis; deck sebaiknya tetap memberi pembaca konteks yang jelas. Karena headline pada website sengaja dibuat lebih nyaman, usahakan judul tidak lebih dari sekitar 12–16 kata.
 
 ## 3. Menambahkan Cover Image
 
@@ -57,7 +61,7 @@ Bagian **Isi jurnal** adalah area utama untuk menulis. Anda dapat mengetik seper
 | **I** | Italic | Memberi penekanan lembut pada frasa, refleksi, atau judul karya. |
 | **H2** | Subjudul besar | Membagi jurnal menjadi bagian utama. |
 | **H3** | Subjudul kecil | Menambah subbagian di dalam satu bagian utama. |
-| **Kutipan** | Kutipan tarik | Menonjolkan kutipan, suara narasumber, atau kalimat penting. |
+| **Kutipan** | Kutipan tarik | Menonjolkan satu gagasan penting, suara narasumber, atau kalimat yang ingin pembaca ingat. |
 | **Daftar berpoin** | Daftar berpoin | Merangkum observasi atau langkah. |
 | **Daftar bernomor** | Daftar bernomor | Menjelaskan urutan proses. |
 | **Tautan** | Tautan | Memasukkan URL referensi atau sumber karya. |
@@ -72,7 +76,7 @@ Pilih ikon gambar, lalu isi tiga informasi ketika diminta:
 2. **Teks alternatif** untuk deskripsi aksesibel.
 3. **Keterangan gambar** untuk konteks editorial yang tampil di bawah gambar.
 
-Caption cocok untuk menjelaskan waktu, tempat, proses, atau makna gambar. Contohnya: *“Contact sheet dari review malam setelah sesi wawancara pertama.”*
+Caption cocok untuk menjelaskan waktu, tempat, proses, atau makna gambar. Contohnya: *“Sesi belajar yang mengingatkan saya untuk tetap menjadi pemula.”* Gunakan gambar sebagai jeda visual pendukung; hindari memasang terlalu banyak gambar besar dalam satu jurnal.
 
 ## 5. Simpan Draf dan Gunakan Pratinjau
 

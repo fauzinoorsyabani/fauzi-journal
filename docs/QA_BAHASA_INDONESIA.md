@@ -18,6 +18,12 @@ Kelima foto personal telah dipindahkan ke Vercel Blob **public** pada `gwst4iapy
 
 Verifikasi pada domain Production `fauzi-journal.vercel.app/stories/mulai-dari-yang-kecil` mengonfirmasi judul jurnal baru, highlight refleksi, daftar bacaan *Atomic Habits*, dan foto studio, konferensi, serta latihan termuat dari Vercel Blob publik.
 
+## Pemeriksaan skala headline
+
+Pemeriksaan desktop menunjukkan hero beranda, indeks jurnal, dan hero artikel memakai skala headline yang lebih ringkas. Judul tetap memiliki karakter display serif, namun tidak lagi mengambil proporsi layar yang berlebihan sehingga deck, metadata, dan CTA dapat terbaca dalam satu area pandang.
+
+Pada breakpoint mobile `375×812`, judul hero beranda dan artikel kini membentuk tiga sampai empat baris dengan ruang yang cukup untuk deck serta metadata. Indeks jurnal juga mempertahankan hierarki yang jelas tanpa headline yang melampaui area pandang awal.
+
 ## Batas verifikasi
 
 Visual editor yang sudah masuk menampilkan workspace admin pada environment pengembangan. Publikasi cerita end-to-end tetap membutuhkan sesi editor sah pada lingkungan target. Naskah artikel, judul, deck, kutipan, slug, dan rich text milik editor tidak diterjemahkan otomatis oleh penataan bahasa ini.

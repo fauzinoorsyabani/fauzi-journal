@@ -1,6 +1,6 @@
 # Fauzi / Journal
 
-> **Jurnal visual untuk catatan lapangan, cerita berbasis gambar, dan kerja di balik permukaan.**
+> **Jurnal personal tentang kebiasaan kecil, cara berpikir, dan ruang untuk bertumbuh tanpa terburu-buru.**
 
 Fauzi / Journal adalah platform editorial imersif yang dibangun sebagai pengalaman publik bernuansa gallery noir sekaligus workspace privat untuk penerbitan cerita. Website menggabungkan hero sinematik, story index full-bleed, halaman cerita dengan parallax yang lembut, dan sistem CMS internal agar tim dapat menyimpan draft serta menerbitkan cerita tanpa mengubah source code.
 
@@ -14,6 +14,23 @@ Fauzi / Journal adalah platform editorial imersif yang dibangun sebagai pengalam
 | **Inbox prospek** | Form pertanyaan media tervalidasi disimpan ke database dan dapat ditindaklanjuti lewat status `new`, `reviewed`, atau `contacted`. |
 | **Pelanggan jurnal** | Footer opt-in dengan persetujuan eksplisit, daftar pelanggan privat, token unsubscribe, serta log notifikasi terbit yang siap dikirim melalui provider email di tahap berikutnya. |
 | **Sistem merek** | Masthead **Fauzi / Journal**, aperture mark, palet obsidian–warm white–Signal Brass, serta kombinasi Bodoni Moda, Manrope, dan IBM Plex Mono. |
+
+## Untuk Fauzi: Tambah Jurnal Tanpa Kode
+
+Semua jurnal baru dibuat dari **Studio**; Anda tidak perlu membuka GitHub, mengubah source code, atau melakukan deploy manual. Buka [Studio Production](https://fauzi-journal.vercel.app/studio), masuk dengan akun editor, lalu ikuti alur berikut.
+
+| Urutan | Tindakan di Studio | Hasil yang diharapkan |
+| --- | --- | --- |
+| 1 | Pilih **Cerita baru**. | Studio membuka draf baru yang belum terlihat publik. |
+| 2 | Isi nomor cerita, kategori, judul, slug, dan pembuka singkat. | Identitas jurnal serta URL publik siap digunakan. |
+| 3 | Tambahkan URL/unggah gambar sampul dan isi **teks alternatif** yang menjelaskan foto. | Cover dapat diakses dan tampil pada jurnal. |
+| 4 | Tulis isi di editor. Gunakan **H2** untuk bagian, **italic** untuk judul buku, **tebal** untuk kata penting, dan **Kutipan** untuk satu gagasan yang ingin ditonjolkan. | Naskah memiliki ritme baca yang jelas. |
+| 5 | Pilih **Simpan draf**, kemudian **Pratinjau**. | Anda dapat memeriksa judul, gambar, caption, tautan, dan susunan sebelum tayang. |
+| 6 | Saat siap, pilih **Terbitkan cerita**. | Jurnal muncul di `/stories` dan URL `/stories/[slug]`. |
+
+> **Kebiasaan yang aman:** selalu simpan draf sebelum menerbitkan. Jika ada revisi setelah tayang, buka jurnal di Studio, pilih **Sunting**, perbarui naskah, lalu simpan kembali. Perubahan pada jurnal terbit akan memperbarui halaman publiknya.
+
+Panduan lengkap, contoh struktur tulisan, checklist publish, dan cara menangani pelanggan tersedia di [PANDUAN_PENERBITAN_JURNAL.md](./PANDUAN_PENERBITAN_JURNAL.md).
 
 ## Teknologi
 
@@ -53,7 +70,7 @@ pnpm drizzle-kit generate
 
 Kemudian review SQL yang dihasilkan di `drizzle/` sebelum menerapkan migration ke database target. Tabel `stories` menyimpan metadata, chapter fallback, dan dokumen rich text TipTap. Tabel `mediaInquiries` menyimpan lead, sedangkan `subscribers` dan `newsletterDeliveries` menyimpan persetujuan pembaca serta catatan setiap notifikasi jurnal yang siap dikirim.
 
-## Alur Penerbitan
+## Alur Penerbitan Ringkas
 
 1. Buka `/studio` dan masuk menggunakan akun editor/admin.
 2. Pilih **Cerita baru** untuk membuat draf baru.

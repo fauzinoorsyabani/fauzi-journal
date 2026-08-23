@@ -16,7 +16,7 @@ export default function StoryIndex() {
         <div className="border-b border-black/15 pb-9 sm:pb-12">
           <p className="eyebrow mb-5">Fauzi / Journal / Volume 01</p>
           <div className="grid gap-7 lg:grid-cols-[1.2fr_0.55fr] lg:items-end">
-            <h1 className="max-w-5xl font-display text-[clamp(4rem,9vw,9rem)] leading-[0.78] tracking-[-0.07em]">Indeks jurnal</h1>
+            <h1 className="max-w-5xl font-display text-[clamp(3rem,6.5vw,6.5rem)] leading-[0.84] tracking-[-0.06em]">Indeks jurnal</h1>
             <div className="space-y-5">
               <p className="max-w-sm font-sans text-sm leading-relaxed text-[#625e58] sm:text-base">Catatan sederhana tentang kebiasaan, cara berpikir, dan waktu yang kita pilih untuk dijalani dengan lebih sadar.</p>
               <div className="flex max-w-sm items-center justify-between bg-[#080808] px-4 py-3 font-mono text-[0.58rem] uppercase tracking-[0.15em] text-[#f3f0ea]">

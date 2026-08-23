@@ -27,7 +27,7 @@ export function StoryCard({ story, className = "", priority = false, compact = f
           />
           <div className="absolute inset-0 z-[2] bg-gradient-to-t from-black/75 via-black/5 to-transparent" />
           <div className="absolute inset-x-0 top-0 z-[3] flex items-start justify-between p-4 sm:p-5">
-            <span className="font-mono text-[0.6rem] tracking-[0.16em] text-[#f3f0ea]/82">{story.index} / 06</span>
+            <span className="font-mono text-[0.6rem] tracking-[0.16em] text-[#f3f0ea]/82">{story.index}</span>
             <span className="border border-white/25 bg-black/20 px-2 py-1 font-mono text-[0.56rem] uppercase tracking-[0.14em] text-[#f3f0ea]/85 backdrop-blur-sm">{story.category}</span>
           </div>
           <div className="absolute inset-x-0 bottom-0 z-[3] p-4 sm:p-5">
@@ -35,7 +35,7 @@ export function StoryCard({ story, className = "", priority = false, compact = f
               <span>{story.date.replace(", 2026", "")}</span>
               <ArrowUpRight size={15} className="text-[#b78a58] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </div>
-            <h3 className={`font-display leading-[0.96] text-[#f8f5ef] ${compact ? "text-2xl sm:text-3xl" : "text-3xl sm:text-4xl"}`}>
+            <h3 className={`font-display leading-[1] text-[#f8f5ef] ${compact ? "text-xl sm:text-2xl" : "text-2xl sm:text-3xl"}`}>
               {story.cardTitle ?? story.title}
             </h3>
           </div>

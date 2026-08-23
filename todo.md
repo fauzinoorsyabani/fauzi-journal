@@ -62,3 +62,5 @@
 - [x] Mengubah konten publik menjadi seri self-development berbahasa Indonesia yang ringan dengan rujukan buku nyata dan highlight gagasan penting.
 - [x] Menyimpan foto pengguna pada storage publik dan menempatkannya secara proporsional di jurnal self-development yang relevan.
 - [x] Memvalidasi seri self-development, aset personal, build, dan tampilan responsif sebelum publikasi Production.
+- [x] Mengecilkan skala headline di beranda, indeks, halaman jurnal, dan mobile agar pembacaan lebih nyaman.
+- [x] Memperjelas README dan panduan Studio untuk menambah, menulis, melihat pratinjau, serta menerbitkan jurnal sendiri.

@@ -34,7 +34,7 @@ function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
         <div className="page-shell grid gap-8 lg:grid-cols-[0.42fr_1fr] lg:gap-20">
           <Reveal><p className="eyebrow flex items-center gap-3"><span className="h-px w-6 bg-[#b78a58]" />Catatan dari karya</p></Reveal>
           <Reveal delay="short">
-            <blockquote className="max-w-5xl font-display text-[clamp(2.6rem,5.8vw,6rem)] leading-[0.88] tracking-[-0.06em] text-[#f3f0ea]">“{chapter.quote}”</blockquote>
+            <blockquote className="max-w-5xl font-display text-[clamp(2.15rem,4.5vw,4.6rem)] leading-[0.92] tracking-[-0.055em] text-[#f3f0ea]">“{chapter.quote}”</blockquote>
             {chapter.attribution ? <cite className="mt-7 block font-mono text-[0.62rem] not-italic uppercase tracking-[0.14em] text-[#b78a58]">{chapter.attribution}</cite> : null}
           </Reveal>
         </div>
@@ -53,7 +53,7 @@ function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
           </div>
           <Reveal delay="short" className={`flex flex-col justify-center ${imageFirst ? "lg:order-2" : "lg:order-1"}`}>
             {chapter.eyebrow ? <p className="eyebrow mb-5">{chapter.eyebrow}</p> : null}
-            {chapter.heading ? <h2 className="max-w-lg font-display text-[clamp(2.7rem,4.6vw,5.1rem)] leading-[0.88] tracking-[-0.058em] text-[#f3f0ea]">{chapter.heading}</h2> : null}
+            {chapter.heading ? <h2 className="max-w-lg font-display text-[clamp(2.2rem,3.8vw,4.1rem)] leading-[0.92] tracking-[-0.05em] text-[#f3f0ea]">{chapter.heading}</h2> : null}
             {chapter.highlight ? <p className="mt-7 max-w-lg border-l-2 border-[#b78a58] bg-[#b78a58]/10 px-5 py-4 font-display text-2xl leading-tight tracking-[-0.035em] text-[#f0d4ad]">{chapter.highlight}</p> : null}
             <div className="mt-7 max-w-lg space-y-5 text-[0.98rem] leading-8 text-[#bdb9b1] sm:text-lg sm:leading-8">
               {chapter.body?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
@@ -69,7 +69,7 @@ function StoryChapterBlock({ chapter }: { chapter: StoryChapter }) {
       <div className="page-shell grid gap-9 lg:grid-cols-[0.48fr_1fr] lg:gap-20">
         <Reveal><div>{chapter.eyebrow ? <p className="eyebrow">{chapter.eyebrow}</p> : null}</div></Reveal>
         <Reveal delay="short">
-          {chapter.heading ? <h2 className="max-w-4xl font-display text-[clamp(2.8rem,5vw,5.6rem)] leading-[0.86] tracking-[-0.06em] text-[#f3f0ea]">{chapter.heading}</h2> : null}
+          {chapter.heading ? <h2 className="max-w-4xl font-display text-[clamp(2.3rem,4.1vw,4.45rem)] leading-[0.9] tracking-[-0.052em] text-[#f3f0ea]">{chapter.heading}</h2> : null}
           {chapter.highlight ? <p className="mt-8 max-w-2xl border-l-2 border-[#b78a58] bg-[#b78a58]/10 px-5 py-4 font-display text-2xl leading-tight tracking-[-0.035em] text-[#f0d4ad] sm:text-3xl">{chapter.highlight}</p> : null}
           <div className="mt-9 max-w-2xl space-y-6 text-[1rem] leading-8 text-[#bdb9b1] sm:text-lg sm:leading-9">
             {chapter.body?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
@@ -161,7 +161,7 @@ export default function StoryPage() {
             <div className="mb-7 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[0.6rem] uppercase tracking-[0.15em] text-[#e0b98d]">
               <span>{story.index} / {String(stories.length).padStart(2, "0")}</span><span className="h-1 w-1 rounded-full bg-[#b78a58]" /><span>{story.category}</span><span className="h-1 w-1 rounded-full bg-[#b78a58]" /><span>{story.date}</span>
             </div>
-            <h1 className="max-w-6xl font-display text-[clamp(3.6rem,9vw,9.4rem)] leading-[0.8] tracking-[-0.07em] text-[#f8f5ef]">{story.title}</h1>
+            <h1 className="max-w-6xl font-display text-[clamp(2.85rem,6.6vw,6.7rem)] leading-[0.85] tracking-[-0.06em] text-[#f8f5ef]">{story.title}</h1>
             <div className="mt-8 grid max-w-4xl gap-5 border-t border-white/20 pt-5 sm:grid-cols-[1fr_auto] sm:items-start">
               <p className="max-w-2xl font-sans text-base leading-relaxed text-[#d8d4cd] sm:text-lg">{story.deck}</p>
               <p className="font-mono text-[0.58rem] uppercase tracking-[0.15em] text-[#aaa69f]">Ditulis oleh {story.author} · {story.readTime}</p>
@@ -199,7 +199,7 @@ export default function StoryPage() {
         <div className="page-shell grid gap-8 lg:grid-cols-[0.56fr_1fr] lg:gap-20">
           <div><p className="eyebrow">Ruang setelah membaca</p></div>
           <div>
-            <p className="max-w-3xl font-display text-[clamp(2.7rem,4.8vw,5.2rem)] leading-[0.88] tracking-[-0.058em] text-[#f3f0ea]">Tidak semua hal harus langsung dipahami untuk tetap memberi arah.</p>
+            <p className="max-w-3xl font-display text-[clamp(2.3rem,3.9vw,4.25rem)] leading-[0.92] tracking-[-0.05em] text-[#f3f0ea]">Tidak semua hal harus langsung dipahami untuk tetap memberi arah.</p>
             <div className="mt-9 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
               <p className="max-w-xl text-sm leading-relaxed text-[#aaa69f]">Simpan satu kalimat yang terasa dekat, lalu biarkan ia bekerja perlahan di hari-hari berikutnya. Tidak perlu terburu-buru membuatnya menjadi jawaban.</p>
               <Link href="/stories" className="link-sightline">Baca jurnal lain <ArrowUpRight size={15} /></Link>
