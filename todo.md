@@ -64,3 +64,4 @@
 - [x] Memvalidasi seri self-development, aset personal, build, dan tampilan responsif sebelum publikasi Production.
 - [x] Mengecilkan skala headline di beranda, indeks, halaman jurnal, dan mobile agar pembacaan lebih nyaman.
 - [x] Memperjelas README dan panduan Studio untuk menambah, menulis, melihat pratinjau, serta menerbitkan jurnal sendiri.
+- [x] Memverifikasi deployment Vercel Production untuk commit `8dd8d70` dan halaman publik versi headline terbaru.

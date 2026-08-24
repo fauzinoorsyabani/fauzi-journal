@@ -24,6 +24,8 @@ Pemeriksaan desktop menunjukkan hero beranda, indeks jurnal, dan hero artikel me
 
 Pada breakpoint mobile `375×812`, judul hero beranda dan artikel kini membentuk tiga sampai empat baris dengan ruang yang cukup untuk deck serta metadata. Indeks jurnal juga mempertahankan hierarki yang jelas tanpa headline yang melampaui area pandang awal.
 
+Pemeriksaan Vercel Production untuk commit `8dd8d70` mengonfirmasi halaman beranda termuat dan stylesheet terbaru aktif. Pada viewport desktop `1280px`, headline hero dihitung pada `79.36px` dengan line-height `68.25px`, sesuai skala baru yang lebih ringkas.
+
 ## Batas verifikasi
 
 Visual editor yang sudah masuk menampilkan workspace admin pada environment pengembangan. Publikasi cerita end-to-end tetap membutuhkan sesi editor sah pada lingkungan target. Naskah artikel, judul, deck, kutipan, slug, dan rich text milik editor tidak diterjemahkan otomatis oleh penataan bahasa ini.
