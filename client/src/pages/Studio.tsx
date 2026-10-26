@@ -155,18 +155,22 @@ function StoryEditor({ editingRecord, onClose }: { editingRecord: any | null; on
       setCompressionInfo("Mengubah ke format WebP ringan...");
       const optimized = await convertToWebP(file, { maxWidth: 1920, maxHeight: 1200, quality: 0.82 });
       setCompressionInfo(
-        `WebP ringan: ${formatBytes(optimized.originalSizeBytes)} → ${formatBytes(optimized.compressedSizeBytes)} (-${optimized.compressionRatio}%)`
+        `WebP: ${formatBytes(optimized.originalSizeBytes)} → ${formatBytes(optimized.compressedSizeBytes)} (-${optimized.compressionRatio}%)`
       );
-      await upload.mutateAsync({
+      const res = await upload.mutateAsync({
         filename: optimized.filename,
         contentType: "image/webp",
         dataBase64: optimized.dataBase64,
       });
+      if (res?.url) {
+        setDraft((current) => ({ ...current, heroImageUrl: res.url }));
+      }
     } catch (err) {
       console.error("Gagal optimasi gambar cover:", err);
       setCompressionInfo("Gagal mengoptimalkan gambar.");
     } finally {
       setIsOptimizingCover(false);
+      event.target.value = "";
     }
   };
 
@@ -206,7 +210,7 @@ function StoryEditor({ editingRecord, onClose }: { editingRecord: any | null; on
             ) : null}
           </div>
           <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
-            <label className="grid gap-2 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-[#aaa69f]">URL gambar<Input required value={draft.heroImageUrl} onChange={(event) => setDraft({ ...draft, heroImageUrl: event.target.value })} className="border-white/15 bg-[#080808] text-[#f3f0ea]" placeholder="https://… atau URL publik Vercel Blob" /></label>
+            <label className="grid gap-2 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-[#aaa69f]">URL gambar<Input required value={draft.heroImageUrl} onChange={(event) => setDraft({ ...draft, heroImageUrl: event.target.value })} className="border-white/15 bg-[#080808] text-[#f3f0ea]" placeholder="https://… atau unggah file di samping" /></label>
             <label className="inline-flex h-10 cursor-pointer items-center justify-center gap-2 border border-[#b78a58]/60 px-4 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-[#f3f0ea] hover:border-[#f3f0ea]">
               {isUploading ? <Loader2 size={14} className="animate-spin text-[#b78a58]" /> : <ImageUp size={14} className="text-[#b78a58]" />} 
               {isOptimizingCover ? "Mengubah ke WebP..." : "Unggah sampul (WebP)"}
@@ -214,7 +218,19 @@ function StoryEditor({ editingRecord, onClose }: { editingRecord: any | null; on
             </label>
           </div>
           <label className="grid gap-2 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-[#aaa69f]">Teks alternatif<Input required value={draft.heroImageAlt} onChange={(event) => setDraft({ ...draft, heroImageAlt: event.target.value })} className="border-white/15 bg-[#080808] text-[#f3f0ea]" placeholder="Deskripsikan gambar untuk pembaca yang menggunakan teknologi bantu." /></label>
-          {draft.heroImageUrl ? <img src={draft.heroImageUrl} alt="Pratinjau sampul" className="aspect-[16/8] w-full object-cover brightness-[0.8]" /> : null}
+          {draft.heroImageUrl ? (
+            <div className="relative mt-2 overflow-hidden border border-white/15 bg-black/40">
+              <img src={draft.heroImageUrl} alt="Pratinjau sampul" className="aspect-[16/8] w-full object-cover brightness-[0.85]" />
+              <span className="absolute bottom-2 right-2 border border-white/10 bg-black/80 px-2.5 py-1 font-mono text-[0.55rem] uppercase tracking-widest text-[#b78a58]">
+                Pratinjau Sampul Aktif
+              </span>
+            </div>
+          ) : (
+            <div className="flex aspect-[16/5] w-full flex-col items-center justify-center border border-dashed border-white/15 bg-white/[0.02] p-6 text-center">
+              <ImageUp size={24} className="mb-2 text-[#aaa69f]/50" />
+              <p className="font-mono text-[0.62rem] text-[#aaa69f]">Pratinjau gambar sampul akan tampil di sini setelah Anda mengunggah gambar atau menempel URL.</p>
+            </div>
+          )}
         </div>
 
         <div className="grid gap-5 border border-white/10 bg-[#11100f] p-5 sm:p-7">
