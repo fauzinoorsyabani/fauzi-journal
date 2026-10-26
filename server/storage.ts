@@ -33,15 +33,19 @@ export async function storagePut(
   data: Buffer | Uint8Array | string,
   contentType = "application/octet-stream",
 ): Promise<{ key: string; url: string }> {
-  if (process.env.VERCEL || process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID) {
-    const key = `fauzi-journal/${appendHashSuffix(normalizeKey(relKey))}`;
-    const payload = typeof data === "string" || Buffer.isBuffer(data) ? data : Buffer.from(data);
-    const uploaded = await put(key, payload, {
-      access: "public",
-      addRandomSuffix: false,
-      contentType,
-    });
-    return { key: uploaded.pathname, url: uploaded.url };
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    try {
+      const key = `fauzi-journal/${appendHashSuffix(normalizeKey(relKey))}`;
+      const payload = typeof data === "string" || Buffer.isBuffer(data) ? data : Buffer.from(data);
+      const uploaded = await put(key, payload, {
+        access: "public",
+        addRandomSuffix: false,
+        contentType,
+      });
+      return { key: uploaded.pathname, url: uploaded.url };
+    } catch (err) {
+      console.warn("[Storage] Vercel Blob upload error, falling back to data URI:", err);
+    }
   }
 
   if (ENV.forgeApiUrl && ENV.forgeApiKey) {
