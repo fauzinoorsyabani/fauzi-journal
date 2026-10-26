@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
+  canActorMutateStory,
   createMediaInquiry,
   createStory,
   deleteStory,
@@ -20,6 +21,7 @@ import {
 } from "../editorial.js";
 import { adminProcedure, protectedProcedure, publicProcedure, router } from "../_core/trpc.js";
 import { storagePut } from "../storage.js";
+
 
 const chapterSchema = z.object({
   type: z.enum(["copy", "image", "quote", "split"]),
@@ -147,8 +149,7 @@ export const editorialRouter = router({
     const existing = await getStoryById(input.id);
     if (!existing) throw new TRPCError({ code: "NOT_FOUND", message: "Cerita tidak ditemukan." });
 
-    // Ensure user is author or admin
-    if (existing.createdBy !== ctx.user.id && ctx.user.role !== "admin") {
+    if (!canActorMutateStory(existing, ctx.user)) {
       throw new TRPCError({ code: "FORBIDDEN", message: "Anda hanya dapat menyunting cerita karya Anda sendiri." });
     }
 
@@ -165,13 +166,14 @@ export const editorialRouter = router({
     const existing = await getStoryById(input.id);
     if (!existing) throw new TRPCError({ code: "NOT_FOUND", message: "Cerita tidak ditemukan." });
 
-    if (existing.createdBy !== ctx.user.id && ctx.user.role !== "admin") {
+    if (!canActorMutateStory(existing, ctx.user)) {
       throw new TRPCError({ code: "FORBIDDEN", message: "Anda hanya dapat menghapus cerita karya Anda sendiri." });
     }
 
     await deleteStory(input.id);
     return { success: true };
   }),
+
   uploadImage: protectedProcedure.input(z.object({
     filename: z.string().min(1).max(180),
     contentType: z.enum(["image/jpeg", "image/png", "image/webp"]),

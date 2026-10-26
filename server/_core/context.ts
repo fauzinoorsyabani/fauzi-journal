@@ -1,7 +1,6 @@
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import type { User } from "../../drizzle/schema.js";
-import { authenticateClerkRequest } from "./clerk.js";
-import { sdk } from "./sdk.js";
+import { authenticateRequest } from "../auth.js";
 
 export type TrpcContext = {
   req: CreateExpressContextOptions["req"];
@@ -15,15 +14,8 @@ export async function createContext(
   let user: User | null = null;
 
   try {
-    // 1. Prioritize Clerk Authentication
-    user = await authenticateClerkRequest(opts.req);
-
-    // 2. Fall back to legacy SDK session if Clerk not present
-    if (!user) {
-      user = await sdk.authenticateRequest(opts.req).catch(() => null);
-    }
+    user = await authenticateRequest(opts.req);
   } catch (error) {
-    // Authentication is optional for public procedures.
     user = null;
   }
 

@@ -1,21 +1,10 @@
-// Storage adapter: Vercel Blob for external deployment, Forge storage for the managed runtime.
-// Stored URLs are persisted on stories, so public Vercel Blob URLs remain portable across hosts.
-
+/**
+ * Storage Module — Fauzi / Journal
+ * Provides 2 clean, active adapters:
+ * 1. Vercel Blob Storage (Production CDN when BLOB_READ_WRITE_TOKEN is set)
+ * 2. Data URI Storage (100% Free, Zero-Configuration Offline/Local Fallback)
+ */
 import { put } from "@vercel/blob";
-import { ENV } from "./_core/env.js";
-
-function getForgeConfig() {
-  const forgeUrl = ENV.forgeApiUrl;
-  const forgeKey = ENV.forgeApiKey;
-
-  if (!forgeUrl || !forgeKey) {
-    throw new Error(
-      "Storage config missing: set BUILT_IN_FORGE_API_URL and BUILT_IN_FORGE_API_KEY",
-    );
-  }
-
-  return { forgeUrl: forgeUrl.replace(/\/+$/, ""), forgeKey };
-}
 
 function normalizeKey(relKey: string): string {
   return relKey.replace(/^\/+/, "");
@@ -31,8 +20,9 @@ function appendHashSuffix(relKey: string): string {
 export async function storagePut(
   relKey: string,
   data: Buffer | Uint8Array | string,
-  contentType = "application/octet-stream",
+  contentType = "application/octet-stream"
 ): Promise<{ key: string; url: string }> {
+  // Adapter 1: Vercel Blob Storage (CDN)
   if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
       const key = `fauzi-journal/${appendHashSuffix(normalizeKey(relKey))}`;
@@ -44,50 +34,11 @@ export async function storagePut(
       });
       return { key: uploaded.pathname, url: uploaded.url };
     } catch (err) {
-      console.warn("[Storage] Vercel Blob upload error, falling back to data URI:", err);
+      console.warn("[Storage] Vercel Blob upload failed, falling back to Data URI:", err);
     }
   }
 
-  if (ENV.forgeApiUrl && ENV.forgeApiKey) {
-    const { forgeUrl, forgeKey } = getForgeConfig();
-    const key = appendHashSuffix(normalizeKey(relKey));
-
-    // 1. Get presigned PUT URL from Forge
-    const presignUrl = new URL("v1/storage/presign/put", forgeUrl + "/");
-    presignUrl.searchParams.set("path", key);
-
-    const presignResp = await fetch(presignUrl, {
-      headers: { Authorization: `Bearer ${forgeKey}` },
-    });
-
-    if (!presignResp.ok) {
-      const msg = await presignResp.text().catch(() => presignResp.statusText);
-      throw new Error(`Storage presign failed (${presignResp.status}): ${msg}`);
-    }
-
-    const { url: s3Url } = (await presignResp.json()) as { url: string };
-    if (!s3Url) throw new Error("Forge returned empty presign URL");
-
-    // 2. PUT file directly to S3
-    const blob =
-      typeof data === "string"
-        ? new Blob([data], { type: contentType })
-        : new Blob([data as any], { type: contentType });
-
-    const uploadResp = await fetch(s3Url, {
-      method: "PUT",
-      headers: { "Content-Type": contentType },
-      body: blob,
-    });
-
-    if (!uploadResp.ok) {
-      throw new Error(`Storage upload to S3 failed (${uploadResp.status})`);
-    }
-
-    return { key, url: `/manus-storage/${key}` };
-  }
-
-  // Graceful offline/local development fallback: data URI
+  // Adapter 2: Data URI Storage (Free Fallback)
   const key = appendHashSuffix(normalizeKey(relKey));
   const buffer = Buffer.isBuffer(data) ? data : Buffer.from(data);
   const dataUri = `data:${contentType};base64,${buffer.toString("base64")}`;
@@ -96,25 +47,5 @@ export async function storagePut(
 
 export async function storageGet(relKey: string): Promise<{ key: string; url: string }> {
   const key = normalizeKey(relKey);
-  return { key, url: `/manus-storage/${key}` };
-}
-
-export async function storageGetSignedUrl(relKey: string): Promise<string> {
-  const { forgeUrl, forgeKey } = getForgeConfig();
-  const key = normalizeKey(relKey);
-
-  const getUrl = new URL("v1/storage/presign/get", forgeUrl + "/");
-  getUrl.searchParams.set("path", key);
-
-  const resp = await fetch(getUrl, {
-    headers: { Authorization: `Bearer ${forgeKey}` },
-  });
-
-  if (!resp.ok) {
-    const msg = await resp.text().catch(() => resp.statusText);
-    throw new Error(`Storage signed URL failed (${resp.status}): ${msg}`);
-  }
-
-  const { url } = (await resp.json()) as { url: string };
-  return url;
+  return { key, url: `/storage/${key}` };
 }

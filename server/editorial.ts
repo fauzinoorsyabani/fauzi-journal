@@ -49,12 +49,21 @@ export async function updateStory(id: number, input: Partial<InsertStoryRecord>)
   return getStoryById(id);
 }
 
+export function canActorMutateStory(
+  story: { createdBy: number | null },
+  actor: { id: number; role?: string }
+): boolean {
+  if (actor.role === "admin") return true;
+  return story.createdBy === actor.id;
+}
+
 export async function deleteStory(id: number) {
   const db = await getDb();
   if (!db) throw new Error("Editorial database is unavailable");
   await db.delete(stories).where(eq(stories.id, id));
   return true;
 }
+
 
 export async function createMediaInquiry(input: InsertMediaInquiry) {
   const db = await getDb();
