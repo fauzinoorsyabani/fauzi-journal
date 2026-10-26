@@ -87,8 +87,19 @@ export default function DashboardLayout({
             onClick={() => {
               if (hasClerk && (window as any).Clerk) {
                 (window as any).Clerk.openSignIn();
-              } else {
+              } else if (import.meta.env.VITE_OAUTH_PORTAL_URL) {
                 startLogin();
+              } else {
+                localStorage.setItem(
+                  "manus-runtime-user-info",
+                  JSON.stringify({
+                    id: "local-author",
+                    name: "Fauzi (Lokal)",
+                    email: "author@fauzi-journal.id",
+                    role: "admin",
+                  })
+                );
+                window.location.reload();
               }
             }}
             size="lg"

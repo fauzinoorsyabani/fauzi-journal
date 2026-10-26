@@ -428,14 +428,11 @@ function StudioDesk() {
 }
 
 export default function Studio() {
-  const { user, loading } = useAuth();
-  if (loading) return <div className="grid min-h-screen place-items-center bg-[#080808] text-[#b78a58]"><Loader2 className="animate-spin" /></div>;
-  if (!user) {
-    return (
-      <DashboardLayout>
-        <div />
-      </DashboardLayout>
-    );
-  }
-  return <DashboardLayout><StudioDesk /></DashboardLayout>;
+  const { user } = useAuth();
+  return (
+    <DashboardLayout>
+      {user ? <StudioDesk /> : null}
+    </DashboardLayout>
+  );
 }
+

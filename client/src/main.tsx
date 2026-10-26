@@ -9,7 +9,14 @@ import App from "./App";
 import { startLogin } from "./const";
 import "./index.css";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const clerkPublishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -21,7 +28,7 @@ const redirectToLoginIfUnauthorized = (error: unknown) => {
 
   if (!isUnauthorized) return;
 
-  if (!clerkPublishableKey) {
+  if (!clerkPublishableKey && import.meta.env.VITE_OAUTH_PORTAL_URL) {
     startLogin();
   }
 };
@@ -30,7 +37,6 @@ queryClient.getQueryCache().subscribe(event => {
   if (event.type === "updated" && event.action.type === "error") {
     const error = event.query.state.error;
     redirectToLoginIfUnauthorized(error);
-    console.error("[API Query Error]", error);
   }
 });
 
@@ -38,7 +44,6 @@ queryClient.getMutationCache().subscribe(event => {
   if (event.type === "updated" && event.action.type === "error") {
     const error = event.mutation.state.error;
     redirectToLoginIfUnauthorized(error);
-    console.error("[API Mutation Error]", error);
   }
 });
 
@@ -103,5 +108,14 @@ function Root() {
   return content;
 }
 
+if (import.meta.env.VITE_ANALYTICS_ENDPOINT && import.meta.env.VITE_ANALYTICS_WEBSITE_ID) {
+  const script = document.createElement("script");
+  script.defer = true;
+  script.src = `${import.meta.env.VITE_ANALYTICS_ENDPOINT}/umami`;
+  script.setAttribute("data-website-id", import.meta.env.VITE_ANALYTICS_WEBSITE_ID);
+  document.head.appendChild(script);
+}
+
 createRoot(document.getElementById("root")!).render(<Root />);
+
 
