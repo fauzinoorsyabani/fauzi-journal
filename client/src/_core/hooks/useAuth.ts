@@ -120,8 +120,8 @@ function useLegacyAuth(options?: UseAuthOptions) {
     }
   }, []);
 
-  const user = meQuery.data ?? (timedOut || meQuery.isError ? null : cachedUser);
-  const loading = !timedOut && !meQuery.isError && meQuery.isLoading;
+  const user = meQuery.data ?? cachedUser ?? null;
+  const loading = !cachedUser && !timedOut && !meQuery.isError && meQuery.isLoading;
 
   useEffect(() => {
     if (meQuery.data) {
