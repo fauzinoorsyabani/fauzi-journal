@@ -9,7 +9,13 @@ let _db: ReturnType<typeof drizzle> | null = null;
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      let url = process.env.DATABASE_URL;
+      const isCloudDb = url.includes("tidb") || url.includes("ssl") || url.includes("aws") || url.includes("aiven");
+      if (isCloudDb && !url.includes("ssl=")) {
+        const separator = url.includes("?") ? "&" : "?";
+        url = `${url}${separator}ssl={"rejectUnauthorized":true}`;
+      }
+      _db = drizzle(url);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
