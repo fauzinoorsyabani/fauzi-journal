@@ -1,4 +1,5 @@
 import { ClerkProvider } from "@clerk/clerk-react";
+import { dark } from "@clerk/themes";
 import { trpc } from "@/lib/trpc";
 import { COOKIE_NAME, UNAUTHED_ERR_MSG } from '@shared/const';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -99,7 +100,18 @@ function Root() {
 
   if (clerkPublishableKey) {
     return (
-      <ClerkProvider publishableKey={clerkPublishableKey} afterSignOutUrl="/">
+      <ClerkProvider
+        publishableKey={clerkPublishableKey}
+        afterSignOutUrl="/"
+        appearance={{
+          baseTheme: dark,
+          variables: {
+            colorPrimary: "#b78a58",
+            colorBackground: "#111111",
+            colorText: "#f3f0ea",
+          },
+        }}
+      >
         {content}
       </ClerkProvider>
     );

@@ -24,10 +24,13 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
+  console.log("[Server] Initializing Express & Vite...");
   const server = createServer(app);
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development") {
+    console.log("[Server] Setting up Vite dev middleware...");
     await setupVite(app, server);
+    console.log("[Server] Vite dev middleware ready.");
   } else {
     serveStatic(app);
   }
