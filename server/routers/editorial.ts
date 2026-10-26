@@ -28,7 +28,7 @@ const chapterSchema = z.object({
   body: z.array(z.string().max(6000)).max(12).optional(),
   quote: z.string().max(1000).optional(),
   attribution: z.string().max(240).optional(),
-  image: z.string().max(2000).optional(),
+  image: z.string().max(10_000_000).optional(),
   alt: z.string().max(600).optional(),
   caption: z.string().max(1000).optional(),
   side: z.enum(["left", "right"]).optional(),
@@ -45,11 +45,11 @@ const storyInputSchema = z.object({
   readTime: z.string().min(3).max(48).optional().default("05 menit baca"),
   accent: z.string().max(160).optional(),
   impact: z.string().max(2000).optional(),
-  heroImageUrl: z.string().min(3).max(2000),
+  heroImageUrl: z.string().min(3).max(10_000_000),
   heroImageAlt: z.string().min(3).max(1000),
   heroImagePosition: z.string().max(96).optional(),
   chapters: z.array(chapterSchema).min(1).max(20),
-  richContentJson: z.string().max(100_000).optional(),
+  richContentJson: z.string().max(10_000_000).optional(),
 });
 
 function editorialValues(input: z.infer<typeof storyInputSchema>, authorFallback: string = "Penulis", avatarUrlFallback: string | null = null) {

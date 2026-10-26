@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { int, mediumtext, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -46,12 +46,12 @@ export const stories = mysqlTable("stories", {
   readTime: varchar("readTime", { length: 48 }).notNull(),
   accent: varchar("accent", { length: 160 }),
   impact: text("impact"),
-  heroImageUrl: text("heroImageUrl").notNull(),
+  heroImageUrl: mediumtext("heroImageUrl").notNull(),
   heroImageKey: varchar("heroImageKey", { length: 512 }),
   heroImageAlt: text("heroImageAlt").notNull(),
   heroImagePosition: varchar("heroImagePosition", { length: 96 }),
-  chaptersJson: text("chaptersJson").notNull(),
-  richContentJson: text("richContentJson"),
+  chaptersJson: mediumtext("chaptersJson").notNull(),
+  richContentJson: mediumtext("richContentJson"),
   status: mysqlEnum("status", ["draft", "published"]).default("draft").notNull(),
   publishedAt: timestamp("publishedAt"),
   createdBy: int("createdBy").references(() => users.id),
