@@ -9,8 +9,8 @@ import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
 const isVercelBuild = process.env.VITE_DEPLOY_TARGET === "vercel" || process.env.VERCEL === "1";
 
 if (isVercelBuild && !process.env.VITE_PUBLIC_MEDIA_BASE_URL) {
-  throw new Error(
-    "VITE_PUBLIC_MEDIA_BASE_URL is required for a Vercel build. Connect a public Vercel Blob store, migrate the editorial assets, then set its URL in the Vercel project environment.",
+  console.warn(
+    "[Vite] Warning: VITE_PUBLIC_MEDIA_BASE_URL is not set. For Vercel Blob media assets, set this in your environment variables.",
   );
 }
 

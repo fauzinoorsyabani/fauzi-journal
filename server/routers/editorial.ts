@@ -3,6 +3,7 @@ import { z } from "zod";
 import {
   createMediaInquiry,
   createStory,
+  deleteStory,
   getStoryById,
   getPublishedStoryBySlug,
   listMediaInquiries,
@@ -10,13 +11,14 @@ import {
   listPublishedStories,
   listSubscribers,
   listStoriesForEditor,
+  listStoriesByUserId,
   queuePublishNotifications,
   subscribeReader,
   unsubscribeReader,
   updateMediaInquiryStatus,
   updateStory,
 } from "../editorial.js";
-import { adminProcedure, publicProcedure, router } from "../_core/trpc.js";
+import { adminProcedure, protectedProcedure, publicProcedure, router } from "../_core/trpc.js";
 import { storagePut } from "../storage.js";
 
 const chapterSchema = z.object({
@@ -34,13 +36,13 @@ const chapterSchema = z.object({
 
 const storyInputSchema = z.object({
   slug: z.string().min(3).max(160).regex(/^[a-z0-9-]+$/, "Gunakan huruf kecil, angka, dan tanda hubung untuk slug."),
-  storyNumber: z.number().int().min(1).max(999),
+  storyNumber: z.number().int().min(1).max(999).optional().default(1),
   category: z.string().min(2).max(72),
-  title: z.string().min(8).max(1000),
+  title: z.string().min(4).max(1000),
   cardTitle: z.string().max(220).optional(),
-  deck: z.string().min(16).max(2000),
-  author: z.string().min(2).max(160),
-  readTime: z.string().min(3).max(48),
+  deck: z.string().min(10).max(2000),
+  author: z.string().min(2).max(160).optional(),
+  readTime: z.string().min(3).max(48).optional().default("05 menit baca"),
   accent: z.string().max(160).optional(),
   impact: z.string().max(2000).optional(),
   heroImageUrl: z.string().min(3).max(2000),
@@ -50,16 +52,17 @@ const storyInputSchema = z.object({
   richContentJson: z.string().max(100_000).optional(),
 });
 
-function editorialValues(input: z.infer<typeof storyInputSchema>) {
+function editorialValues(input: z.infer<typeof storyInputSchema>, authorFallback: string = "Penulis", avatarUrlFallback: string | null = null) {
   return {
     slug: input.slug,
-    storyNumber: input.storyNumber,
+    storyNumber: input.storyNumber ?? 1,
     category: input.category,
     title: input.title,
     cardTitle: input.cardTitle ?? null,
     deck: input.deck,
-    author: input.author,
-    readTime: input.readTime,
+    author: input.author || authorFallback,
+    authorAvatarUrl: avatarUrlFallback,
+    readTime: input.readTime ?? "05 menit baca",
     accent: input.accent ?? null,
     impact: input.impact ?? null,
     heroImageUrl: input.heroImageUrl,
@@ -113,11 +116,19 @@ export const editorialRouter = router({
     if (isPublicFormDryRun()) return { success: true as const, dryRun: true as const };
     return { success: await unsubscribeReader(input.token), dryRun: false as const };
   }),
-  adminList: adminProcedure.query(async () => listStoriesForEditor()),
-  adminCreate: adminProcedure.input(storyInputSchema.extend({ status: z.enum(["draft", "published"]).default("draft") })).mutation(async ({ ctx, input }) => {
+
+  // User-facing author procedures (accessible to any logged-in author)
+  myStories: protectedProcedure.query(async ({ ctx }) => {
+    if (ctx.user.role === "admin") {
+      return listStoriesForEditor();
+    }
+    return listStoriesByUserId(ctx.user.id);
+  }),
+  createStory: protectedProcedure.input(storyInputSchema.extend({ status: z.enum(["draft", "published"]).default("draft") })).mutation(async ({ ctx, input }) => {
     try {
+      const authorName = ctx.user.name || input.author || "Penulis";
       const record = await createStory({
-        ...editorialValues(input),
+        ...editorialValues(input, authorName, ctx.user.avatarUrl),
         status: input.status,
         publishedAt: input.status === "published" ? new Date() : null,
         createdBy: ctx.user.id,
@@ -132,22 +143,36 @@ export const editorialRouter = router({
       throw error;
     }
   }),
-  adminUpdate: adminProcedure.input(storyInputSchema.extend({ id: z.number().int().positive(), status: z.enum(["draft", "published"]) })).mutation(async ({ input }) => {
+  updateStory: protectedProcedure.input(storyInputSchema.extend({ id: z.number().int().positive(), status: z.enum(["draft", "published"]) })).mutation(async ({ ctx, input }) => {
     const existing = await getStoryById(input.id);
     if (!existing) throw new TRPCError({ code: "NOT_FOUND", message: "Cerita tidak ditemukan." });
+
+    // Ensure user is author or admin
+    if (existing.createdBy !== ctx.user.id && ctx.user.role !== "admin") {
+      throw new TRPCError({ code: "FORBIDDEN", message: "Anda hanya dapat menyunting cerita karya Anda sendiri." });
+    }
+
+    const authorName = input.author || existing.author || ctx.user.name || "Penulis";
     const updated = await updateStory(input.id, {
-      ...editorialValues(input),
+      ...editorialValues(input, authorName, existing.authorAvatarUrl || ctx.user.avatarUrl),
       status: input.status,
       publishedAt: input.status === "published" ? (existing.publishedAt ?? new Date()) : null,
     });
     const notification = existing.status === "draft" && input.status === "published" ? await queuePublishNotifications(input.id) : { queued: 0 };
     return { story: updated, queuedNotifications: notification.queued };
   }),
-  adminInquiries: adminProcedure.query(async () => listMediaInquiries()),
-  adminUpdateInquiryStatus: adminProcedure.input(z.object({ id: z.number().int().positive(), status: z.enum(["new", "reviewed", "contacted"]) })).mutation(async ({ input }) => updateMediaInquiryStatus(input.id, input.status)),
-  adminSubscribers: adminProcedure.query(async () => listSubscribers()),
-  adminNewsletterDeliveries: adminProcedure.query(async () => listNewsletterDeliveries()),
-  adminUploadImage: adminProcedure.input(z.object({
+  deleteStory: protectedProcedure.input(z.object({ id: z.number().int().positive() })).mutation(async ({ ctx, input }) => {
+    const existing = await getStoryById(input.id);
+    if (!existing) throw new TRPCError({ code: "NOT_FOUND", message: "Cerita tidak ditemukan." });
+
+    if (existing.createdBy !== ctx.user.id && ctx.user.role !== "admin") {
+      throw new TRPCError({ code: "FORBIDDEN", message: "Anda hanya dapat menghapus cerita karya Anda sendiri." });
+    }
+
+    await deleteStory(input.id);
+    return { success: true };
+  }),
+  uploadImage: protectedProcedure.input(z.object({
     filename: z.string().min(1).max(180),
     contentType: z.enum(["image/jpeg", "image/png", "image/webp"]),
     dataBase64: z.string().min(32).max(8_500_000),
@@ -161,4 +186,55 @@ export const editorialRouter = router({
     const uploaded = await storagePut(key, bytes, input.contentType);
     return uploaded;
   }),
+
+  // Legacy/Admin procedures maintained for backward compatibility
+  adminList: protectedProcedure.query(async ({ ctx }) => {
+    if (ctx.user.role === "admin") return listStoriesForEditor();
+    return listStoriesByUserId(ctx.user.id);
+  }),
+  adminCreate: protectedProcedure.input(storyInputSchema.extend({ status: z.enum(["draft", "published"]).default("draft") })).mutation(async ({ ctx, input }) => {
+    const authorName = ctx.user.name || input.author || "Penulis";
+    const record = await createStory({
+      ...editorialValues(input, authorName, ctx.user.avatarUrl),
+      status: input.status,
+      publishedAt: input.status === "published" ? new Date() : null,
+      createdBy: ctx.user.id,
+    });
+    const id = Number(record.insertId);
+    const notification = input.status === "published" ? await queuePublishNotifications(id) : { queued: 0 };
+    return { id, queuedNotifications: notification.queued };
+  }),
+  adminUpdate: protectedProcedure.input(storyInputSchema.extend({ id: z.number().int().positive(), status: z.enum(["draft", "published"]) })).mutation(async ({ ctx, input }) => {
+    const existing = await getStoryById(input.id);
+    if (!existing) throw new TRPCError({ code: "NOT_FOUND", message: "Cerita tidak ditemukan." });
+    if (existing.createdBy !== ctx.user.id && ctx.user.role !== "admin") {
+      throw new TRPCError({ code: "FORBIDDEN", message: "Anda hanya dapat menyunting cerita karya Anda sendiri." });
+    }
+    const updated = await updateStory(input.id, {
+      ...editorialValues(input, input.author || existing.author, existing.authorAvatarUrl || ctx.user.avatarUrl),
+      status: input.status,
+      publishedAt: input.status === "published" ? (existing.publishedAt ?? new Date()) : null,
+    });
+    const notification = existing.status === "draft" && input.status === "published" ? await queuePublishNotifications(input.id) : { queued: 0 };
+    return { story: updated, queuedNotifications: notification.queued };
+  }),
+  adminUploadImage: protectedProcedure.input(z.object({
+    filename: z.string().min(1).max(180),
+    contentType: z.enum(["image/jpeg", "image/png", "image/webp"]),
+    dataBase64: z.string().min(32).max(8_500_000),
+  })).mutation(async ({ ctx, input }) => {
+    const bytes = Buffer.from(input.dataBase64, "base64");
+    if (bytes.byteLength > 6_000_000) {
+      throw new TRPCError({ code: "PAYLOAD_TOO_LARGE", message: "Ukuran gambar maksimal 6 MB." });
+    }
+    const safeFilename = input.filename.toLowerCase().replace(/[^a-z0-9._-]+/g, "-").replace(/-+/g, "-");
+    const key = `editorial/${ctx.user.id}/${Date.now()}-${safeFilename}`;
+    return storagePut(key, bytes, input.contentType);
+  }),
+
+  // Admin-only procedures for private data
+  adminInquiries: adminProcedure.query(async () => listMediaInquiries()),
+  adminUpdateInquiryStatus: adminProcedure.input(z.object({ id: z.number().int().positive(), status: z.enum(["new", "reviewed", "contacted"]) })).mutation(async ({ input }) => updateMediaInquiryStatus(input.id, input.status)),
+  adminSubscribers: adminProcedure.query(async () => listSubscribers()),
+  adminNewsletterDeliveries: adminProcedure.query(async () => listNewsletterDeliveries()),
 });

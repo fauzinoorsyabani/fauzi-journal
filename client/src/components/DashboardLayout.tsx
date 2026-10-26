@@ -28,12 +28,17 @@ import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 import { BrandMark } from "./BrandMark";
 
-const menuItems = [
+const baseMenuItems = [
   { icon: BookOpenText, label: "Cerita", path: "/studio" },
   { icon: FilePlus2, label: "Tulis cerita", path: "/studio/new" },
+];
+
+const adminMenuItems = [
   { icon: UsersRound, label: "Pelanggan", path: "/studio/subscribers" },
   { icon: Inbox, label: "Pertanyaan", path: "/studio/inquiries" },
 ];
+
+const hasClerk = Boolean(import.meta.env.VITE_CLERK_PUBLISHABLE_KEY);
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
 const DEFAULT_WIDTH = 280;
@@ -62,25 +67,32 @@ export default function DashboardLayout({
 
   if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="flex flex-col items-center gap-8 p-8 max-w-md w-full">
-          <div className="flex flex-col items-center gap-6">
-            <h1 className="text-2xl font-semibold tracking-tight text-center">
-              Masuk untuk melanjutkan
+      <div className="flex items-center justify-center min-h-screen bg-[#080808] text-[#f3f0ea]">
+        <div className="flex flex-col items-center gap-8 p-8 max-w-md w-full border border-white/10 bg-[#11100f]">
+          <div className="flex flex-col items-center gap-4 text-center">
+            <BrandMark className="scale-110 mb-2" />
+            <h1 className="text-2xl font-display tracking-tight">
+              Masuk untuk Menulis
             </h1>
-            <p className="text-sm text-muted-foreground text-center max-w-sm">
-              Masuk untuk membuka ruang kerja editorial pribadi.
+            <p className="text-sm text-[#aaa69f] leading-relaxed">
+              Buka meja kerja editorial Anda untuk membuat draf, mengunggah foto, dan menerbitkan jurnal.
             </p>
             {hasOAuthStateError ? (
               <p role="alert" className="max-w-sm border border-[#b78a58]/50 bg-[#b78a58]/10 px-4 py-3 text-center text-sm leading-relaxed text-[#f3f0ea]">
-                Sesi masuk aman Anda berakhir atau terputus. Pilih Masuk ke Studio untuk memulai sesi baru.
+                Sesi masuk Anda berakhir. Silakan masuk kembali.
               </p>
             ) : null}
           </div>
           <Button
-            onClick={() => startLogin()}
+            onClick={() => {
+              if (hasClerk && (window as any).Clerk) {
+                (window as any).Clerk.openSignIn();
+              } else {
+                startLogin();
+              }
+            }}
             size="lg"
-            className="w-full shadow-lg hover:shadow-xl transition-all"
+            className="w-full rounded-none bg-[#b78a58] text-[#080808] hover:bg-[#d1a06b] font-mono text-xs uppercase tracking-wider transition-all"
           >
             Masuk ke Studio
           </Button>
@@ -119,7 +131,8 @@ function DashboardLayoutContent({
   const isCollapsed = state === "collapsed";
   const [isResizing, setIsResizing] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const activeMenuItem = menuItems.find(item => item.path === location);
+  const currentMenuItems = user?.role === "admin" ? [...baseMenuItems, ...adminMenuItems] : baseMenuItems;
+  const activeMenuItem = currentMenuItems.find(item => item.path === location);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -185,7 +198,7 @@ function DashboardLayoutContent({
 
           <SidebarContent className="gap-0">
             <SidebarMenu className="px-2 py-1">
-              {menuItems.map(item => {
+              {currentMenuItems.map(item => {
                 const isActive = location === item.path;
                 return (
                   <SidebarMenuItem key={item.path}>

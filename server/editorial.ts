@@ -29,6 +29,12 @@ export async function listStoriesForEditor() {
   return db.select().from(stories).orderBy(desc(stories.updatedAt));
 }
 
+export async function listStoriesByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(stories).where(eq(stories.createdBy, userId)).orderBy(desc(stories.updatedAt));
+}
+
 export async function createStory(input: InsertStoryRecord) {
   const db = await getDb();
   if (!db) throw new Error("Editorial database is unavailable");
@@ -41,6 +47,13 @@ export async function updateStory(id: number, input: Partial<InsertStoryRecord>)
   if (!db) throw new Error("Editorial database is unavailable");
   await db.update(stories).set(input).where(eq(stories.id, id));
   return getStoryById(id);
+}
+
+export async function deleteStory(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Editorial database is unavailable");
+  await db.delete(stories).where(eq(stories.id, id));
+  return true;
 }
 
 export async function createMediaInquiry(input: InsertMediaInquiry) {

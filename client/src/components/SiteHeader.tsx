@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { BrandMark } from "./BrandMark";
+import { HeaderAuth } from "./HeaderAuth";
 import { copy } from "@/lib/copy";
 
 const navItems = [
@@ -58,12 +59,15 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <a
-          href="mailto:media@lensstories.studio"
-          className="hidden border-b border-[#b78a58]/70 pb-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#f3f0ea] transition-colors hover:border-[#f3f0ea] lg:block"
-        >
-          {copy.navigation.mediaInquiries}
-        </a>
+        <div className="hidden items-center gap-6 lg:flex">
+          <HeaderAuth />
+          <a
+            href="mailto:media@lensstories.studio"
+            className="border-b border-[#b78a58]/70 pb-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#f3f0ea] transition-colors hover:border-[#f3f0ea]"
+          >
+            {copy.navigation.mediaInquiries}
+          </a>
+        </div>
 
         <button
           type="button"
@@ -78,11 +82,14 @@ export function SiteHeader() {
 
       <div
         className={`overflow-hidden border-t border-white/10 bg-[#080808] transition-[max-height,opacity] duration-300 lg:hidden ${
-          isOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <nav className="px-5 py-5 sm:px-8" aria-label={copy.navigation.mobileAria}>
           <div className="flex flex-col gap-1">
+            <div className="pb-3 border-b border-white/10">
+              <HeaderAuth />
+            </div>
             {navItems.map((item, index) => (
               <a
                 key={item.label}

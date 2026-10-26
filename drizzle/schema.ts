@@ -11,10 +11,14 @@ export const users = mysqlTable("users", {
    * Use this for relations between tables.
    */
   id: int("id").autoincrement().primaryKey(),
-  /** Manus OAuth identifier (openId) returned from the OAuth callback. Unique per user. */
-  openId: varchar("openId", { length: 64 }).notNull().unique(),
+  /** Unique user identifier (supports Clerk user ID or legacy openId). */
+  openId: varchar("openId", { length: 128 }).notNull().unique(),
+  /** Explicit Clerk User ID (e.g. user_2xxx). */
+  clerkId: varchar("clerkId", { length: 128 }).unique(),
   name: text("name"),
   email: varchar("email", { length: 320 }),
+  avatarUrl: text("avatarUrl"),
+  username: varchar("username", { length: 64 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
   role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -38,6 +42,7 @@ export const stories = mysqlTable("stories", {
   cardTitle: varchar("cardTitle", { length: 220 }),
   deck: text("deck").notNull(),
   author: varchar("author", { length: 160 }).notNull(),
+  authorAvatarUrl: text("authorAvatarUrl"),
   readTime: varchar("readTime", { length: 48 }).notNull(),
   accent: varchar("accent", { length: 160 }),
   impact: text("impact"),
