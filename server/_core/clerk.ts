@@ -56,6 +56,8 @@ export async function authenticateClerkRequest(req: Request): Promise<User | nul
         const avatarUrl = clerkUser.imageUrl || null;
         const username = clerkUser.username || null;
 
+        const clerkRole = (clerkUser.publicMetadata?.role as "admin" | "user") || undefined;
+
         await upsertUser({
           openId: clerkUserId,
           clerkId: clerkUserId,
@@ -63,6 +65,7 @@ export async function authenticateClerkRequest(req: Request): Promise<User | nul
           email,
           avatarUrl,
           username,
+          role: clerkRole,
           loginMethod: "clerk",
           lastSignedIn: now,
         });
@@ -75,9 +78,13 @@ export async function authenticateClerkRequest(req: Request): Promise<User | nul
       await upsertUser({
         openId: user.openId,
         clerkId: user.clerkId ?? clerkUserId,
+        email: user.email,
         lastSignedIn: now,
       });
+      // Re-fetch in case role was upgraded to admin
+      user = await getUserByClerkId(clerkUserId);
     }
+
 
     return user ?? null;
   } catch (error) {

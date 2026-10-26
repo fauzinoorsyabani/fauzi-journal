@@ -58,13 +58,21 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       values.lastSignedIn = user.lastSignedIn;
       updateSet.lastSignedIn = user.lastSignedIn;
     }
-    if (user.role !== undefined) {
+    const adminEmails = (process.env.ADMIN_EMAIL || "career.fauzinoorsyabani@gmail.com,fauzinoorsyabani05@gmail.com,fnoorsyabani@gmail.com")
+      .split(",")
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean);
+
+    const isEmailAdmin = Boolean(user.email && adminEmails.includes(user.email.toLowerCase()));
+
+    if (isEmailAdmin || user.openId === ENV.ownerOpenId || user.role === "admin") {
+      values.role = "admin";
+      updateSet.role = "admin";
+    } else if (user.role !== undefined) {
       values.role = user.role;
       updateSet.role = user.role;
-    } else if (user.openId === ENV.ownerOpenId || (user.email && process.env.ADMIN_EMAIL && user.email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase())) {
-      values.role = 'admin';
-      updateSet.role = 'admin';
     }
+
 
     if (!values.lastSignedIn) {
       values.lastSignedIn = new Date();
